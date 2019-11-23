@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
- // $config['base_url'] = 'https://valispa.com/server/';
- $config['base_url'] = 'http://localhost:8888/proyectos/vali/server/';
+ $config['base_url'] = 'https://valispa.com/server/';
+ //$config['base_url'] = 'http://localhost:8888/proyectos/vali/server/';
 
 
 

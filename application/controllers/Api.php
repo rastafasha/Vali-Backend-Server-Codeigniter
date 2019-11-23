@@ -545,8 +545,8 @@ public function waxs()
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $wax->price,
-				'description' => $wax->description,
 				'popup' => $wax->popup,
+				'description' => $wax->description,
 				'button' => $wax->button,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at
@@ -563,7 +563,7 @@ public function featured_waxs()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$waxs = $this->api_model->get_waxs($featured=true, $recentpost=false);
+	$permanents = $this->api_model->get_waxs($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($waxs)){
@@ -580,8 +580,8 @@ public function featured_waxs()
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $wax->price,
-				'description' => $wax->description,
 				'popup' => $wax->popup,
+				'description' => $wax->description,
 				'button' => $wax->button,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at
@@ -605,14 +605,13 @@ public function wax($id)
 	$post = array(
 		'id' => $wax->id,
 		'title' => $wax->title,
+		'description' => $wax->description,
 		'titleesp' => $wax->titleesp,
 		'descriptionesp' => $wax->descriptionesp,
-		'short_desc' => html_entity_decode($short_desc),
-		'author' => $author,
 		'price' => $wax->price,
-		'description' => $wax->description,
 		'popup' => $wax->popup,
 		'button' => $wax->button,
+		'author' => $author,
 		'image' => base_url('media/images/servicios/wax/'.$wax->image),
 		'created_at' => $wax->created_at
 	);
@@ -643,7 +642,6 @@ public function recent_waxs()
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $wax->price,
-				'description' => $wax->description,
 				'popup' => $wax->popup,
 				'button' => $wax->button,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
@@ -659,130 +657,6 @@ public function recent_waxs()
 
 //
 
-// Wax info
-
-public function waxinfos()
-{
-	header("Access-Control-Allow-Origin: *");
-
-	$waxinfos = $this->api_model->get_waxinfos($featured=false, $recentpost=false);
-
-	$posts = array();
-	if(!empty($waxinfos)){
-		foreach($waxinfos as $waxinfo){
-
-			$short_desc = strip_tags(character_limiter($waxinfo->description, 70));
-			$author = $waxinfo->first_name.' '.$waxinfo->last_name;
-
-			$posts[] = array(
-				'id' => $waxinfo->id,
-				'title' => $waxinfo->title,
-				'titleesp' => $waxinfo->titleesp,
-				'short_desc' => html_entity_decode($short_desc),
-				'author' => $author,
-				'description' => $waxinfo->description,
-				'descriptionesp' => $waxinfo->descriptionesp,
-				'image' => base_url('media/images/servicios/paginas/'.$waxinfo->image),
-				'created_at' => $waxinfo->created_at
-			);
-		}
-	}
-
-	$this->output
-		->set_content_type('application/json')
-		->set_output(json_encode($posts));
-}
-
-public function featured_waxinfos()
-{
-	header("Access-Control-Allow-Origin: *");
-
-	$waxinfos = $this->api_model->get_waxinfos($featured=true, $recentpost=false);
-
-	$posts = array();
-	if(!empty($waxinfos)){
-		foreach($waxinfos as $waxinfo){
-			
-			$short_desc = strip_tags(character_limiter($waxinfo->description, 70));
-			$author = $waxinfo->first_name.' '.$waxinfo->last_name;
-
-			$posts[] = array(
-				'id' => $waxinfo->id,
-				'title' => $waxinfo->title,
-				'titleesp' => $waxinfo->titleesp,
-				'short_desc' => html_entity_decode($short_desc),
-				'author' => $author,
-				'description' => $waxinfo->description,
-				'descriptionesp' => $waxinfo->descriptionesp,
-				'image' => base_url('media/images/servicios/paginas/'.$waxinfo->image),
-				'created_at' => $waxinfo->created_at
-			);
-		}
-	}
-
-	$this->output
-		->set_content_type('application/json')
-		->set_output(json_encode($posts));
-}
-
-public function waxinfo($id)
-{
-	header("Access-Control-Allow-Origin: *");
-	
-	$waxinfo = $this->api_model->get_waxinfo($id);
-
-	$author = $waxinfo->first_name.' '.$waxinfo->last_name;
-
-	$post = array(
-		'id' => $waxinfo->id,
-		'title' => $waxinfo->title,
-		'titleesp' => $waxinfo->titleesp,
-		'short_desc' => html_entity_decode($short_desc),
-		'author' => $author,
-		'description' => $waxinfo->description,
-		'descriptionesp' => $waxinfo->descriptionesp,
-		'image' => base_url('media/images/servicios/paginas/'.$waxinfo->image),
-		'created_at' => $waxinfo->created_at
-	);
-	
-	$this->output
-		->set_content_type('application/json')
-		->set_output(json_encode($post));
-}
-
-public function recent_waxinfos()
-{
-	header("Access-Control-Allow-Origin: *");
-
-	$waxinfos = $this->api_model->get_waxinfos($featured=false, $recentpost=5);
-
-	$posts = array();
-	if(!empty($waxinfo)){
-		foreach($waxinfos as $waxinfo){
-			
-			$short_desc = strip_tags(character_limiter($waxinfo->description, 70));
-			$author = $wax->first_name.' '.$waxinfo->last_name;
-
-			$posts[] = array(
-				'id' => $waxinfo->id,
-				'title' => $waxinfo->title,
-				'titleesp' => $waxinfo->titleesp,
-				'short_desc' => html_entity_decode($short_desc),
-				'author' => $author,
-				'description' => $waxinfo->description,
-				'descriptionesp' => $waxinfo->descriptionesp,
-				'image' => base_url('media/images/servicios/paginas/'.$waxinfo->image),
-				'created_at' => $waxinfo->created_at
-			);
-		}
-	}
-
-	$this->output
-		->set_content_type('application/json')
-		->set_output(json_encode($posts));
-}
-
-//
 
 
 // Permanent Makeup 
@@ -803,6 +677,8 @@ public function permanents()
 			$posts[] = array(
 				'id' => $permanent->id,
 				'title' => $permanent->title,
+				'titleesp' => $permanent->titleesp,
+				'descriptionesp' => $permanent->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $permanent->price,
@@ -836,6 +712,8 @@ public function featured_permanents()
 			$posts[] = array(
 				'id' => $permanent->id,
 				'title' => $permanent->title,
+				'titleesp' => $permanent->titleesp,
+				'descriptionesp' => $permanent->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $permanent->price,
@@ -865,6 +743,8 @@ public function permanent($id)
 		'id' => $permanent->id,
 		'title' => $permanent->title,
 		'description' => $permanent->description,
+		'titleesp' => $permanent->titleesp,
+		'descriptionesp' => $permanent->descriptionesp,
 		'price' => $permanent->price,
 		'popup' => $permanent->popup,
 		'button' => $permanent->button,
@@ -894,6 +774,8 @@ public function recent_permanents()
 			$posts[] = array(
 				'id' => $permanent->id,
 				'title' => $permanent->title,
+				'titleesp' => $permanent->titleesp,
+				'descriptionesp' => $permanent->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $permanent->price,
@@ -930,6 +812,8 @@ public function specialts()
 			$posts[] = array(
 				'id' => $specialt->id,
 				'title' => $specialt->title,
+				'titleesp' => $specialt->titleesp,
+				'descriptionesp' => $specialt->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $specialt->price,
@@ -963,6 +847,8 @@ public function featured_specialts()
 			$posts[] = array(
 				'id' => $specialt->id,
 				'title' => $specialt->title,
+				'titleesp' => $specialt->titleesp,
+				'descriptionesp' => $specialt->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $specialt->price,
@@ -992,6 +878,8 @@ public function specialt($id)
 		'id' => $specialt->id,
 		'title' => $specialt->title,
 		'description' => $specialt->description,
+		'titleesp' => $specialt->titleesp,
+		'descriptionesp' => $specialt->descriptionesp,
 		'price' => $specialt->price,
 		'popup' => $specialt->popup,
 		'button' => $specialt->button,
@@ -1021,6 +909,8 @@ public function recent_specialts()
 			$posts[] = array(
 				'id' => $specialt->id,
 				'title' => $specialt->title,
+				'titleesp' => $specialt->titleesp,
+				'descriptionesp' => $specialt->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $specialt->price,
@@ -1176,7 +1066,8 @@ public function recent_antiages()
 
 ///
 
-// Facial Restorative 
+
+// Facial restorative 
 
 public function restoratives()
 {
@@ -1194,6 +1085,8 @@ public function restoratives()
 			$posts[] = array(
 				'id' => $restorative->id,
 				'title' => $restorative->title,
+				'titleesp' => $restorative->titleesp,
+				'descriptionesp' => $restorative->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $restorative->price,
@@ -1227,6 +1120,8 @@ public function featured_restoratives()
 			$posts[] = array(
 				'id' => $restorative->id,
 				'title' => $restorative->title,
+				'titleesp' => $restorative->titleesp,
+				'descriptionesp' => $restorative->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $restorative->price,
@@ -1256,6 +1151,8 @@ public function restorative($id)
 		'id' => $restorative->id,
 		'title' => $restorative->title,
 		'description' => $restorative->description,
+		'titleesp' => $restorative->titleesp,
+		'descriptionesp' => $restorative->descriptionesp,
 		'price' => $restorative->price,
 		'popup' => $restorative->popup,
 		'button' => $restorative->button,
@@ -1285,6 +1182,8 @@ public function recent_restoratives()
 			$posts[] = array(
 				'id' => $restorative->id,
 				'title' => $restorative->title,
+				'titleesp' => $restorative->titleesp,
+				'descriptionesp' => $restorative->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $restorative->price,
@@ -1305,6 +1204,13 @@ public function recent_restoratives()
 ///
 
 
+
+
+
+
+
+
+
 // Facial Calming 
 
 public function calmings()
@@ -1323,6 +1229,8 @@ public function calmings()
 			$posts[] = array(
 				'id' => $calming->id,
 				'title' => $calming->title,
+				'titleesp' => $calming->titleesp,
+				'descriptionesp' => $calming->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $calming->price,
@@ -1356,6 +1264,8 @@ public function featured_calmings()
 			$posts[] = array(
 				'id' => $calming->id,
 				'title' => $calming->title,
+				'titleesp' => $calming->titleesp,
+				'descriptionesp' => $calming->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $calming->price,
@@ -1385,6 +1295,8 @@ public function calming($id)
 		'id' => $calming->id,
 		'title' => $calming->title,
 		'description' => $calming->description,
+		'titleesp' => $calming->titleesp,
+				'descriptionesp' => $calming->descriptionesp,
 		'price' => $calming->price,
 		'popup' => $calming->popup,
 		'button' => $calming->button,
@@ -1414,6 +1326,8 @@ public function recent_calmings()
 			$posts[] = array(
 				'id' => $calming->id,
 				'title' => $calming->title,
+				'titleesp' => $calming->titleesp,
+				'descriptionesp' => $calming->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $calming->price,
@@ -1451,6 +1365,8 @@ public function brightenings()
 			$posts[] = array(
 				'id' => $brightening->id,
 				'title' => $brightening->title,
+				'titleesp' => $brightening->titleesp,
+				'descriptionesp' => $brightening->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $brightening->price,
@@ -1484,6 +1400,8 @@ public function featured_brightenings()
 			$posts[] = array(
 				'id' => $brightening->id,
 				'title' => $brightening->title,
+				'titleesp' => $brightening->titleesp,
+				'descriptionesp' => $brightening->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $brightening->price,
@@ -1513,6 +1431,8 @@ public function brightening($id)
 		'id' => $brightening->id,
 		'title' => $brightening->title,
 		'description' => $brightening->description,
+		'titleesp' => $brightening->titleesp,
+				'descriptionesp' => $brightening->descriptionesp,
 		'price' => $brightening->price,
 		'popup' => $brightening->popup,
 		'button' => $brightening->button,
@@ -1542,6 +1462,8 @@ public function recent_brightenings()
 			$posts[] = array(
 				'id' => $brightening->id,
 				'title' => $brightening->title,
+				'titleesp' => $brightening->titleesp,
+				'descriptionesp' => $brightening->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $brightening->price,
@@ -1580,6 +1502,8 @@ public function specialfs()
 			$posts[] = array(
 				'id' => $specialf->id,
 				'title' => $specialf->title,
+				'titleesp' => $specialf->titleesp,
+				'descriptionesp' => $specialf->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $specialf->price,
@@ -1613,6 +1537,8 @@ public function featured_specialfs()
 			$posts[] = array(
 				'id' => $specialf->id,
 				'title' => $specialf->title,
+				'titleesp' => $specialf->titleesp,
+				'descriptionesp' => $specialf->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $specialf->price,
@@ -1642,6 +1568,8 @@ public function specialf($id)
 		'id' => $specialf->id,
 		'title' => $specialf->title,
 		'description' => $specialf->description,
+		'titleesp' => $specialf->titleesp,
+				'descriptionesp' => $specialf->descriptionesp,
 		'price' => $specialf->price,
 		'popup' => $specialf->popup,
 		'button' => $specialf->button,
@@ -1671,6 +1599,8 @@ public function recent_specialfs()
 			$posts[] = array(
 				'id' => $specialf->id,
 				'title' => $specialf->title,
+				'titleesp' => $specialf->titleesp,
+				'descriptionesp' => $specialf->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $specialf->price,
@@ -1708,6 +1638,8 @@ public function luxurings()
 			$posts[] = array(
 				'id' => $luxuring->id,
 				'title' => $luxuring->title,
+				'titleesp' => $luxuring->titleesp,
+				'descriptionesp' => $luxuring->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $luxuring->price,
@@ -1741,6 +1673,8 @@ public function featured_luxurings()
 			$posts[] = array(
 				'id' => $luxuring->id,
 				'title' => $luxuring->title,
+				'titleesp' => $luxuring->titleesp,
+				'descriptionesp' => $luxuring->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $luxuring->price,
@@ -1770,6 +1704,8 @@ public function luxuring($id)
 		'id' => $luxuring->id,
 		'title' => $luxuring->title,
 		'description' => $luxuring->description,
+		'titleesp' => $luxuring->titleesp,
+		'descriptionesp' => $luxuring->descriptionesp,
 		'price' => $luxuring->price,
 		'popup' => $luxuring->popup,
 		'button' => $luxuring->button,
@@ -1799,6 +1735,8 @@ public function recent_luxurings()
 			$posts[] = array(
 				'id' => $luxuring->id,
 				'title' => $luxuring->title,
+				'titleesp' => $luxuring->titleesp,
+				'descriptionesp' => $luxuring->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $luxuring->price,
@@ -1840,6 +1778,8 @@ public function hands()
 			$posts[] = array(
 				'id' => $hand->id,
 				'title' => $hand->title,
+				'titleesp' => $hand->titleesp,
+				'descriptionesp' => $hand->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $hand->price,
@@ -1873,6 +1813,8 @@ public function featured_hands()
 			$posts[] = array(
 				'id' => $hand->id,
 				'title' => $hand->title,
+				'titleesp' => $hand->titleesp,
+				'descriptionesp' => $hand->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $hand->price,
@@ -1902,6 +1844,8 @@ public function hand($id)
 		'id' => $hand->id,
 		'title' => $hand->title,
 		'description' => $hand->description,
+		'titleesp' => $hand->titleesp,
+				'descriptionesp' => $hand->descriptionesp,
 		'price' => $hand->price,
 		'popup' => $hand->popup,
 		'button' => $hand->button,
@@ -1931,6 +1875,8 @@ public function recent_hands()
 			$posts[] = array(
 				'id' => $hand->id,
 				'title' => $hand->title,
+				'titleesp' => $hand->titleesp,
+				'descriptionesp' => $hand->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $hand->price,
@@ -1970,6 +1916,8 @@ public function sculptings()
 			$posts[] = array(
 				'id' => $sculpting->id,
 				'title' => $sculpting->title,
+				'titleesp' => $sculpting->titleesp,
+				'descriptionesp' => $sculpting->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $sculpting->price,
@@ -2003,6 +1951,8 @@ public function featured_sculptings()
 			$posts[] = array(
 				'id' => $sculpting->id,
 				'title' => $sculpting->title,
+				'titleesp' => $sculpting->titleesp,
+				'descriptionesp' => $sculpting->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $sculpting->price,
@@ -2032,6 +1982,8 @@ public function sculpting($id)
 		'id' => $sculpting->id,
 		'title' => $sculpting->title,
 		'description' => $sculpting->description,
+		'titleesp' => $sculpting->titleesp,
+				'descriptionesp' => $sculpting->descriptionesp,
 		'price' => $sculpting->price,
 		'popup' => $sculpting->popup,
 		'button' => $sculpting->button,
@@ -2061,6 +2013,8 @@ public function recent_sculptings()
 			$posts[] = array(
 				'id' => $sculpting->id,
 				'title' => $sculpting->title,
+				'titleesp' => $sculpting->titleesp,
+				'descriptionesp' => $sculpting->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $sculpting->price,
@@ -2099,6 +2053,8 @@ public function wrappings()
 			$posts[] = array(
 				'id' => $wrapping->id,
 				'title' => $wrapping->title,
+				'titleesp' => $wrapping->titleesp,
+				'descriptionesp' => $wrapping->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $wrapping->price,
@@ -2132,6 +2088,8 @@ public function featured_wrappings()
 			$posts[] = array(
 				'id' => $wrapping->id,
 				'title' => $wrapping->title,
+				'titleesp' => $sculpting->titleesp,
+				'descriptionesp' => $sculpting->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $wrapping->price,
@@ -2161,6 +2119,8 @@ public function wrapping($id)
 		'id' => $wrapping->id,
 		'title' => $wrapping->title,
 		'description' => $wrapping->description,
+		'titleesp' => $wrapping->titleesp,
+				'descriptionesp' => $wrapping->descriptionesp,
 		'price' => $wrapping->price,
 		'popup' => $wrapping->popup,
 		'button' => $wrapping->button,
@@ -2190,6 +2150,8 @@ public function recent_wrappings()
 			$posts[] = array(
 				'id' => $wrapping->id,
 				'title' => $wrapping->title,
+				'titleesp' => $wrapping->titleesp,
+				'descriptionesp' => $wrapping->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $wrapping->price,
@@ -2228,6 +2190,8 @@ public function looks()
 			$posts[] = array(
 				'id' => $look->id,
 				'title' => $look->title,
+				'titleesp' => $look->titleesp,
+				'descriptionesp' => $look->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $look->price,
@@ -2261,6 +2225,8 @@ public function featured_looks()
 			$posts[] = array(
 				'id' => $look->id,
 				'title' => $look->title,
+				'titleesp' => $look->titleesp,
+				'descriptionesp' => $look->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $look->price,
@@ -2290,6 +2256,8 @@ public function look($id)
 		'id' => $look->id,
 		'title' => $look->title,
 		'description' => $look->description,
+		'titleesp' => $look->titleesp,
+				'descriptionesp' => $look->descriptionesp,
 		'price' => $look->price,
 		'popup' => $look->popup,
 		'button' => $look->button,
@@ -2319,6 +2287,8 @@ public function recent_looks()
 			$posts[] = array(
 				'id' => $look->id,
 				'title' => $look->title,
+				'titleesp' => $look->titleesp,
+				'descriptionesp' => $look->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $look->price,
@@ -2356,6 +2326,8 @@ public function bridals()
 			$posts[] = array(
 				'id' => $bridal->id,
 				'title' => $bridal->title,
+				'titleesp' => $bridal->titleesp,
+				'descriptionesp' => $bridal->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $bridal->price,
@@ -2389,6 +2361,8 @@ public function featured_bridals()
 			$posts[] = array(
 				'id' => $bridal->id,
 				'title' => $bridal->title,
+				'titleesp' => $bridal->titleesp,
+				'descriptionesp' => $bridal->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $bridal->price,
@@ -2418,6 +2392,8 @@ public function bridal($id)
 		'id' => $bridal->id,
 		'title' => $bridal->title,
 		'description' => $bridal->description,
+		'titleesp' => $bridal->titleesp,
+				'descriptionesp' => $bridal->descriptionesp,
 		'price' => $bridal->price,
 		'popup' => $bridal->popup,
 		'button' => $bridal->button,
@@ -2447,6 +2423,8 @@ public function recent_bridals()
 			$posts[] = array(
 				'id' => $bridal->id,
 				'title' => $bridal->title,
+				'titleesp' => $bridal->titleesp,
+				'descriptionesp' => $bridal->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $bridal->price,
@@ -2487,6 +2465,8 @@ public function clasess()
 			$posts[] = array(
 				'id' => $clases->id,
 				'title' => $clases->title,
+				'titleesp' => $clases->titleesp,
+				'descriptionesp' => $clases->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $clases->price,
@@ -2520,6 +2500,8 @@ public function featured_clasess()
 			$posts[] = array(
 				'id' => $clases->id,
 				'title' => $clases->title,
+				'titleesp' => $clases->titleesp,
+				'descriptionesp' => $clases->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $clases->price,
@@ -2549,6 +2531,8 @@ public function clases($id)
 		'id' => $clases->id,
 		'title' => $clases->title,
 		'description' => $clases->description,
+		'titleesp' => $clases->titleesp,
+				'descriptionesp' => $clases->descriptionesp,
 		'price' => $clases->price,
 		'popup' => $clases->popup,
 		'button' => $clases->button,
@@ -2578,6 +2562,8 @@ public function recent_clasess()
 			$posts[] = array(
 				'id' => $clases->id,
 				'title' => $clases->title,
+				'titleesp' => $clases->titleesp,
+				'descriptionesp' => $clases->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $clases->price,
@@ -2615,6 +2601,8 @@ public function fibrofaces()
 			$posts[] = array(
 				'id' => $fibroface->id,
 				'title' => $fibroface->title,
+				'titleesp' => $fibroface->titleesp,
+				'descriptionesp' => $fibroface->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $fibroface->price,
@@ -2648,6 +2636,8 @@ public function featured_fibrofaces()
 			$posts[] = array(
 				'id' => $fibroface->id,
 				'title' => $fibroface->title,
+				'titleesp' => $fibroface->titleesp,
+				'descriptionesp' => $fibroface->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $fibroface->price,
@@ -2677,6 +2667,8 @@ public function fibroface($id)
 		'id' => $fibroface->id,
 		'title' => $fibroface->title,
 		'description' => $fibroface->description,
+		'titleesp' => $fibroface->titleesp,
+				'descriptionesp' => $fibroface->descriptionesp,
 		'price' => $fibroface->price,
 		'popup' => $fibroface->popup,
 		'button' => $fibroface->button,
@@ -2706,6 +2698,8 @@ public function recent_fibrofaces()
 			$posts[] = array(
 				'id' => $fibroface->id,
 				'title' => $fibroface->title,
+				'titleesp' => $fibroface->titleesp,
+				'descriptionesp' => $fibroface->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $fibroface->price,
@@ -2744,6 +2738,8 @@ public function bodys()
 				'id' => $body->id,
 				'title' => $body->title,
 				'description' => $body->description,
+				'titleesp' => $body->titleesp,
+				'descriptionesp' => $body->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $body->price,
@@ -2777,6 +2773,8 @@ public function featured_bodys()
 				'id' => $body->id,
 				'title' => $body->title,
 				'description' => $body->description,
+				'titleesp' => $body->titleesp,
+				'descriptionesp' => $body->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $body->price,
@@ -2805,6 +2803,8 @@ public function body($id)
 		'id' => $body->id,
 		'title' => $body->title,
 		'description' => $body->description,
+		'titleesp' => $body->titleesp,
+				'descriptionesp' => $body->descriptionesp,
 		'price' => $body->price,
 		'popup' => $body->popup,
 		'button' => $body->button,
@@ -2835,6 +2835,8 @@ public function recent_bodys()
 				'id' => $body->id,
 				'title' => $body->title,
 				'description' => $body->description,
+				'titleesp' => $body->titleesp,
+				'descriptionesp' => $body->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $body->price,
@@ -2872,6 +2874,8 @@ public function hypertrophics()
 				'id' => $hypertrophic->id,
 				'title' => $hypertrophic->title,
 				'description' => $hypertrophic->description,
+				'titleesp' => $hypertrophic->titleesp,
+				'descriptionesp' => $hypertrophic->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $hypertrophic->price,
@@ -2905,6 +2909,8 @@ public function featured_hypertrophics()
 				'id' => $hypertrophic->id,
 				'title' => $hypertrophic->title,
 				'description' => $hypertrophic->description,
+				'titleesp' => $hypertrophic->titleesp,
+				'descriptionesp' => $hypertrophic->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $hypertrophic->price,
@@ -2933,6 +2939,8 @@ public function hypertrophic($id)
 		'id' => $hypertrophic->id,
 		'title' => $hypertrophic->title,
 		'description' => $hypertrophic->description,
+		'titleesp' => $hypertrophic->titleesp,
+		'descriptionesp' => $hypertrophic->descriptionesp,
 		'price' => $hypertrophic->price,
 		'popup' => $hypertrophic->popup,
 		'button' => $hypertrophic->button,
@@ -2963,6 +2971,8 @@ public function recent_hypertrophics()
 				'id' => $hypertrophic->id,
 				'title' => $hypertrophic->title,
 				'description' => $hypertrophic->description,
+				'titleesp' => $hypertrophic->titleesp,
+				'descriptionesp' => $hypertrophic->descriptionesp,
 				'short_desc' => html_entity_decode($short_desc),
 				'author' => $author,
 				'price' => $hypertrophic->price,
@@ -4550,7 +4560,7 @@ public function updateUser($id)
 			}
 			else {
    
-				if($user->image && file_exists(FCPATH.'media/images/user/'.$wax->image))
+				if($user->image && file_exists(FCPATH.'media/images/user/'.$user->image))
 				{
 					unlink(FCPATH.'media/images/servicios/user/'.$user->image);
 				}
@@ -4634,13 +4644,11 @@ public function deleteUser($id)
 			$waxs = $this->api_model->get_admin_waxs();
 			foreach($waxs as $wax) {
 				$posts[] = array(
-					
 					'id' => $wax->id,
 					'title' => $wax->title,
+					'price' => $wax->price,
 					'titleesp' => $wax->titleesp,
 					'descriptionesp' => $wax->descriptionesp,
-					'price' => $wax->price,
-					'description' => $wax->description,
 					'popup' => $wax->popup,
 					'button' => $wax->button,
 					'image' => base_url('media/images/servicios/wax/'.$wax->image),
@@ -4669,16 +4677,17 @@ public function deleteUser($id)
 			$wax = $this->api_model->get_admin_wax($id);
 
 			$post = array(
-					'id' => $wax->id,
-					'title' => $wax->title,
-					'titleesp' => $wax->titleesp,
+				'id' => $wax->id,
+				'title' => $wax->title,
+				'description' => $wax->description,
+				'titleesp' => $wax->titleesp,
 					'descriptionesp' => $wax->descriptionesp,
-					'price' => $wax->price,
-					'description' => $wax->description,
-					'popup' => $wax->popup,
-					'button' => $wax->button,
-					'image' => base_url('media/images/servicios/wax/'.$wax->image),
-					'created_at' => $wax->created_at
+				'price' => $wax->price,
+				'popup' => $wax->popup,
+				'button' => $wax->button,
+				'image' => base_url('media/images/servicios/wax/'.$wax->image),
+				'is_featured' => $wax->is_featured,
+				'is_active' => $wax->is_active
 			);
 			
 
@@ -4703,8 +4712,8 @@ public function deleteUser($id)
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
-			$title = $this->input->post('title');
-			$description = $this->input->post('descriptionesp');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -4739,11 +4748,11 @@ public function deleteUser($id)
 
 			if( ! $isUploadError) {
 	        	$waxData = array(
+					'user_id' => 1,
 					'title' => $title,
+					'description' => $description,
 					'titleesp' => $titleesp,
 					'descriptionesp' => $descriptionesp,
-					'user_id' => 1,
-					'description' => $description,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -4822,22 +4831,19 @@ public function deleteUser($id)
 	            }
 			}
 
-			
-
 			if( ! $isUploadError) {
 	        	$waxData = array(
+					'user_id' => 1,
 					'title' => $title,
+					'description' => $description,
 					'titleesp' => $titleesp,
 					'descriptionesp' => $descriptionesp,
-					'user_id' => 1,
-					'description' => $description,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active,
-					'created_at' => date('Y-m-d H:i:s', time())
+					'is_active' => $is_active
 				);
 
 				$this->api_model->updateWax($id, $waxData);
@@ -4872,261 +4878,8 @@ public function deleteUser($id)
 			{
 				unlink(FCPATH.'media/images/servicios/wax/'.$wax->image);
 			}
-			
 
-			$this->api_model->deleteWax($id);
-
-			$response = array(
-				'status' => 'success'
-			);
-
-			$this->output
-				->set_status_header(200)
-				->set_content_type('application/json')
-				->set_output(json_encode($response)); 
-		}
-	}
-//
-
-// Waxinfo
-
-public function adminWaxinfos()
-	{
-		header("Access-Control-Allow-Origin: *");
-		header("Access-Control-Allow-Headers: authorization, Content-Type");
-
-		$token = $this->input->get_request_header('Authorization');
-
-		$isValidToken = $this->api_model->checkToken($token);
-
-		$posts = array();
-		if($isValidToken) {
-			$waxinfos = $this->api_model->get_admin_waxinfos();
-			foreach($waxinfos as $waxinfo) {
-				$posts[] = array(
-					
-					'id' => $waxinfo->id,
-					'title' => $waxinfo->title,
-					'titleesp' => $waxinfo->titleesp,
-					'description' => $waxinfo->description,
-					'descriptionesp' => $waxinfo->descriptionesp,
-					'image' => base_url('media/images/servicios/paginas/'.$waxinfo->image),
-					'created_at' => $waxinfo->created_at
-				);
-			}
-
-			$this->output
-				->set_status_header(200)
-				->set_content_type('application/json')
-				->set_output(json_encode($posts)); 
-		}
-	}
-
-	public function adminWaxinfo($id)
-	{
-		header("Access-Control-Allow-Origin: *");
-		header("Access-Control-Allow-Headers: authorization, Content-Type");
-
-		$token = $this->input->get_request_header('Authorization');
-
-		$isValidToken = $this->api_model->checkToken($token);
-
-		if($isValidToken) {
-
-			$waxinfo = $this->api_model->get_admin_waxinfo($id);
-
-			$post = array(
-					'id' => $waxinfo->id,
-					'title' => $waxinfo->title,
-					'titleesp' => $waxinfo->titleesp,
-					'description' => $waxinfo->description,
-					'descriptionesp' => $waxinfo->descriptionesp,
-					'image' => base_url('media/images/servicios/paginas/'.$waxinfo->image),
-					'created_at' => $waxinfo->created_at
-			);
-			
-
-			$this->output
-				->set_status_header(200)
-				->set_content_type('application/json')
-				->set_output(json_encode($post)); 
-		}
-	}
-
-	public function createWaxinfo()
-	{
-		header("Access-Control-Allow-Origin: *");
-		header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
-		header("Access-Control-Allow-Headers: authorization, Content-Type");
-
-		$token = $this->input->get_request_header('Authorization');
-
-		$isValidToken = $this->api_model->checkToken($token);
-
-		if($isValidToken) {
-
-			$title = $this->input->post('title');
-			$titleesp = $this->input->post('titleesp');
-			$description = $this->input->post('description');
-			$descriptionesp = $this->input->post('descriptionesp');
-			$is_featured = $this->input->post('is_featured');
-			$is_active = $this->input->post('is_active');
-
-			$filename = NULL;
-
-			$isUploadError = FALSE;
-
-			if ($_FILES && $_FILES['image']['name']) {
-
-				$config['upload_path']          = './media/images/servicios/paginas/';
-	            $config['allowed_types']        = 'gif|jpg|png|jpeg';
-	            $config['max_size']             = 500;
-
-	            $this->load->library('upload', $config);
-	            if ( ! $this->upload->do_upload('image')) {
-
-	            	$isUploadError = TRUE;
-
-					$response = array(
-						'status' => 'error',
-						'message' => $this->upload->display_errors()
-					);
-	            }
-	            else {
-	            	$uploadData = $this->upload->data();
-            		$filename = $uploadData['file_name'];
-	            }
-			}
-
-			if( ! $isUploadError) {
-	        	$waxinfoData = array(
-					'title' => $title,
-					'titleesp' => $titleesp,
-					'user_id' => 1,
-					'description' => $description,
-					'descriptionesp' => $descriptionesp,
-					'image' => $filename,
-					'is_featured' => $is_featured,
-					'is_active' => $is_active,
-					'created_at' => date('Y-m-d H:i:s', time())
-				);
-
-				$id = $this->api_model->insertWaxinfo($waxinfoData);
-
-				$response = array(
-					'status' => 'success'
-				);
-			}
-
-			$this->output
-				->set_status_header(200)
-				->set_content_type('application/json')
-				->set_output(json_encode($response)); 
-		}
-	}
-
-	public function updateWaxinfo($id)
-	{
-		header("Access-Control-Allow-Origin: *");
-		header("Access-Control-Allow-Headers: authorization, Content-Type");
-		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-
-		$token = $this->input->get_request_header('Authorization');
-
-		$isValidToken = $this->api_model->checkToken($token);
-
-		if($isValidToken) {
-
-			$waxinfo = $this->api_model->get_admin_waxinfo($id);
-			$filename = $waxinfo->image;
-
-			$title = $this->input->post('title');
-			$titleesp = $this->input->post('titleesp');
-			$description = $this->input->post('description');
-			$descriptionesp = $this->input->post('descriptionesp');
-			$is_featured = $this->input->post('is_featured');
-			$is_active = $this->input->post('is_active');
-
-			$isUploadError = FALSE;
-
-			if ($_FILES && $_FILES['image']['name']) {
-
-				$config['upload_path']          = './media/images/servicios/paginas/';
-	            $config['allowed_types']        = 'gif|jpg|png|jpeg';
-	            $config['max_size']             = 500;
-
-	            $this->load->library('upload', $config);
-	            if ( ! $this->upload->do_upload('image')) {
-
-	            	$isUploadError = TRUE;
-
-					$response = array(
-						'status' => 'error',
-						'message' => $this->upload->display_errors()
-					);
-	            }
-	            else {
-	   
-					if($waxinfo->image && file_exists(FCPATH.'media/images/servicios/paginas/'.$waxinfo->image))
-					{
-						unlink(FCPATH.'media/images/servicios/paginas/'.$waxinfo->image);
-					}
-
-	            	$uploadData = $this->upload->data();
-            		$filename = $uploadData['file_name'];
-	            }
-			}
-
-			
-
-			if( ! $isUploadError) {
-	        	$waxinfoData = array(
-					'title' => $title,
-					'titleesp' => $titleesp,
-					'user_id' => 1,
-					'description' => $description,
-					'descriptionesp' => $descriptionesp,
-					'image' => $filename,
-					'is_featured' => $is_featured,
-					'is_active' => $is_active,
-					'created_at' => date('Y-m-d H:i:s', time())
-				);
-
-				$this->api_model->updateWaxinfo($id, $waxinfoData);
-
-				$response = array(
-					'status' => 'success'
-				);
-           	}
-
-			$this->output
-				->set_status_header(200)
-				->set_content_type('application/json')
-				->set_output(json_encode($response)); 
-		}
-	}
-
-	public function deleteWaxinfo($id)
-	{
-		header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-		header("Access-Control-Allow-Headers: authorization, Content-Type");
-
-		$token = $this->input->get_request_header('Authorization');
-
-		$isValidToken = $this->api_model->checkToken($token);
-
-		if($isValidToken) {
-
-			$waxinfo = $this->api_model->get_admin_waxinfo($id);
-
-			if($waxinfo->image && file_exists(FCPATH.'media/images/servicios/paginas/'.$waxinfo->image))
-			{
-				unlink(FCPATH.'media/images/servicios/paginas/'.$waxinfo->image);
-			}
-			
-
-			$this->api_model->deleteWaxinfo($id);
+			$this->api_model->deletePermanent($id);
 
 			$response = array(
 				'status' => 'success'
@@ -5138,6 +4891,8 @@ public function adminWaxinfos()
 				->set_output(json_encode($response)); 
 		}
 	}
+
+	
 //
 
 
@@ -5160,6 +4915,8 @@ public function adminWaxinfos()
 					'id' => $permanent->id,
 					'title' => $permanent->title,
 					'price' => $permanent->price,
+					'titleesp' => $permanent->titleesp,
+					'descriptionesp' => $permanent->descriptionesp,
 					'popup' => $permanent->popup,
 					'button' => $permanent->button,
 					'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
@@ -5191,6 +4948,8 @@ public function adminWaxinfos()
 				'id' => $permanent->id,
 				'title' => $permanent->title,
 				'description' => $permanent->description,
+				'titleesp' => $permanent->titleesp,
+					'descriptionesp' => $permanent->descriptionesp,
 				'price' => $permanent->price,
 				'popup' => $permanent->popup,
 				'button' => $permanent->button,
@@ -5221,6 +4980,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -5255,9 +5016,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$permanentData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -5298,6 +5061,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -5336,9 +5101,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$permanentData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -5392,6 +5159,7 @@ public function adminWaxinfos()
 				->set_output(json_encode($response)); 
 		}
 	}
+	//
 
 
 	// Special treatment
@@ -5412,6 +5180,9 @@ public function adminWaxinfos()
 				$posts[] = array(
 					'id' => $specialt->id,
 					'title' => $specialt->title,
+					'description' => $specialt->description,
+					'titleesp' => $specialt->titleesp,
+					'descriptionesp' => $specialt->descriptionesp,
 					'price' => $specialt->price,
 					'popup' => $specialt->popup,
 					'button' => $specialt->button,
@@ -5444,6 +5215,8 @@ public function adminWaxinfos()
 				'id' => $specialt->id,
 				'title' => $specialt->title,
 				'description' => $specialt->description,
+				'titleesp' => $specialt->titleesp,
+				'descriptionesp' => $specialt->descriptionesp,
 				'price' => $specialt->price,
 				'popup' => $specialt->popup,
 				'button' => $specialt->button,
@@ -5474,6 +5247,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -5508,9 +5283,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$specialtData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -5551,6 +5328,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -5589,9 +5368,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$specialtData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -5913,6 +5694,10 @@ public function adminWaxinfos()
 		}
 	}
 
+	//
+
+
+
 
 
 	// Facial Restorative
@@ -5933,6 +5718,9 @@ public function adminWaxinfos()
 				$posts[] = array(
 					'id' => $restorative->id,
 					'title' => $restorative->title,
+					'description' => $restorative->description,
+					'titleesp' => $restorative->titleesp,
+					'descriptionesp' => $restorative->descriptionesp,
 					'price' => $restorative->price,
 					'popup' => $restorative->popup,
 					'button' => $restorative->button,
@@ -5965,6 +5753,8 @@ public function adminWaxinfos()
 				'id' => $restorative->id,
 				'title' => $restorative->title,
 				'description' => $restorative->description,
+				'titleesp' => $restorative->titleesp,
+				'descriptionesp' => $restorative->descriptionesp,
 				'price' => $restorative->price,
 				'popup' => $restorative->popup,
 				'button' => $restorative->button,
@@ -5995,6 +5785,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6029,9 +5821,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$restorativeData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6072,6 +5866,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6110,9 +5906,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$restorativeData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6186,6 +5984,9 @@ public function adminWaxinfos()
 				$posts[] = array(
 					'id' => $calming->id,
 					'title' => $calming->title,
+					'description' => $calming->description,
+					'titleesp' => $calming->titleesp,
+					'descriptionesp' => $calming->descriptionesp,
 					'price' => $calming->price,
 					'popup' => $calming->popup,
 					'button' => $calming->button,
@@ -6218,6 +6019,8 @@ public function adminWaxinfos()
 				'id' => $calming->id,
 				'title' => $calming->title,
 				'description' => $calming->description,
+				'titleesp' => $calming->titleesp,
+				'descriptionesp' => $calming->descriptionesp,
 				'price' => $calming->price,
 				'popup' => $calming->popup,
 				'button' => $calming->button,
@@ -6248,6 +6051,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6282,9 +6087,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$calmingData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6325,6 +6132,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6363,9 +6172,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$calmingData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6420,7 +6231,7 @@ public function adminWaxinfos()
 		}
 	}
 
-
+//
 
 
 	// Facial brightening
@@ -6441,6 +6252,9 @@ public function adminWaxinfos()
 				$posts[] = array(
 					'id' => $brightening->id,
 					'title' => $brightening->title,
+					'description' => $brightening->description,
+					'titleesp' => $brightening->titleesp,
+					'descriptionesp' => $brightening->descriptionesp,
 					'price' => $brightening->price,
 					'popup' => $brightening->popup,
 					'button' => $brightening->button,
@@ -6473,6 +6287,8 @@ public function adminWaxinfos()
 				'id' => $brightening->id,
 				'title' => $brightening->title,
 				'description' => $brightening->description,
+				'titleesp' => $brightening->titleesp,
+				'descriptionesp' => $brightening->descriptionesp,
 				'price' => $brightening->price,
 				'popup' => $brightening->popup,
 				'button' => $brightening->button,
@@ -6503,6 +6319,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6537,9 +6355,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$brighteningData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6580,6 +6400,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6618,9 +6440,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$brighteningData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6694,6 +6518,9 @@ public function adminWaxinfos()
 				$posts[] = array(
 					'id' => $specialf->id,
 					'title' => $specialf->title,
+					'description' => $specialf->description,
+					'titleesp' => $specialf->titleesp,
+					'descriptionesp' => $specialf->descriptionesp,
 					'price' => $specialf->price,
 					'popup' => $specialf->popup,
 					'button' => $specialf->button,
@@ -6726,6 +6553,8 @@ public function adminWaxinfos()
 				'id' => $specialf->id,
 				'title' => $specialf->title,
 				'description' => $specialf->description,
+				'titleesp' => $specialf->titleesp,
+				'descriptionesp' => $specialf->descriptionesp,
 				'price' => $specialf->price,
 				'popup' => $specialf->popup,
 				'button' => $specialf->button,
@@ -6756,6 +6585,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6790,9 +6621,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$specialfData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6833,6 +6666,8 @@ public function adminWaxinfos()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -6871,9 +6706,11 @@ public function adminWaxinfos()
 
 			if( ! $isUploadError) {
 	        	$specialfData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -6946,6 +6783,9 @@ public function adminLuxurings()
 				$posts[] = array(
 					'id' => $luxuring->id,
 					'title' => $luxuring->title,
+					'description' => $luxuring->description,
+					'titleesp' => $luxuring->titleesp,
+					'descriptionesp' => $luxuring->descriptionesp,
 					'price' => $luxuring->price,
 					'popup' => $luxuring->popup,
 					'button' => $luxuring->button,
@@ -6978,6 +6818,8 @@ public function adminLuxurings()
 				'id' => $luxuring->id,
 				'title' => $luxuring->title,
 				'description' => $luxuring->description,
+				'titleesp' => $luxuring->titleesp,
+				'descriptionesp' => $luxuring->descriptionesp,
 				'price' => $luxuring->price,
 				'popup' => $luxuring->popup,
 				'button' => $luxuring->button,
@@ -7008,6 +6850,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7042,9 +6886,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$luxuringData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7085,6 +6931,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7123,9 +6971,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$luxuringData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7203,6 +7053,9 @@ public function adminLuxurings()
 				$posts[] = array(
 					'id' => $hand->id,
 					'title' => $hand->title,
+					'description' => $hand->description,
+					'titleesp' => $hand->titleesp,
+					'descriptionesp' => $hand->descriptionesp,
 					'price' => $hand->price,
 					'popup' => $hand->popup,
 					'button' => $hand->button,
@@ -7235,6 +7088,8 @@ public function adminLuxurings()
 				'id' => $hand->id,
 				'title' => $hand->title,
 				'description' => $hand->description,
+				'titleesp' => $hand->titleesp,
+				'descriptionesp' => $hand->descriptionesp,
 				'price' => $hand->price,
 				'popup' => $hand->popup,
 				'button' => $hand->button,
@@ -7265,6 +7120,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7299,9 +7156,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$handData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7342,6 +7201,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7380,9 +7241,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$handData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7458,6 +7321,9 @@ public function adminLuxurings()
 				$posts[] = array(
 					'id' => $sculpting->id,
 					'title' => $sculpting->title,
+					'description' => $sculpting->description,
+					'titleesp' => $sculpting->titleesp,
+					'descriptionesp' => $sculpting->descriptionesp,
 					'price' => $sculpting->price,
 					'popup' => $sculpting->popup,
 					'button' => $sculpting->button,
@@ -7490,6 +7356,8 @@ public function adminLuxurings()
 				'id' => $sculpting->id,
 				'title' => $sculpting->title,
 				'description' => $sculpting->description,
+				'titleesp' => $sculpting->titleesp,
+				'descriptionesp' => $sculpting->descriptionesp,
 				'price' => $sculpting->price,
 				'popup' => $sculpting->popup,
 				'button' => $sculpting->button,
@@ -7520,6 +7388,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7554,9 +7424,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$sculptingData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7597,6 +7469,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7635,9 +7509,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$sculptingData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7711,6 +7587,9 @@ public function adminLuxurings()
 				$posts[] = array(
 					'id' => $wrapping->id,
 					'title' => $wrapping->title,
+					'description' => $wrapping->description,
+					'titleesp' => $wrapping->titleesp,
+					'descriptionesp' => $wrapping->descriptionesp,
 					'price' => $wrapping->price,
 					'popup' => $wrapping->popup,
 					'button' => $wrapping->button,
@@ -7743,6 +7622,8 @@ public function adminLuxurings()
 				'id' => $wrapping->id,
 				'title' => $wrapping->title,
 				'description' => $wrapping->description,
+				'titleesp' => $wrapping->titleesp,
+				'descriptionesp' => $wrapping->descriptionesp,
 				'price' => $wrapping->price,
 				'popup' => $wrapping->popup,
 				'button' => $wrapping->button,
@@ -7773,6 +7654,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7807,9 +7690,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$wrappingData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7850,6 +7735,8 @@ public function adminLuxurings()
 
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
+			$titleesp = $this->input->post('titleesp');
+			$descriptionesp = $this->input->post('descriptionesp');
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
@@ -7888,9 +7775,11 @@ public function adminLuxurings()
 
 			if( ! $isUploadError) {
 	        	$wrappingData = array(
-					'title' => $title,
 					'user_id' => 1,
+					'title' => $title,
 					'description' => $description,
+					'titleesp' => $titleesp,
+					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
@@ -7964,6 +7853,9 @@ public function adminLooks()
 			$posts[] = array(
 				'id' => $look->id,
 				'title' => $look->title,
+				'description' => $look->description,
+				'titleesp' => $look->titleesp,
+				'descriptionesp' => $look->descriptionesp,
 				'price' => $look->price,
 				'popup' => $look->popup,
 				'button' => $look->button,
@@ -7996,6 +7888,8 @@ public function adminLook($id)
 			'id' => $look->id,
 			'title' => $look->title,
 			'description' => $look->description,
+			'titleesp' => $look->titleesp,
+			'descriptionesp' => $look->descriptionesp,
 			'price' => $look->price,
 			'popup' => $look->popup,
 			'button' => $look->button,
@@ -8026,6 +7920,8 @@ public function createLook()
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8060,9 +7956,11 @@ public function createLook()
 
 		if( ! $isUploadError) {
 			$lookData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8103,6 +8001,8 @@ public function updateLook($id)
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8141,9 +8041,11 @@ public function updateLook($id)
 
 		if( ! $isUploadError) {
 			$lookData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8216,6 +8118,9 @@ public function adminBridals()
 			$posts[] = array(
 				'id' => $bridal->id,
 				'title' => $bridal->title,
+				'description' => $bridal->description,
+				'titleesp' => $bridal->titleesp,
+				'descriptionesp' => $bridal->descriptionesp,
 				'price' => $bridal->price,
 				'popup' => $bridal->popup,
 				'button' => $bridal->button,
@@ -8248,6 +8153,8 @@ public function adminBridal($id)
 			'id' => $bridal->id,
 			'title' => $bridal->title,
 			'description' => $bridal->description,
+			'titleesp' => $bridal->titleesp,
+			'descriptionesp' => $bridal->descriptionesp,
 			'price' => $bridal->price,
 			'popup' => $bridal->popup,
 			'button' => $bridal->button,
@@ -8278,6 +8185,8 @@ public function createBridal()
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8312,9 +8221,11 @@ public function createBridal()
 
 		if( ! $isUploadError) {
 			$bridalData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8355,6 +8266,8 @@ public function updateBridal($id)
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8393,9 +8306,11 @@ public function updateBridal($id)
 
 		if( ! $isUploadError) {
 			$bridalData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8470,6 +8385,9 @@ public function adminClasess()
 			$posts[] = array(
 				'id' => $clases->id,
 				'title' => $clases->title,
+				'description' => $clases->description,
+				'titleesp' => $clases->titleesp,
+				'descriptionesp' => $clases->descriptionesp,
 				'price' => $clases->price,
 				'popup' => $clases->popup,
 				'button' => $clases->button,
@@ -8502,6 +8420,8 @@ public function adminClases($id)
 			'id' => $clases->id,
 			'title' => $clases->title,
 			'description' => $clases->description,
+			'titleesp' => $clases->titleesp,
+			'descriptionesp' => $clases->descriptionesp,
 			'price' => $clases->price,
 			'popup' => $clases->popup,
 			'button' => $clases->button,
@@ -8532,6 +8452,8 @@ public function createClases()
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8566,9 +8488,11 @@ public function createClases()
 
 		if( ! $isUploadError) {
 			$clasesData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8609,6 +8533,8 @@ public function updateClases($id)
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8647,9 +8573,11 @@ public function updateClases($id)
 
 		if( ! $isUploadError) {
 			$clasesData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8722,6 +8650,9 @@ public function adminFibrofaces()
 			$posts[] = array(
 				'id' => $fibroface->id,
 				'title' => $fibroface->title,
+				'description' => $fibroface->description,
+				'titleesp' => $fibroface->titleesp,
+				'descriptionesp' => $fibroface->descriptionesp,
 				'price' => $fibroface->price,
 				'popup' => $fibroface->popup,
 				'button' => $fibroface->button,
@@ -8754,6 +8685,8 @@ public function adminFibroface($id)
 			'id' => $fibroface->id,
 			'title' => $fibroface->title,
 			'description' => $fibroface->description,
+			'titleesp' => $fibroface->titleesp,
+			'descriptionesp' => $fibroface->descriptionesp,
 			'price' => $fibroface->price,
 			'popup' => $fibroface->popup,
 			'button' => $fibroface->button,
@@ -8784,6 +8717,8 @@ public function createFibroface()
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8818,9 +8753,11 @@ public function createFibroface()
 
 		if( ! $isUploadError) {
 			$fibrofaceData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8861,6 +8798,8 @@ public function updateFibroface($id)
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -8899,9 +8838,11 @@ public function updateFibroface($id)
 
 		if( ! $isUploadError) {
 			$fibrofaceData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -8956,6 +8897,8 @@ public function deleteFibroface($id)
 	}
 }
 
+//
+
 
 // Fibroblast Body
 
@@ -8975,6 +8918,9 @@ public function adminBodys()
 			$posts[] = array(
 				'id' => $body->id,
 				'title' => $body->title,
+				'description' => $body->description,
+				'titleesp' => $body->titleesp,
+				'descriptionesp' => $body->descriptionesp,
 				'price' => $body->price,
 				'popup' => $body->popup,
 				'button' => $body->button,
@@ -9007,6 +8953,8 @@ public function adminBody($id)
 			'id' => $body->id,
 			'title' => $body->title,
 			'description' => $body->description,
+			'titleesp' => $body->titleesp,
+			'descriptionesp' => $body->descriptionesp,
 			'price' => $body->price,
 			'popup' => $body->popup,
 			'button' => $body->button,
@@ -9037,6 +8985,8 @@ public function createBody()
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -9071,9 +9021,11 @@ public function createBody()
 
 		if( ! $isUploadError) {
 			$bodyData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -9114,6 +9066,8 @@ public function updateBody($id)
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -9152,9 +9106,11 @@ public function updateBody($id)
 
 		if( ! $isUploadError) {
 			$bodyData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -9210,6 +9166,9 @@ public function deleteBody($id)
 }
 
 
+//
+
+
 
 
 
@@ -9231,6 +9190,9 @@ public function adminHypertrophics()
 			$posts[] = array(
 				'id' => $hypertrophic->id,
 				'title' => $hypertrophic->title,
+				'description' => $hypertrophic->description,
+				'titleesp' => $hypertrophic->titleesp,
+				'descriptionesp' => $hypertrophic->descriptionesp,
 				'price' => $hypertrophic->price,
 				'popup' => $hypertrophic->popup,
 				'button' => $hypertrophic->button,
@@ -9263,6 +9225,8 @@ public function adminHypertrophic($id)
 			'id' => $hypertrophic->id,
 			'title' => $hypertrophic->title,
 			'description' => $hypertrophic->description,
+			'titleesp' => $hypertrophic->titleesp,
+			'descriptionesp' => $hypertrophic->descriptionesp,
 			'price' => $hypertrophic->price,
 			'popup' => $hypertrophic->popup,
 			'button' => $hypertrophic->button,
@@ -9293,6 +9257,8 @@ public function createHypertrophic()
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -9327,9 +9293,11 @@ public function createHypertrophic()
 
 		if( ! $isUploadError) {
 			$hypertrophicData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
@@ -9370,6 +9338,8 @@ public function updateHypertrophic($id)
 
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$titleesp = $this->input->post('titleesp');
+		$descriptionesp = $this->input->post('descriptionesp');
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
@@ -9408,9 +9378,11 @@ public function updateHypertrophic($id)
 
 		if( ! $isUploadError) {
 			$hypertrophicData = array(
-				'title' => $title,
 				'user_id' => 1,
+				'title' => $title,
 				'description' => $description,
+				'titleesp' => $titleesp,
+				'descriptionesp' => $descriptionesp,
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,

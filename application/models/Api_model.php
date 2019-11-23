@@ -41,8 +41,10 @@ class Api_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('products product');
 		$this->db->like('title', $text, 'both');
+		$this->db->like('titleesp', $text, 'both');
 		$this->db->or_like('type', $text, 'both');
 		$this->db->or_like('description', $text, 'both');
+		$this->db->or_like('descriptionesp', $text, 'both');
 
 		$query = $this->db->get();
 		return $query->result();
@@ -52,7 +54,7 @@ class Api_model extends CI_Model
 
 	// contact
 
-	public function get_contacts($featured, $recentpost)
+	/*public function get_contacts($featured, $recentpost)
 	{
 		$this->db->select('contact.*');
 		$this->db->from('contacts contact');
@@ -77,7 +79,26 @@ class Api_model extends CI_Model
 		$this->db->where('contact.id', $id);
 		$query = $this->db->get();
 		return $query->row();
+	}*/
+
+	public function get_contacts($featured, $recentpost)
+	{
+		$this->db->select('contact.*');
+		$this->db->from('contacts contact');
+
+		
+		$query = $this->db->get();
+		return $query->result();
 	}
+
+	public function get_contact($id)
+	{
+		$this->db->select('contact.*');
+		$this->db->from('contacts contact');
+		$query = $this->db->get();
+		return $query->row();
+	}
+	//
 
 	// subcriptores
 
@@ -265,37 +286,7 @@ class Api_model extends CI_Model
 
 	//
 
-	// waxinfo
-
-	public function get_waxinfos($featured, $recentpost)
-	{
-		$this->db->select('waxinfo.*, cat.category_name, u.first_name, u.last_name');
-		$this->db->from('waxinfos waxinfo');
-		$this->db->join('users u', 'u.id=waxinfo.user_id');
-		$this->db->join('categories cat', 'cat.id=waxinfo.category_id', 'left');
-		$this->db->where('waxinfo.is_active', 1);
-
-		if($featured) {
-			$this->db->where('waxinfo.is_featured', 1);
-		}
-		if($recentpost){
-			$this->db->order_by('waxinfo.created_at', 'desc');
-			$this->db->limit($recentpost);
-		}
-		$query = $this->db->get();
-		return $query->result();
-	}
-
-	public function get_waxinfo($id)
-	{
-		$this->db->select('waxinfo.*, cat.category_name, u.first_name, u.last_name');
-		$this->db->from('waxinfos waxinfo');
-		$this->db->where('waxinfo.id', $id);
-		$query = $this->db->get();
-		return $query->row();
-	}
-
-	//
+	
 
 	// permanent makeup
 
@@ -1017,6 +1008,28 @@ public function get_admin_user($id)
 //
 
 
+// contact
+
+public function get_admin_contacts()
+{
+	$this->db->select('contact.*');
+	$this->db->from('contacts contact');
+	$this->db->order_by('contact.created_at', 'desc');
+	$query = $this->db->get();
+	return $query->result();
+}
+
+public function get_admin_contact($id)
+{
+	$this->db->select('contact.*');
+	$this->db->from('contacts contact');
+	$this->db->where('contact.id', $id);
+	$query = $this->db->get();
+	return $query->row();
+}
+//
+
+
 // wax
 
 public function get_admin_waxs()
@@ -1040,28 +1053,7 @@ public function get_admin_wax($id)
 }
 //
 
-// waxinfo
 
-public function get_admin_waxinfos()
-{
-	$this->db->select('waxinfo.*, u.first_name, u.last_name');
-	$this->db->from('waxinfos waxinfo');
-	$this->db->join('users u', 'u.id=waxinfo.user_id');
-	$this->db->order_by('waxinfo.created_at', 'desc');
-	$query = $this->db->get();
-	return $query->result();
-}
-
-public function get_admin_waxinfo($id)
-{
-	$this->db->select('waxinfo.*, u.first_name, u.last_name');
-	$this->db->from('waxinfos waxinfo');
-	$this->db->join('users u', 'u.id=waxinfo.user_id');
-	$this->db->where('waxinfo.id', $id);
-	$query = $this->db->get();
-	return $query->row();
-}
-//
 
 // permanent makeup
 
@@ -1596,26 +1588,7 @@ public function get_admin_hypertrophic($id)
 	
 //
 
-	// waxinfo
-	public function insertWaxinfo($waxinfoData)
-	{
-		$this->db->insert('waxinfos', $waxinfoData);
-		return $this->db->insert_id();
-	}
-
-	public function updateWaxinfo($id, $waxinfoData)
-	{
-		$this->db->where('id', $id);
-		$this->db->update('waxinfos', $waxinfoData);
-	}
-
-	public function deleteWaxinfo($id)
-	{
-		$this->db->where('id', $id);
-		$this->db->delete('waxinfos');
-	}
 	
-//
 
 
 //
@@ -1897,19 +1870,19 @@ public function get_admin_hypertrophic($id)
 	}
 
 	// Fibroblast Face
-	public function insertFibrofaces($fibrofaceData)
+	public function insertFibroface($fibrofaceData)
 	{
 		$this->db->insert('fibrofaces', $fibrofaceData);
 		return $this->db->insert_id();
 	}
 
-	public function updateFibrofaces($id, $fibrofaceData)
+	public function updateFibroface($id, $fibrofaceData)
 	{
 		$this->db->where('id', $id);
 		$this->db->update('fibrofaces', $fibrofaceData);
 	}
 
-	public function deleteFibrofaces($id)
+	public function deleteFibroface($id)
 	{
 		$this->db->where('id', $id);
 		$this->db->delete('fibrofaces');
