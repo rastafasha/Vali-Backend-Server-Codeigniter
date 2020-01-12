@@ -474,8 +474,6 @@ public function users()
 	if(!empty($users)){
 		foreach($users as $user){
 
-			$short_desc = strip_tags(character_limiter($user->description, 70));
-			$author = $user->first_name.' '.$user->last_name;
 
 			$posts[] = array(
 				'id' => $user->id,
@@ -496,28 +494,26 @@ public function users()
 
 
 public function user($id)
-{
-	header("Access-Control-Allow-Origin: *");
-	
-	$user = $this->api_model->get_user($id);
+	{
+		header("Access-Control-Allow-Origin: *");
+		
+		$user = $this->api_model->get_user($id);
 
-	$author = $user->first_name.' '.$user->last_name;
 
-	$post = array(
-		'id' => $user->id,
-		'username' => $user->username,
-		'password' => $user->password,
-		'first_name' => $user->first_name,
-		'last_name' => $user->last_name,
-		'image' => base_url('media/images/user/'.$user->image),
-		'created_at' => $user->created_at
-	);
-	
-	$this->output
-		->set_content_type('application/json')
-		->set_output(json_encode($post));
-}
-//
+		$post = array(
+			'id' => $user->id,
+			'username' => $user->username,
+				'password' => $user->password,
+				'first_name' => $user->first_name,
+				'last_name' => $user->last_name,
+				'image' => base_url('media/images/user/'.$user->image),
+				'created_at' => $user->created_at
+		);
+		
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($post));
+	}
 
 
 
@@ -3694,6 +3690,7 @@ public function categories()
 				$posts[] = array(
 					'id' => $gallery->id,
 					'title' => $gallery->title,
+					'is_active' => $gallery->is_active,
 					'image' => base_url('media/images/gallery/'.$gallery->image),
 					'created_at' => $gallery->created_at
 				);
@@ -4879,7 +4876,7 @@ public function deleteUser($id)
 				unlink(FCPATH.'media/images/servicios/wax/'.$wax->image);
 			}
 
-			$this->api_model->deletePermanent($id);
+			$this->api_model->deleteWax($id);
 
 			$response = array(
 				'status' => 'success'
@@ -9445,17 +9442,13 @@ public function search()
 		header("Access-Control-Allow-Origin: *");
 		header("Content-Type:application/json; charset=UTF-8");
 
-
 		$text = $this->input->get('text');
-
 
 		$data['product'] = $this->api_model->search_products($text);
 		// echo $text;
 		 //print_r($data); // traemos el array
 		$data = json_encode( $data, JSON_FORCE_OBJECT );// se convierte a json
 		echo $data."\n";
-
-
 
 		$this->output
 			->set_content_type('application/json');
