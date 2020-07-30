@@ -38,6 +38,51 @@ public function get_hypertrophic($id)
 
 //
 
+
+// Fibroblast hypertrophic
+
+public function get_admin_hypertrophics()
+{
+	$this->db->select('hypertrophic.*, u.first_name, u.last_name');
+	$this->db->from('hypertrophics hypertrophic');
+	$this->db->join('users u', 'u.id=hypertrophic.user_id');
+	$this->db->order_by('hypertrophic.created_at', 'desc');
+	$query = $this->db->get();
+	return $query->result();
+}
+
+public function get_admin_hypertrophic($id)
+{
+	$this->db->select('hypertrophic.*, u.first_name, u.last_name');
+	$this->db->from('hypertrophics hypertrophic');
+	$this->db->join('users u', 'u.id=hypertrophic.user_id');
+	$this->db->where('hypertrophic.id', $id);
+	$query = $this->db->get();
+	return $query->row();
+}
+//
+
+// Fibroblast hypertrophic
+public function insertHypertrophic($hypertrophicData)
+{
+	$this->db->insert('hypertrophics', $hypertrophicData);
+	return $this->db->insert_id();
+}
+
+public function updateHypertrophic($id, $hypertrophicData)
+{
+	$this->db->where('id', $id);
+	$this->db->update('hypertrophics', $hypertrophicData);
+}
+
+public function deleteHypertrophic($id)
+{
+	$this->db->where('id', $id);
+	$this->db->delete('hypertrophics');
+}
+
+
+
 	
 	
 	

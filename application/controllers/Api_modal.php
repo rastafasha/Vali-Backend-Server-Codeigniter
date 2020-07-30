@@ -7,6 +7,7 @@ class Api_Modal extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_modal');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -18,7 +19,7 @@ public function modals()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$modals = $this->api_model->get_modals($featured=false, $recentpost=false);
+	$modals = $this->api_model_modal->get_modals($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($modals)){
@@ -48,7 +49,7 @@ public function featured_modals()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$modals = $this->api_model->get_modals($featured=true, $recentpost=false);
+	$modals = $this->api_model_modal->get_modals($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($modals)){
@@ -78,7 +79,7 @@ public function modal($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$modal = $this->api_model->get_modal($id);
+	$modal = $this->api_model_modal->get_modal($id);
 
 	$author = $modal->first_name.' '.$modal->last_name;
 
@@ -101,7 +102,7 @@ public function recent_modals()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$modals = $this->api_model->get_modals($featured=false, $recentpost=5);
+	$modals = $this->api_model_modal->get_modals($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($modal)){
@@ -147,7 +148,7 @@ public function recent_modals()
 
 		$posts = array();
 		if($isValidToken) {
-			$modals = $this->api_model->get_admin_modals();
+			$modals = $this->api_model_modal->get_admin_modals();
 			foreach($modals as $modal) {
 				$posts[] = array(
 					'id' => $modal->id,
@@ -176,7 +177,7 @@ public function recent_modals()
 
 		if($isValidToken) {
 
-			$modal = $this->api_model->get_admin_modal($id);
+			$modal = $this->api_model_modal->get_admin_modal($id);
 
 			$post = array(
 				'id' => $modal->id,
@@ -249,7 +250,7 @@ public function recent_modals()
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertModal($modalData);
+				$id = $this->api_model_modal->insertModal($modalData);
 
 				$response = array(
 					'status' => 'success'
@@ -275,7 +276,7 @@ public function recent_modals()
 
 		if($isValidToken) {
 
-			$modal = $this->api_model->get_admin_modal($id);
+			$modal = $this->api_model_modal->get_admin_modal($id);
 			$filename = $modal->image;
 
 			$title = $this->input->post('title');
@@ -349,14 +350,14 @@ public function recent_modals()
 
 		if($isValidToken) {
 
-			$modal = $this->api_model->get_admin_modal($id);
+			$modal = $this->api_model_modal->get_admin_modal($id);
 
 			if($modal->image && file_exists(FCPATH.'media/images/modal/'.$modal->image))
 			{
 				unlink(FCPATH.'media/images/modal/'.$modal->image);
 			}
 
-			$this->api_model->deleteModal($id);
+			$this->api_model_modal->deleteModal($id);
 
 			$response = array(
 				'status' => 'success'

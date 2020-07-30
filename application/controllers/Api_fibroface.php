@@ -7,6 +7,7 @@ class Api_Fibroface extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_fibroface');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -18,7 +19,7 @@ public function fibrofaces()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$fibrofaces = $this->api_model->get_fibrofaces($featured=false, $recentpost=false);
+	$fibrofaces = $this->api_model_fibroface->get_fibrofaces($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($fibrofaces)){
@@ -40,7 +41,9 @@ public function fibrofaces()
 				'button' => $fibroface->button,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
-				'is_active' => $fibroface->is_active
+				'is_active' => $fibroface->is_active,
+				'textFinanc' => $fibroface->textFinanc,
+				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
 	}
@@ -54,7 +57,7 @@ public function featured_fibrofaces()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$fibrofaces = $this->api_model->get_fibrofaces($featured=true, $recentpost=false);
+	$fibrofaces = $this->api_model_fibroface->get_fibrofaces($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($fibrofaces)){
@@ -76,7 +79,9 @@ public function featured_fibrofaces()
 				'button' => $fibroface->button,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
-				'is_active' => $fibroface->is_active
+				'is_active' => $fibroface->is_active,
+				'textFinanc' => $fibroface->textFinanc,
+				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
 	}
@@ -90,7 +95,7 @@ public function fibroface($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$fibroface = $this->api_model->get_fibroface($id);
+	$fibroface = $this->api_model_fibroface->get_fibroface($id);
 
 	$author = $fibroface->first_name.' '.$fibroface->last_name;
 
@@ -106,7 +111,9 @@ public function fibroface($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 		'created_at' => $fibroface->created_at,
-		'is_active' => $fibroface->is_active
+		'is_active' => $fibroface->is_active,
+		'textFinanc' => $fibroface->textFinanc,
+				'is_activeTf'=> $fibroface->is_activeTf
 	);
 	
 	$this->output
@@ -118,7 +125,7 @@ public function recent_fibrofaces()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$fibrofaces = $this->api_model->get_fibroface($featured=false, $recentpost=5);
+	$fibrofaces = $this->api_model_fibroface->get_fibroface($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($fibroface)){
@@ -140,7 +147,9 @@ public function recent_fibrofaces()
 				'button' => $fibroface->button,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
-				'is_active' => $fibroface->is_active
+				'is_active' => $fibroface->is_active,
+				'textFinanc' => $fibroface->textFinanc,
+				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
 	}
@@ -168,7 +177,7 @@ public function adminFibrofaces()
 
 	$posts = array();
 	if($isValidToken) {
-		$fibrofaces = $this->api_model->get_admin_fibrofaces();
+		$fibrofaces = $this->api_model_fibroface->get_admin_fibrofaces();
 		foreach($fibrofaces as $fibroface) {
 			$posts[] = array(
 				'id' => $fibroface->id,
@@ -181,7 +190,9 @@ public function adminFibrofaces()
 				'button' => $fibroface->button,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
-				'is_active' => $fibroface->is_active
+				'is_active' => $fibroface->is_active,
+				'textFinanc' => $fibroface->textFinanc,
+				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
 
@@ -203,7 +214,7 @@ public function adminFibroface($id)
 
 	if($isValidToken) {
 
-		$fibroface = $this->api_model->get_admin_fibroface($id);
+		$fibroface = $this->api_model_fibroface->get_admin_fibroface($id);
 
 		$post = array(
 			'id' => $fibroface->id,
@@ -216,7 +227,9 @@ public function adminFibroface($id)
 			'button' => $fibroface->button,
 			'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 			'is_featured' => $fibroface->is_featured,
-			'is_active' => $fibroface->is_active
+			'is_active' => $fibroface->is_active,
+			'textFinanc' => $fibroface->textFinanc,
+				'is_activeTf'=> $fibroface->is_activeTf
 		);
 		
 
@@ -248,6 +261,8 @@ public function createFibroface()
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
 
@@ -288,6 +303,8 @@ public function createFibroface()
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
 
@@ -317,7 +334,7 @@ public function updateFibroface($id)
 
 	if($isValidToken) {
 
-		$fibroface = $this->api_model->get_admin_fibroface($id);
+		$fibroface = $this->api_model_fibroface->get_admin_fibroface($id);
 		$filename = $fibroface->image;
 
 		$title = $this->input->post('title');
@@ -329,6 +346,8 @@ public function updateFibroface($id)
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
 
@@ -372,10 +391,12 @@ public function updateFibroface($id)
 				'button' => $button,
 				'image' => $filename,
 				'is_featured' => $is_featured,
-				'is_active' => $is_active
+				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf,
 			);
 
-			$this->api_model->updateFibroface($id, $fibrofaceData);
+			$this->api_model_fibroface->updateFibroface($id, $fibrofaceData);
 
 			$response = array(
 				'status' => 'success'
@@ -401,14 +422,14 @@ public function deleteFibroface($id)
 
 	if($isValidToken) {
 
-		$fibroface = $this->api_model->get_admin_fibroface($id);
+		$fibroface = $this->api_model_fibroface->get_admin_fibroface($id);
 
 		if($fibroface->image && file_exists(FCPATH.'media/images/servicios/fibroblast/fibroface/'.$fibroface->image))
 		{
 			unlink(FCPATH.'media/images/servicios/fibroblast/fibroface/'.$fibroface->image);
 		}
 
-		$this->api_model->deleteFibroface($id);
+		$this->api_model_fibroface->deleteFibroface($id);
 
 		$response = array(
 			'status' => 'success'

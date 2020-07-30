@@ -7,6 +7,7 @@ class Api_Look extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_look');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -20,7 +21,7 @@ public function looks()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$looks = $this->api_model->get_looks($featured=false, $recentpost=false);
+	$looks = $this->api_model_look->get_looks($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($looks)){
@@ -42,7 +43,10 @@ public function looks()
 				'button' => $look->button,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
-				'is_active' => $look->is_active
+				'is_active' => $look->is_active,
+				'textFinanc' => $look->textFinanc,
+				'textFinancEsp' => $look->textFinancEsp,
+				'is_activeTf'=> $look->is_activeTf
 			);
 		}
 	}
@@ -56,7 +60,7 @@ public function featured_looks()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$looks = $this->api_model->get_looks($featured=true, $recentpost=false);
+	$looks = $this->api_model_look->get_looks($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($looks)){
@@ -78,7 +82,10 @@ public function featured_looks()
 				'button' => $look->button,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
-				'is_active' => $look->is_active
+				'is_active' => $look->is_active,
+				'textFinanc' => $look->textFinanc,
+				'textFinancEsp' => $look->textFinancEsp,
+				'is_activeTf'=> $look->is_activeTf
 			);
 		}
 	}
@@ -92,7 +99,7 @@ public function look($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$look = $this->api_model->get_look($id);
+	$look = $this->api_model_look->get_look($id);
 
 	$author = $look->first_name.' '.$look->last_name;
 
@@ -108,7 +115,10 @@ public function look($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 		'created_at' => $look->created_at,
-		'is_active' => $look->is_active
+		'is_active' => $look->is_active,
+		'textFinanc' => $look->textFinanc,
+		'textFinancEsp' => $look->textFinancEsp,
+		'is_activeTf'=> $look->is_activeTf
 	);
 	
 	$this->output
@@ -120,7 +130,7 @@ public function recent_looks()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$looks = $this->api_model->get_looks($featured=false, $recentpost=5);
+	$looks = $this->api_model_look->get_looks($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($look)){
@@ -142,7 +152,10 @@ public function recent_looks()
 				'button' => $look->button,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
-				'is_active' => $look->is_active
+				'is_active' => $look->is_active,
+				'textFinanc' => $look->textFinanc,
+				'textFinancEsp' => $look->textFinancEsp,
+				'is_activeTf'=> $look->is_activeTf
 			);
 		}
 	}
@@ -169,7 +182,7 @@ public function adminLooks()
 
 	$posts = array();
 	if($isValidToken) {
-		$looks = $this->api_model->get_admin_looks();
+		$looks = $this->api_model_look->get_admin_looks();
 		foreach($looks as $look) {
 			$posts[] = array(
 				'id' => $look->id,
@@ -182,7 +195,10 @@ public function adminLooks()
 				'button' => $look->button,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
-				'is_active' => $look->is_active
+				'is_active' => $look->is_active,
+				'textFinanc' => $look->textFinanc,
+				'textFinancEsp' => $look->textFinancEsp,
+				'is_activeTf'=> $look->is_activeTf
 			);
 		}
 
@@ -204,7 +220,7 @@ public function adminLook($id)
 
 	if($isValidToken) {
 
-		$look = $this->api_model->get_admin_look($id);
+		$look = $this->api_model_look->get_admin_look($id);
 
 		$post = array(
 			'id' => $look->id,
@@ -217,7 +233,10 @@ public function adminLook($id)
 			'button' => $look->button,
 			'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 			'is_featured' => $look->is_featured,
-			'is_active' => $look->is_active
+			'is_active' => $look->is_active,
+			'textFinanc' => $look->textFinanc,
+			'textFinancEsp' => $look->textFinancEsp,
+			'is_activeTf'=> $look->is_activeTf
 		);
 		
 
@@ -249,6 +268,9 @@ public function createLook()
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
 
@@ -289,6 +311,9 @@ public function createLook()
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
+				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
 
@@ -318,7 +343,7 @@ public function updateLook($id)
 
 	if($isValidToken) {
 
-		$look = $this->api_model->get_admin_look($id);
+		$look = $this->api_model_look->get_admin_look($id);
 		$filename = $look->image;
 
 		$title = $this->input->post('title');
@@ -330,6 +355,9 @@ public function updateLook($id)
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
 
@@ -373,10 +401,13 @@ public function updateLook($id)
 				'button' => $button,
 				'image' => $filename,
 				'is_featured' => $is_featured,
-				'is_active' => $is_active
+				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
+				'is_activeTf' => $is_activeTf,
 			);
 
-			$this->api_model->updateLook($id, $lookData);
+			$this->api_model_look->updateLook($id, $lookData);
 
 			$response = array(
 				'status' => 'success'
@@ -402,14 +433,14 @@ public function deleteLook($id)
 
 	if($isValidToken) {
 
-		$look = $this->api_model->get_admin_look($id);
+		$look = $this->api_model_look->get_admin_look($id);
 
 		if($look->image && file_exists(FCPATH.'media/images/servicios/makeup/looks/'.$look->image))
 		{
 			unlink(FCPATH.'media/images/servicios/makeup/looks/'.$look->image);
 		}
 
-		$this->api_model->deleteLook($id);
+		$this->api_model_look->deleteLook($id);
 
 		$response = array(
 			'status' => 'success'

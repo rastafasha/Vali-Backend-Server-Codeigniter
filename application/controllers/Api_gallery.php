@@ -7,6 +7,7 @@ class Api_Gallery extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_gallery');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -19,7 +20,7 @@ public function gallerys()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$gallerys = $this->api_model->get_gallerys($featured=false, $recentpost=false);
+	$gallerys = $this->api_model_gallery->get_gallerys($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($gallerys)){
@@ -49,7 +50,7 @@ public function featured_gallerys()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$gallerys = $this->api_model->get_gallerys($featured=true, $recentpost=false);
+	$gallerys = $this->api_model_gallery->get_gallerys($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($gallerys)){
@@ -79,7 +80,7 @@ public function gallery($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$gallery = $this->api_model->get_gallery($id);
+	$gallery = $this->api_model_gallery->get_gallery($id);
 
 	$author = $gallery->first_name.' '.$gallery->last_name;
 
@@ -102,7 +103,7 @@ public function recent_gallerys()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$gallerys = $this->api_model->get_gallerys($featured=false, $recentpost=5);
+	$gallerys = $this->api_model_gallery->get_gallerys($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($gallery)){
@@ -146,7 +147,7 @@ public function recent_gallerys()
 
 		$posts = array();
 		if($isValidToken) {
-			$gallerys = $this->api_model->get_admin_gallerys();
+			$gallerys = $this->api_model_gallery->get_admin_gallerys();
 			foreach($gallerys as $gallery) {
 				$posts[] = array(
 					'id' => $gallery->id,
@@ -175,7 +176,7 @@ public function recent_gallerys()
 
 		if($isValidToken) {
 
-			$gallery = $this->api_model->get_admin_gallery($id);
+			$gallery = $this->api_model_gallery->get_admin_gallery($id);
 
 			$post = array(
 				'id' => $gallery->id,
@@ -248,7 +249,7 @@ public function recent_gallerys()
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertGallery($galleryData);
+				$id = $this->api_model_gallery->insertGallery($galleryData);
 
 				$response = array(
 					'status' => 'success'
@@ -274,7 +275,7 @@ public function recent_gallerys()
 
 		if($isValidToken) {
 
-			$gallery = $this->api_model->get_admin_gallery($id);
+			$gallery = $this->api_model_gallery->get_admin_gallery($id);
 			$filename = $gallery->image;
 
 			$title = $this->input->post('title');
@@ -322,7 +323,7 @@ public function recent_gallerys()
 					'is_active' => $is_active
 				);
 
-				$this->api_model->updateGallery($id, $galleryData);
+				$this->api_model_gallery->updateGallery($id, $galleryData);
 
 				$response = array(
 					'status' => 'success'
@@ -348,14 +349,14 @@ public function recent_gallerys()
 
 		if($isValidToken) {
 
-			$gallery = $this->api_model->get_admin_gallery($id);
+			$gallery = $this->api_model_gallery->get_admin_gallery($id);
 
 			if($gallery->image && file_exists(FCPATH.'media/images/gallery/'.$gallery->image))
 			{
 				unlink(FCPATH.'media/images/gallery/'.$gallery->image);
 			}
 
-			$this->api_model->deleteGallery($id);
+			$this->api_model_gallery->deleteGallery($id);
 
 			$response = array(
 				'status' => 'success'

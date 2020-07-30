@@ -7,6 +7,7 @@ class Api_Classe extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_classe');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -19,7 +20,7 @@ public function clasess()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$clasess = $this->api_model->get_clasess($featured=false, $recentpost=false);
+	$clasess = $this->api_model_classe->get_clasess($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($clasess)){
@@ -41,7 +42,9 @@ public function clasess()
 				'button' => $clases->button,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
-				'is_active' => $clases->is_active
+				'is_active' => $clases->is_active,
+				'textFinanc' => $clases->textFinanc,
+				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
 	}
@@ -55,7 +58,7 @@ public function featured_clasess()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$clasess = $this->api_model->get_clasess($featured=true, $recentpost=false);
+	$clasess = $this->api_model_classe->get_clasess($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($clasess)){
@@ -77,7 +80,9 @@ public function featured_clasess()
 				'button' => $clases->button,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
-				'is_active' => $clases->is_active
+				'is_active' => $clases->is_active,
+				'textFinanc' => $clases->textFinanc,
+				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
 	}
@@ -91,7 +96,7 @@ public function clases($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$clases = $this->api_model->get_clases($id);
+	$clases = $this->api_model_classe->get_clases($id);
 
 	$author = $clases->first_name.' '.$clases->last_name;
 
@@ -107,7 +112,9 @@ public function clases($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 		'created_at' => $clases->created_at,
-		'is_active' => $clases->is_active
+		'is_active' => $clases->is_active,
+		'textFinanc' => $clases->textFinanc,
+				'is_activeTf'=> $clases->is_activeTf
 	);
 	
 	$this->output
@@ -119,7 +126,7 @@ public function recent_clasess()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$clasess = $this->api_model->get_clases($featured=false, $recentpost=5);
+	$clasess = $this->api_model_classe->get_clases($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($clases)){
@@ -141,7 +148,9 @@ public function recent_clasess()
 				'button' => $clases->button,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
-				'is_active' => $clases->is_active
+				'is_active' => $clases->is_active,
+				'textFinanc' => $clases->textFinanc,
+				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
 	}
@@ -169,7 +178,7 @@ public function adminClasess()
 
 	$posts = array();
 	if($isValidToken) {
-		$clasess = $this->api_model->get_admin_clasess();
+		$clasess = $this->api_model_classe->get_admin_clasess();
 		foreach($clasess as $clases) {
 			$posts[] = array(
 				'id' => $clases->id,
@@ -182,7 +191,9 @@ public function adminClasess()
 				'button' => $clases->button,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
-				'is_active' => $clases->is_active
+				'is_active' => $clases->is_active,
+				'textFinanc' => $clases->textFinanc,
+				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
 
@@ -204,7 +215,7 @@ public function adminClases($id)
 
 	if($isValidToken) {
 
-		$clases = $this->api_model->get_admin_clases($id);
+		$clases = $this->api_model_classe->get_admin_clases($id);
 
 		$post = array(
 			'id' => $clases->id,
@@ -217,7 +228,9 @@ public function adminClases($id)
 			'button' => $clases->button,
 			'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 			'is_featured' => $clases->is_featured,
-			'is_active' => $clases->is_active
+			'is_active' => $clases->is_active,
+			'textFinanc' => $clases->textFinanc,
+				'is_activeTf'=> $clases->is_activeTf
 		);
 		
 
@@ -249,6 +262,8 @@ public function createClases()
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
 
@@ -289,10 +304,12 @@ public function createClases()
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
 
-			$id = $this->api_model->insertClases($clasesData);
+			$id = $this->api_model_classe->insertClases($clasesData);
 
 			$response = array(
 				'status' => 'success'
@@ -318,7 +335,7 @@ public function updateClases($id)
 
 	if($isValidToken) {
 
-		$clases = $this->api_model->get_admin_clases($id);
+		$clases = $this->api_model_classe->get_admin_clases($id);
 		$filename = $clases->image;
 
 		$title = $this->input->post('title');
@@ -330,6 +347,8 @@ public function updateClases($id)
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
 
@@ -373,10 +392,12 @@ public function updateClases($id)
 				'button' => $button,
 				'image' => $filename,
 				'is_featured' => $is_featured,
-				'is_active' => $is_active
+				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf
 			);
 
-			$this->api_model->updateClases($id, $clasesData);
+			$this->api_model_classe->updateClases($id, $clasesData);
 
 			$response = array(
 				'status' => 'success'
@@ -402,14 +423,14 @@ public function deleteClases($id)
 
 	if($isValidToken) {
 
-		$clases = $this->api_model->get_admin_clases($id);
+		$clases = $this->api_model_classe->get_admin_clases($id);
 
 		if($clases->image && file_exists(FCPATH.'media/images/servicios/makeup/clases/'.$clases->image))
 		{
 			unlink(FCPATH.'media/images/servicios/makeup/clases/'.$clases->image);
 		}
 
-		$this->api_model->deleteClases($id);
+		$this->api_model_classe->deleteClases($id);
 
 		$response = array(
 			'status' => 'success'

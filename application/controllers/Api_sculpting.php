@@ -7,6 +7,7 @@ class Api_Sculpting extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_sculpting');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -19,7 +20,7 @@ public function sculptings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$sculptings = $this->api_model->get_sculptings($featured=false, $recentpost=false);
+	$sculptings = $this->api_model_sculpting->get_sculptings($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($sculptings)){
@@ -41,7 +42,10 @@ public function sculptings()
 				'button' => $sculpting->button,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'created_at' => $sculpting->created_at,
-				'is_active' => $sculpting->is_active
+				'is_active' => $sculpting->is_active,
+				'textFinanc' => $sculpting->textFinanc,
+				'textFinancEsp' => $sculpting->textFinancEsp,
+				'is_activeTf'=> $sculpting->is_activeTf
 			);
 		}
 	}
@@ -55,7 +59,7 @@ public function featured_sculptings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$sculptings = $this->api_model->get_sculptings($featured=true, $recentpost=false);
+	$sculptings = $this->api_model_sculpting->get_sculptings($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($sculptings)){
@@ -77,7 +81,10 @@ public function featured_sculptings()
 				'button' => $sculpting->button,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'created_at' => $sculpting->created_at,
-				'is_active' => $sculpting->is_active
+				'is_active' => $sculpting->is_active,
+				'textFinanc' => $sculpting->textFinanc,
+				'textFinancEsp' => $sculpting->textFinancEsp,
+				'is_activeTf'=> $sculpting->is_activeTf
 			);
 		}
 	}
@@ -91,7 +98,7 @@ public function sculpting($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$sculpting = $this->api_model->get_sculpting($id);
+	$sculpting = $this->api_model_sculpting->get_sculpting($id);
 
 	$author = $sculpting->first_name.' '.$sculpting->last_name;
 
@@ -107,7 +114,10 @@ public function sculpting($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 		'created_at' => $sculpting->created_at,
-		'is_active' => $sculpting->is_active
+		'is_active' => $sculpting->is_active,
+		'textFinanc' => $sculpting->textFinanc,
+		'textFinancEsp' => $sculpting->textFinancEsp,
+		'is_activeTf'=> $sculpting->is_activeTf
 	);
 	
 	$this->output
@@ -119,7 +129,7 @@ public function recent_sculptings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$sculptings = $this->api_model->get_sculptings($featured=false, $recentpost=5);
+	$sculptings = $this->api_model_sculpting->get_sculptings($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($sculpting)){
@@ -141,7 +151,10 @@ public function recent_sculptings()
 				'button' => $sculpting->button,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'created_at' => $sculpting->created_at,
-				'is_active' => $sculpting->is_active
+				'is_active' => $sculpting->is_active,
+				'textFinanc' => $sculpting->textFinanc,
+				'textFinancEsp' => $sculpting->textFinancEsp,
+				'is_activeTf'=> $sculpting->is_activeTf
 			);
 		}
 	}
@@ -170,7 +183,7 @@ public function recent_sculptings()
 
 		$posts = array();
 		if($isValidToken) {
-			$sculptings = $this->api_model->get_admin_sculptings();
+			$sculptings = $this->api_model_sculpting->get_admin_sculptings();
 			foreach($sculptings as $sculpting) {
 				$posts[] = array(
 					'id' => $sculpting->id,
@@ -183,7 +196,10 @@ public function recent_sculptings()
 					'button' => $sculpting->button,
 					'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 					'created_at' => $sculpting->created_at,
-					'is_active' => $sculpting->is_active
+					'is_active' => $sculpting->is_active,
+					'textFinanc' => $sculpting->textFinanc,
+					'textFinancEsp' => $sculpting->textFinancEsp,
+				'is_activeTf'=> $sculpting->is_activeTf
 				);
 			}
 
@@ -205,7 +221,7 @@ public function recent_sculptings()
 
 		if($isValidToken) {
 
-			$sculpting = $this->api_model->get_admin_sculpting($id);
+			$sculpting = $this->api_model_sculpting->get_admin_sculpting($id);
 
 			$post = array(
 				'id' => $sculpting->id,
@@ -218,7 +234,10 @@ public function recent_sculptings()
 				'button' => $sculpting->button,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'is_featured' => $sculpting->is_featured,
-				'is_active' => $sculpting->is_active
+				'is_active' => $sculpting->is_active,
+				'textFinanc' => $sculpting->textFinanc,
+				'textFinancEsp' => $sculpting->textFinancEsp,
+				'is_activeTf'=> $sculpting->is_activeTf
 			);
 			
 
@@ -250,6 +269,9 @@ public function recent_sculptings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -290,10 +312,13 @@ public function recent_sculptings()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertSculpting($sculptingData);
+				$id = $this->api_model_sculpting->insertSculpting($sculptingData);
 
 				$response = array(
 					'status' => 'success'
@@ -319,7 +344,7 @@ public function recent_sculptings()
 
 		if($isValidToken) {
 
-			$sculpting = $this->api_model->get_admin_sculpting($id);
+			$sculpting = $this->api_model_sculpting->get_admin_sculpting($id);
 			$filename = $sculpting->image;
 
 			$title = $this->input->post('title');
@@ -331,6 +356,9 @@ public function recent_sculptings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -374,10 +402,13 @@ public function recent_sculptings()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateSculpting($id, $sculptingData);
+				$this->api_model_sculpting->updateSculpting($id, $sculptingData);
 
 				$response = array(
 					'status' => 'success'
@@ -403,14 +434,14 @@ public function recent_sculptings()
 
 		if($isValidToken) {
 
-			$sculpting = $this->api_model->get_admin_sculpting($id);
+			$sculpting = $this->api_model_sculpting->get_admin_sculpting($id);
 
 			if($sculpting->image && file_exists(FCPATH.'media/images/servicios/body/sculpting/'.$sculpting->image))
 			{
 				unlink(FCPATH.'media/images/servicios/body/sculpting/'.$sculpting->image);
 			}
 
-			$this->api_model->deleteSculpting($id);
+			$this->api_model_sculpting->deleteSculpting($id);
 
 			$response = array(
 				'status' => 'success'

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Api_model_wax extends CI_Model 
+class Api_model_hand extends CI_Model 
 {
 	
 	// Body Hand and legs
@@ -35,6 +35,50 @@ public function get_hand($id)
 }
 
 //
+
+
+
+// Body hand and legs
+
+public function get_admin_hands()
+{
+	$this->db->select('hand.*, u.first_name, u.last_name');
+	$this->db->from('hands hand');
+	$this->db->join('users u', 'u.id=hand.user_id');
+	$this->db->order_by('hand.created_at', 'desc');
+	$query = $this->db->get();
+	return $query->result();
+}
+
+public function get_admin_hand($id)
+{
+	$this->db->select('hand.*, u.first_name, u.last_name');
+	$this->db->from('hands hand');
+	$this->db->join('users u', 'u.id=hand.user_id');
+	$this->db->where('hand.id', $id);
+	$query = $this->db->get();
+	return $query->row();
+}
+//
+
+// Body Hand and legs
+public function insertHand($handData)
+{
+	$this->db->insert('hands', $handData);
+	return $this->db->insert_id();
+}
+
+public function updateHand($id, $handData)
+{
+	$this->db->where('id', $id);
+	$this->db->update('hands', $handData);
+}
+
+public function deleteHand($id)
+{
+	$this->db->where('id', $id);
+	$this->db->delete('hands');
+}
 
 	
 	

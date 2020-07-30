@@ -7,6 +7,7 @@ class Api_Calming extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_calming');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -20,7 +21,7 @@ public function calmings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$calmings = $this->api_model->get_calmings($featured=false, $recentpost=false);
+	$calmings = $this->api_model_calming->get_calmings($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($calmings)){
@@ -42,7 +43,9 @@ public function calmings()
 				'button' => $calming->button,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'created_at' => $calming->created_at,
-				'is_active' => $calming->is_active
+				'is_active' => $calming->is_active,
+				'textFinanc' => $calming->textFinanc,
+				'is_activeTf'=> $calming->is_activeTf
 			);
 		}
 	}
@@ -56,7 +59,7 @@ public function featured_calmings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$calmings = $this->api_model->get_calmings($featured=true, $recentpost=false);
+	$calmings = $this->api_model_calming->get_calmings($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($calmings)){
@@ -78,7 +81,9 @@ public function featured_calmings()
 				'button' => $calming->button,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'created_at' => $calming->created_at,
-				'is_active' => $calming->is_active
+				'is_active' => $calming->is_active,
+				'textFinanc' => $calming->textFinanc,
+				'is_activeTf'=> $calming->is_activeTf
 			);
 		}
 	}
@@ -92,23 +97,25 @@ public function calming($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$calming = $this->api_model->get_calming($id);
+	$calming = $this->api_model_calming->get_calming($id);
 
 	$author = $calming->first_name.' '.$calming->last_name;
 
 	$post = array(
-		'id' => $calming->id,
-		'title' => $calming->title,
-		'description' => $calming->description,
-		'titleesp' => $calming->titleesp,
+				'id' => $calming->id,
+				'title' => $calming->title,
+				'description' => $calming->description,
+				'titleesp' => $calming->titleesp,
 				'descriptionesp' => $calming->descriptionesp,
-		'price' => $calming->price,
-		'popup' => $calming->popup,
-		'button' => $calming->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
-		'created_at' => $calming->created_at,
-		'is_active' => $calming->is_active
+				'price' => $calming->price,
+				'popup' => $calming->popup,
+				'button' => $calming->button,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
+				'created_at' => $calming->created_at,
+				'is_active' => $calming->is_active,
+				'textFinanc' => $calming->textFinanc,
+				'is_activeTf'=> $calming->is_activeTf
 	);
 	
 	$this->output
@@ -120,7 +127,7 @@ public function recent_calmings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$calmings = $this->api_model->get_calmings($featured=false, $recentpost=5);
+	$calmings = $this->api_model_calming->get_calmings($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($calming)){
@@ -142,7 +149,9 @@ public function recent_calmings()
 				'button' => $calming->button,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'created_at' => $calming->created_at,
-				'is_active' => $calming->is_active
+				'is_active' => $calming->is_active,
+				'textFinanc' => $calming->textFinanc,
+				'is_activeTf'=> $calming->is_activeTf
 			);
 		}
 	}
@@ -169,7 +178,7 @@ public function recent_calmings()
 
 		$posts = array();
 		if($isValidToken) {
-			$calmings = $this->api_model->get_admin_calmings();
+			$calmings = $this->api_model_calming->get_admin_calmings();
 			foreach($calmings as $calming) {
 				$posts[] = array(
 					'id' => $calming->id,
@@ -182,7 +191,9 @@ public function recent_calmings()
 					'button' => $calming->button,
 					'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 					'created_at' => $calming->created_at,
-					'is_active' => $calming->is_active
+					'is_active' => $calming->is_active,
+					'textFinanc' => $calming->textFinanc,
+					'is_activeTf'=> $calming->is_activeTf
 				);
 			}
 
@@ -204,7 +215,7 @@ public function recent_calmings()
 
 		if($isValidToken) {
 
-			$calming = $this->api_model->get_admin_calming($id);
+			$calming = $this->api_model_calming->get_admin_calming($id);
 
 			$post = array(
 				'id' => $calming->id,
@@ -217,7 +228,9 @@ public function recent_calmings()
 				'button' => $calming->button,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'is_featured' => $calming->is_featured,
-				'is_active' => $calming->is_active
+				'is_active' => $calming->is_active,
+				'textFinanc' => $calming->textFinanc,
+				'is_activeTf'=> $calming->is_activeTf
 			);
 			
 
@@ -249,6 +262,8 @@ public function recent_calmings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -289,10 +304,12 @@ public function recent_calmings()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertCalming($calmingData);
+				$id = $this->api_model_calming->insertCalming($calmingData);
 
 				$response = array(
 					'status' => 'success'
@@ -318,7 +335,7 @@ public function recent_calmings()
 
 		if($isValidToken) {
 
-			$calming = $this->api_model->get_admin_calming($id);
+			$calming = $this->api_model_calming->get_admin_calming($id);
 			$filename = $calming->image;
 
 			$title = $this->input->post('title');
@@ -330,6 +347,8 @@ public function recent_calmings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -373,10 +392,12 @@ public function recent_calmings()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'is_activeTf' => $is_activeTf
 				);
 
-				$this->api_model->updateCalming($id, $calmingData);
+				$this->api_model_calming->updateCalming($id, $calmingData);
 
 				$response = array(
 					'status' => 'success'
@@ -402,14 +423,14 @@ public function recent_calmings()
 
 		if($isValidToken) {
 
-			$calming = $this->api_model->get_admin_calming($id);
+			$calming = $this->api_model_calming->get_admin_calming($id);
 
 			if($calming->image && file_exists(FCPATH.'media/images/servicios/facial/calming/'.$calming->image))
 			{
 				unlink(FCPATH.'media/images/servicios/facial/calming/'.$calming->image);
 			}
 
-			$this->api_model->deleteCalming($id);
+			$this->api_model_calming->deleteCalming($id);
 
 			$response = array(
 				'status' => 'success'

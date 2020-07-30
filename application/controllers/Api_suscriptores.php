@@ -1,51 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Api_Contact extends CI_Controller {
+class Api_Suscriptores extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
         $this->load->model('api_model');
-        $this->load->model('api_model_contact');
+        $this->load->model('api_model_suscriptores');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
 
 	
-// Contact
 
-
-public function getcontacts()
-{
-	header("Access-Control-Allow-Origin: *");
-
-	$getcontacts = $this->api_model_contact->get_contacts($featured=false, $recentpost=false);
-
-	$posts = array();
-	if(!empty($getcontacts)){
-		foreach($getcontacts as $getcontact){
-
-
-			$posts[] = array(
-				'id' => $getcontact->id,
-				'name' => $getcontact->name,
-				'lastname' => $getcontact->lastname,
-				'email' => $getcontact->email,
-				'phone' => $getcontact->phone,
-				'created_at' => $getcontact->created_at,
-			);
-		}
-	}
-
-	$this->output
-		->set_content_type('application/json')
-		->set_output(json_encode($posts));
-}
+// subcritores
 
 	
 
-public function contact()
+public function subcritore()
 {
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Request-Headers: GET,POST,OPTIONS,DELETE,PUT");
@@ -55,24 +28,16 @@ public function contact()
 
     if( ! empty($formdata)) {
 
-        $name = $formdata['name'];
-        $lastname = $formdata['lastname'];
         $email = $formdata['email'];
-        $phone = $formdata['phone'];
-        $message = $formdata['message'];
 
-        $contactData = array(
-            'name' => $name,
-            'lastname' => $lastname,
+        $subcritoreData = array(
             'email' => $email,
-            'phone' => $phone,
-            'message' => $message,
             'created_at' => date('Y-m-d H:i:s', time())
         );
         
-        $id = $this->api_model->insert_contact($contactData);
+        $id = $this->api_model->insert_subcritore($subcritoreData);
 
-        $this->sendemail($contactData);
+        $this->sendregistro($subcritoreData);
         
         $response = array('id' => $id);
     }
@@ -85,7 +50,7 @@ public function contact()
         ->set_output(json_encode($response));
 }
 
-public function adminContacts()
+public function adminSubcritores()
 {
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: authorization, Content-Type");
@@ -96,16 +61,12 @@ public function adminContacts()
 
     $posts = array();
     if($isValidToken) {
-        $contacts = $this->api_model->get_admin_contacts();
-        foreach($contacts as $contact) {
+        $subcritores = $this->api_model->get_admin_subcritores();
+        foreach($subcritores as $subcritore) {
             $posts[] = array(
-                'id' => $contact->id,
-                'name' => $contact->name,
-                'lastname' => $contact->lastname,
-                'email' => $contact->email,
-                'phone' => $contact->phone,
-                'message' => $contact->message,
-                'created_at' => $contact->created_at
+                'id' => $subcritore->id,
+                'email' => $subcritore->email,
+                'created_at' => $subcritore->created_at
             );
         }
 
@@ -116,7 +77,7 @@ public function adminContacts()
     }
 }
 
-public function adminContact($id)
+public function adminSubcritore($id)
 {
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: authorization, Content-Type");
@@ -127,15 +88,11 @@ public function adminContact($id)
 
     if($isValidToken) {
 
-        $contact = $this->api_model->get_admin_contact($id);
+        $subcritore = $this->api_model->get_admin_subcritore($id);
 
         $post = array(
-            'id' => $contact->id,
-            'name' => $contact->name,
-            'lastname' => $contact->lastname,
-            'email' => $contact->email,
-            'phone' => $contact->phone,
-            'message' => $contact->message
+            'id' => $subcritore->id,
+            'email' => $subcritore->email,
         );
         
 
@@ -146,7 +103,7 @@ public function adminContact($id)
     }
 }
 
-public function updateContact($id)
+public function updateSubcritore($id)
 {
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: authorization, Content-Type");
@@ -158,28 +115,18 @@ public function updateContact($id)
 
     if($isValidToken) {
 
-        $contact = $this->api_model->get_admin_contact($id);
+        $subcritore = $this->api_model->get_admin_subcritore($id);
 
-        $name = $this->input->post('title');
-        $lastname = $this->input->post('lastname');
         $email = $this->input->post('email');
-        $phone = $this->input->post('phone');
-        $message = $this->input->post('message');
-        
-        
 
         $isUploadError = FALSE;
 
         if( ! $isUploadError) {
-            $contactData = array(
-                'name' => $name,
-                'lastname' => $lastname,
+            $subcritoreData = array(
                 'email' => $email,
-                'phone' => $phone,
-                'message' => $message
             );
 
-            $this->api_model->updateContact($id, $contactData);
+            $this->api_model->updateSubcritore($id, $subcritoreData);
 
             $response = array(
                 'status' => 'success'
@@ -193,7 +140,7 @@ public function updateContact($id)
     }
 }
 
-public function deleteContact($id)
+public function deleteSubcritore($id)
 {
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
@@ -205,9 +152,9 @@ public function deleteContact($id)
 
     if($isValidToken) {
 
-        $contact = $this->api_model->get_admin_contact($id);
+        $subcritore = $this->api_model->get_admin_subcritore($id);
 
-        $this->api_model->deleteContact($id);
+        $this->api_model->deleteSubcritore($id);
 
         $response = array(
             'status' => 'success'
@@ -220,14 +167,10 @@ public function deleteContact($id)
     }
 }
 
-public function sendemail($contactData)
+public function sendregistro($subcritoreData)
 {
     $message = '<p>Hi, <br />Some one has submitted contact form.</p>';
-    $message .= '<p><strong>Name: </strong>'.$contactData['name'].'</p>';
-    $message .= '<p><strong>Lastname: </strong>'.$contactData['lastname'].'</p>';
-    $message .= '<p><strong>Email: </strong>'.$contactData['email'].'</p>';
-    $message .= '<p><strong>Phone: </strong>'.$contactData['phone'].'</p>';
-    $message .= '<p><strong>Name: </strong>'.$contactData['message'].'</p>';
+    $message .= '<p><strong>Email: </strong>'.$subcritoreData['email'].'</p>';
     $message .= '<br />Thanks';
 
     $this->load->library('email');
@@ -245,12 +188,13 @@ public function sendemail($contactData)
     $this->email->cc('');
     $this->email->bcc('');
 
-    $this->email->subject('Contact Form');
+    $this->email->subject('subscribe Form');
     $this->email->message($message);
 
     $this->email->send();
 }
 
+//
 
 
 

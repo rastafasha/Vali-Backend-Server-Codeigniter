@@ -7,6 +7,7 @@ class Api_Antiages extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_antiages');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -19,7 +20,7 @@ public function antiages()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$antiages = $this->api_model->get_antiages($featured=false, $recentpost=false);
+	$antiages = $this->api_model_antiages->get_antiages($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($antiages)){
@@ -41,7 +42,9 @@ public function antiages()
 				'button' => $antiage->button,
 				'image' => base_url('media/images/servicios/facial/antiage/'.$antiage->image),
 				'created_at' => $antiage->created_at,
-				'is_active' => $antiage->is_active
+				'is_active' => $antiage->is_active,
+				'textFinanc' => $antiage->textFinanc,
+				'is_activeTf'=> $antiage->is_activeTf
 			);
 		}
 	}
@@ -55,7 +58,7 @@ public function featured_antiages()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$antiages = $this->api_model->get_antiages($featured=true, $recentpost=false);
+	$antiages = $this->api_model_antiages->get_antiages($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($antiages)){
@@ -77,7 +80,9 @@ public function featured_antiages()
 				'button' => $antiage->button,
 				'image' => base_url('media/images/servicios/facial/antiage/'.$antiage->image),
 				'created_at' => $antiage->created_at,
-				'is_active' => $antiage->is_active
+				'is_active' => $antiage->is_active,
+				'textFinanc' => $antiage->textFinanc,
+				'is_activeTf'=> $antiage->is_activeTf
 			);
 		}
 	}
@@ -91,7 +96,7 @@ public function antiage($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$antiage = $this->api_model->get_antiage($id);
+	$antiage = $this->api_model_antiages->get_antiage($id);
 
 	$author = $antiage->first_name.' '.$antiage->last_name;
 
@@ -107,7 +112,9 @@ public function antiage($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/facial/antiage/'.$antiage->image),
 		'created_at' => $antiage->created_at,
-		'is_active' => $antiage->is_active
+		'is_active' => $antiage->is_active,
+		'textFinanc' => $antiage->textFinanc,
+				'is_activeTf'=> $antiage->is_activeTf
 	);
 	
 	$this->output
@@ -119,7 +126,7 @@ public function recent_antiages()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$antiages = $this->api_model->get_antiages($featured=false, $recentpost=5);
+	$antiages = $this->api_model_antiages->get_antiages($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($antiage)){
@@ -141,7 +148,9 @@ public function recent_antiages()
 				'button' => $antiage->button,
 				'image' => base_url('media/images/servicios/facial/antiage/'.$antiage->image),
 				'created_at' => $antiage->created_at,
-				'is_active' => $antiage->is_active
+				'is_active' => $antiage->is_active,
+				'textFinanc' => $antiage->textFinanc,
+				'is_activeTf'=> $antiage->is_activeTf
 			);
 		}
 	}
@@ -168,7 +177,7 @@ public function recent_antiages()
 
 		$posts = array();
 		if($isValidToken) {
-			$antiages = $this->api_model->get_admin_antiages();
+			$antiages = $this->api_model_antiages->get_admin_antiages();
 			foreach($antiages as $antiage) {
 				$posts[] = array(
 					'id' => $antiage->id,
@@ -181,7 +190,9 @@ public function recent_antiages()
 					'button' => $antiage->button,
 					'image' => base_url('media/images/servicios/facial/antiage/'.$antiage->image),
 					'created_at' => $antiage->created_at,
-					'is_active' => $antiage->is_active
+					'is_active' => $antiage->is_active,
+					'textFinanc' => $antiage->textFinanc,
+				'is_activeTf'=> $antiage->is_activeTf
 				);
 			}
 
@@ -203,7 +214,7 @@ public function recent_antiages()
 
 		if($isValidToken) {
 
-			$antiage = $this->api_model->get_admin_antiage($id);
+			$antiage = $this->api_model_antiages->get_admin_antiage($id);
 
 			$post = array(
 				'id' => $antiage->id,
@@ -216,7 +227,9 @@ public function recent_antiages()
 				'button' => $antiage->button,
 				'image' => base_url('media/images/servicios/facial/antiage/'.$antiage->image),
 				'is_featured' => $antiage->is_featured,
-				'is_active' => $antiage->is_active
+				'is_active' => $antiage->is_active,
+				'textFinanc' => $antiage->textFinanc,
+				'is_activeTf'=> $antiage->is_activeTf
 			);
 			
 
@@ -248,6 +261,8 @@ public function recent_antiages()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -288,10 +303,12 @@ public function recent_antiages()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertAntiage($antiageData);
+				$id = $this->api_model_antiages->insertAntiage($antiageData);
 
 				$response = array(
 					'status' => 'success'
@@ -317,7 +334,7 @@ public function recent_antiages()
 
 		if($isValidToken) {
 
-			$antiage = $this->api_model->get_admin_antiage($id);
+			$antiage = $this->api_model_antiages->get_admin_antiage($id);
 			$filename = $antiage->image;
 
 			$title = $this->input->post('title');
@@ -329,6 +346,8 @@ public function recent_antiages()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -372,10 +391,12 @@ public function recent_antiages()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateAntiage($id, $antiageData);
+				$this->api_model_antiages->updateAntiage($id, $antiageData);
 
 				$response = array(
 					'status' => 'success'
@@ -401,14 +422,14 @@ public function recent_antiages()
 
 		if($isValidToken) {
 
-			$antiage = $this->api_model->get_admin_antiage($id);
+			$antiage = $this->api_model_antiages->get_admin_antiage($id);
 
 			if($antiage->image && file_exists(FCPATH.'media/images/servicios/facial/antiage/'.$antiage->image))
 			{
 				unlink(FCPATH.'media/images/servicios/facial/antiage/'.$antiage->image);
 			}
 
-			$this->api_model->deleteAntiage($id);
+			$this->api_model_antiages->deleteAntiage($id);
 
 			$response = array(
 				'status' => 'success'

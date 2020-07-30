@@ -7,13 +7,10 @@ class Api_Wax extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_wax');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
-
-
-
-
 
 
 // Wax 
@@ -22,7 +19,7 @@ public function waxs()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$waxs = $this->api_model->get_waxs($featured=false, $recentpost=false);
+	$waxs = $this->api_model_wax->get_waxs($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($waxs)){
@@ -44,7 +41,11 @@ public function waxs()
 				'button' => $wax->button,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at,
-				'is_active' => $wax->is_active
+				'is_active' => $wax->is_active,
+				'textFinanc' => $wax->textFinanc,
+				'textFinancEsp' => $wax->textFinancEsp,
+				'is_activeTf'=> $wax->is_activeTf
+
 			);
 		}
 	}
@@ -58,7 +59,7 @@ public function featured_waxs()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$permanents = $this->api_model->get_waxs($featured=true, $recentpost=false);
+	$permanents = $this->api_model_wax->get_waxs($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($waxs)){
@@ -80,7 +81,10 @@ public function featured_waxs()
 				'button' => $wax->button,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at,
-				'is_active' => $wax->is_active
+				'is_active' => $wax->is_active,
+				'textFinanc' => $wax->textFinanc,
+				'textFinancEsp' => $wax->textFinancEsp,
+				'is_activeTf'=> $wax->is_activeTf
 			);
 		}
 	}
@@ -94,7 +98,7 @@ public function wax($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$wax = $this->api_model->get_wax($id);
+	$wax = $this->api_model_wax->get_wax($id);
 
 	$author = $wax->first_name.' '.$wax->last_name;
 
@@ -110,7 +114,10 @@ public function wax($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/wax/'.$wax->image),
 		'created_at' => $wax->created_at,
-		'is_active' => $wax->is_active
+		'is_active' => $wax->is_active,
+		'textFinanc' => $wax->textFinanc,
+		'textFinancEsp' => $wax->textFinancEsp,
+		'is_activeTf'=> $wax->is_activeTf
 	);
 	
 	$this->output
@@ -122,7 +129,7 @@ public function recent_waxs()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$waxs = $this->api_model->get_waxs($featured=false, $recentpost=5);
+	$waxs = $this->api_model_wax->get_waxs($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($wax)){
@@ -143,7 +150,10 @@ public function recent_waxs()
 				'button' => $wax->button,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at,
-				'is_active' => $wax->is_active
+				'is_active' => $wax->is_active,
+				'textFinanc' => $wax->textFinanc,
+				'textFinancEsp' => $wax->textFinancEsp,
+				'is_activeTf'=> $wax->is_activeTf
 			);
 		}
 	}
@@ -170,7 +180,7 @@ public function recent_waxs()
 
 		$posts = array();
 		if($isValidToken) {
-			$waxs = $this->api_model->get_admin_waxs();
+			$waxs = $this->api_model_wax->get_admin_waxs();
 			foreach($waxs as $wax) {
 				$posts[] = array(
 					'id' => $wax->id,
@@ -182,7 +192,10 @@ public function recent_waxs()
 					'button' => $wax->button,
 					'image' => base_url('media/images/servicios/wax/'.$wax->image),
 					'created_at' => $wax->created_at,
-					'is_active' => $wax->is_active
+					'is_active' => $wax->is_active,
+					'textFinanc' => $wax->textFinanc,
+					'textFinancEsp' => $wax->textFinancEsp,
+				'is_activeTf'=> $wax->is_activeTf
 				);
 			}
 
@@ -204,7 +217,7 @@ public function recent_waxs()
 
 		if($isValidToken) {
 
-			$wax = $this->api_model->get_admin_wax($id);
+			$wax = $this->api_model_wax->get_admin_wax($id);
 
 			$post = array(
 				'id' => $wax->id,
@@ -217,7 +230,10 @@ public function recent_waxs()
 				'button' => $wax->button,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'is_featured' => $wax->is_featured,
-				'is_active' => $wax->is_active
+				'is_active' => $wax->is_active,
+				'textFinanc' => $wax->textFinanc,
+				'textFinancEsp' => $wax->textFinancEsp,
+				'is_activeTf'=> $wax->is_activeTf
 			);
 			
 
@@ -249,6 +265,9 @@ public function recent_waxs()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -289,10 +308,13 @@ public function recent_waxs()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertWax($waxData);
+				$id = $this->api_model_wax->insertWax($waxData);
 
 				$response = array(
 					'status' => 'success'
@@ -318,7 +340,7 @@ public function recent_waxs()
 
 		if($isValidToken) {
 
-			$wax = $this->api_model->get_admin_wax($id);
+			$wax = $this->api_model_wax->get_admin_wax($id);
 			$filename = $wax->image;
 
 			$title = $this->input->post('title');
@@ -330,6 +352,9 @@ public function recent_waxs()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -373,10 +398,13 @@ public function recent_waxs()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf
 				);
 
-				$this->api_model->updateWax($id, $waxData);
+				$this->api_model_wax->updateWax($id, $waxData);
 
 				$response = array(
 					'status' => 'success'
@@ -402,14 +430,14 @@ public function recent_waxs()
 
 		if($isValidToken) {
 
-			$wax = $this->api_model->get_admin_wax($id);
+			$wax = $this->api_model_wax->get_admin_wax($id);
 
 			if($wax->image && file_exists(FCPATH.'media/images/servicios/wax/'.$wax->image))
 			{
 				unlink(FCPATH.'media/images/servicios/wax/'.$wax->image);
 			}
 
-			$this->api_model->deleteWax($id);
+			$this->api_model_wax->deleteWax($id);
 
 			$response = array(
 				'status' => 'success'

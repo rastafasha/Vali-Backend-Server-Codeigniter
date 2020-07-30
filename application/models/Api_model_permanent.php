@@ -39,6 +39,51 @@ class Api_model_permanent extends CI_Model
 
 	//
 
+
+
+// permanent makeup
+
+public function get_admin_permanents()
+{
+	$this->db->select('permanent.*, u.first_name, u.last_name');
+	$this->db->from('permanents permanent');
+	$this->db->join('users u', 'u.id=permanent.user_id');
+	$this->db->order_by('permanent.created_at', 'desc');
+	$query = $this->db->get();
+	return $query->result();
+}
+
+public function get_admin_permanent($id)
+{
+	$this->db->select('permanent.*, u.first_name, u.last_name');
+	$this->db->from('permanents permanent');
+	$this->db->join('users u', 'u.id=permanent.user_id');
+	$this->db->where('permanent.id', $id);
+	$query = $this->db->get();
+	return $query->row();
+}
+//
+
+// permanent makeup
+public function insertPermanent($permanentData)
+{
+	$this->db->insert('permanents', $permanentData);
+	return $this->db->insert_id();
+}
+
+public function updatePermanent($id, $permanentData)
+{
+	$this->db->where('id', $id);
+	$this->db->update('permanents', $permanentData);
+}
+
+public function deletePermanent($id)
+{
+	$this->db->where('id', $id);
+	$this->db->delete('permanents');
+}
+
+
 	
 	
 	

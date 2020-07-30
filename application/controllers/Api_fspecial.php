@@ -7,6 +7,7 @@ class Api_Fspecial extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_specialf');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -19,7 +20,7 @@ public function specialfs()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$specialfs = $this->api_model->get_specialfs($featured=false, $recentpost=false);
+	$specialfs = $this->api_model_specialf->get_specialfs($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($specialfs)){
@@ -41,7 +42,10 @@ public function specialfs()
 				'button' => $specialf->button,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'created_at' => $specialf->created_at,
-				'is_active' => $specialf->is_active
+				'is_active' => $specialf->is_active,
+				'textFinanc' => $specialf->textFinanc,
+				'textFinancEsp' => $specialf->textFinancEsp,
+				'is_activeTf'=> $specialf->is_activeTf
 			);
 		}
 	}
@@ -55,7 +59,7 @@ public function featured_specialfs()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$specialfs = $this->api_model->get_specialfs($featured=true, $recentpost=false);
+	$specialfs = $this->api_model_specialf->get_specialfs($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($specialfs)){
@@ -77,7 +81,10 @@ public function featured_specialfs()
 				'button' => $specialf->button,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'created_at' => $specialf->created_at,
-				'is_active' => $specialf->is_active
+				'is_active' => $specialf->is_active,
+				'textFinanc' => $specialf->textFinanc,
+				'textFinancEsp' => $specialf->textFinancEsp,
+				'is_activeTf'=> $specialf->is_activeTf
 			);
 		}
 	}
@@ -91,7 +98,7 @@ public function specialf($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$specialf = $this->api_model->specialf($id);
+	$specialf = $this->api_model_specialf->specialf($id);
 
 	$author = $specialf->first_name.' '.$specialf->last_name;
 
@@ -106,7 +113,10 @@ public function specialf($id)
 		'button' => $specialf->button,
 		'author' => $author,
 		'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
-		'created_at' => $specialf->created_at
+		'created_at' => $specialf->created_at,
+		'textFinanc' => $specialf->textFinanc,
+		'textFinancEsp' => $specialf->textFinancEsp,
+		'is_activeTf'=> $specialf->is_activeTf
 	);
 	
 	$this->output
@@ -118,7 +128,7 @@ public function recent_specialfs()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$specialf = $this->api_model->get_specialfs($featured=false, $recentpost=5);
+	$specialf = $this->api_model_specialf->get_specialfs($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($specialf)){
@@ -140,7 +150,10 @@ public function recent_specialfs()
 				'button' => $specialf->button,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'created_at' => $specialf->created_at,
-				'is_active' => $specialf->is_active
+				'is_active' => $specialf->is_active,
+				'textFinanc' => $specialf->textFinanc,
+				'textFinancEsp ' => $specialf->textFinancEsp ,
+				'is_activeTf'=> $specialf->is_activeTf
 			);
 		}
 	}
@@ -167,7 +180,7 @@ public function recent_specialfs()
 
 		$posts = array();
 		if($isValidToken) {
-			$specialfs = $this->api_model->get_admin_specialfs();
+			$specialfs = $this->api_model_specialf->get_admin_specialfs();
 			foreach($specialfs as $specialf) {
 				$posts[] = array(
 					'id' => $specialf->id,
@@ -180,7 +193,9 @@ public function recent_specialfs()
 					'button' => $specialf->button,
 					'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 					'created_at' => $specialf->created_at,
-					'is_active' => $specialf->is_active
+					'is_active' => $specialf->is_active,
+					'textFinancEsp' => $specialf->textFinancEsp,
+				    'is_activeTf'=> $specialf->is_activeTf
 				);
 			}
 
@@ -202,7 +217,7 @@ public function recent_specialfs()
 
 		if($isValidToken) {
 
-			$specialf = $this->api_model->get_admin_specialf($id);
+			$specialf = $this->api_model_specialf->get_admin_specialf($id);
 
 			$post = array(
 				'id' => $specialf->id,
@@ -215,7 +230,10 @@ public function recent_specialfs()
 				'button' => $specialf->button,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'is_featured' => $specialf->is_featured,
-				'is_active' => $specialf->is_active
+				'is_active' => $specialf->is_active,
+				'textFinanc' => $specialf->textFinanc,
+				'textFinancEsp' => $specialf->textFinancEsp,
+				'is_activeTf'=> $specialf->is_activeTf
 			);
 			
 
@@ -247,6 +265,9 @@ public function recent_specialfs()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -287,10 +308,13 @@ public function recent_specialfs()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertSpecialf($specialfData);
+				$id = $this->api_model_specialf->insertSpecialf($specialfData);
 
 				$response = array(
 					'status' => 'success'
@@ -316,7 +340,7 @@ public function recent_specialfs()
 
 		if($isValidToken) {
 
-			$specialf = $this->api_model->get_admin_specialf($id);
+			$specialf = $this->api_model_specialf->get_admin_specialf($id);
 			$filename = $specialf->image;
 
 			$title = $this->input->post('title');
@@ -328,6 +352,9 @@ public function recent_specialfs()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -371,10 +398,13 @@ public function recent_specialfs()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateSpecialf($id, $specialfData);
+				$this->api_model_specialf->updateSpecialf($id, $specialfData);
 
 				$response = array(
 					'status' => 'success'
@@ -400,14 +430,14 @@ public function recent_specialfs()
 
 		if($isValidToken) {
 
-			$specialf = $this->api_model->get_admin_specialf($id);
+			$specialf = $this->api_model_specialf->get_admin_specialf($id);
 
 			if($specialf->image && file_exists(FCPATH.'media/images/servicios/facial/specialf/'.$specialf->image))
 			{
 				unlink(FCPATH.'media/images/servicios/facial/specialf/'.$specialf->image);
 			}
 
-			$this->api_model->deleteSpecialf($id);
+			$this->api_model_specialf->deleteSpecialf($id);
 
 			$response = array(
 				'status' => 'success'

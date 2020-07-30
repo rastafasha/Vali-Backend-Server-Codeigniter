@@ -7,6 +7,7 @@ class Api_Fibrohypertrophic extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_hypertrophic');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -17,7 +18,7 @@ public function hypertrophics()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$hypertrophics = $this->api_model->get_hypertrophics($featured=false, $recentpost=false);
+	$hypertrophics = $this->api_model_hypertrophic->get_hypertrophics($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($hypertrophics)){
@@ -39,7 +40,10 @@ public function hypertrophics()
 				'button' => $hypertrophic->button,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
-				'is_active' => $hypertrophic->is_active
+				'is_active' => $hypertrophic->is_active,
+				'textFinanc' => $hypertrophic->textFinanc,
+				'textFinancEsp' => $hypertrophic->textFinancEsp,
+				'is_activeTf'=> $hypertrophic->is_activeTf
 			);
 		}
 	}
@@ -53,7 +57,7 @@ public function featured_hypertrophics()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$hypertrophics = $this->api_model->get_hypertrophics($featured=true, $recentpost=false);
+	$hypertrophics = $this->api_model_hypertrophic->get_hypertrophics($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($hypertrophics)){
@@ -75,7 +79,10 @@ public function featured_hypertrophics()
 				'button' => $hypertrophic->button,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
-				'is_active' => $hypertrophic->is_active
+				'is_active' => $hypertrophic->is_active,
+				'textFinanc' => $hypertrophic->textFinanc,
+				'textFinancEsp' => $hypertrophic->textFinancEsp,
+				'is_activeTf'=> $hypertrophic->is_activeTf
 			);
 		}
 	}
@@ -89,7 +96,7 @@ public function hypertrophic($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$hypertrophic = $this->api_model->get_hypertrophic($id);
+	$hypertrophic = $this->api_model_hypertrophic->get_hypertrophic($id);
 
 	$author = $hypertrophic->first_name.' '.$hypertrophic->last_name;
 
@@ -105,7 +112,10 @@ public function hypertrophic($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 		'created_at' => $hypertrophic->created_at,
-		'is_active' => $hypertrophic->is_active
+		'is_active' => $hypertrophic->is_active,
+		'textFinanc' => $hypertrophic->textFinanc,
+		'textFinancEsp' => $hypertrophic->textFinancEsp,
+		'is_activeTf'=> $hypertrophic->is_activeTf
 	);
 	
 	$this->output
@@ -117,7 +127,7 @@ public function recent_hypertrophics()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$hypertrophics = $this->api_model->get_hypertrophics($featured=false, $recentpost=5);
+	$hypertrophics = $this->api_model_hypertrophic->get_hypertrophics($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($hypertrophic)){
@@ -139,7 +149,10 @@ public function recent_hypertrophics()
 				'button' => $hypertrophic->button,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophic/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
-				'is_active' => $hypertrophic->is_active
+				'is_active' => $hypertrophic->is_active,
+				'textFinanc' => $hypertrophic->textFinanc,
+				'textFinancEsp' => $hypertrophic->textFinancEsp,
+				'is_activeTf'=> $hypertrophic->is_activeTf
 			);
 		}
 	}
@@ -168,7 +181,7 @@ public function adminHypertrophics()
 
 	$posts = array();
 	if($isValidToken) {
-		$hypertrophics = $this->api_model->get_admin_hypertrophics();
+		$hypertrophics = $this->api_model_hypertrophic->get_admin_hypertrophics();
 		foreach($hypertrophics as $hypertrophic) {
 			$posts[] = array(
 				'id' => $hypertrophic->id,
@@ -181,7 +194,10 @@ public function adminHypertrophics()
 				'button' => $hypertrophic->button,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
-				'is_active' => $hypertrophic->is_active
+				'is_active' => $hypertrophic->is_active,
+				'textFinanc' => $hypertrophic->textFinanc,
+				'textFinancEsp' => $hypertrophic->textFinancEsp,
+				'is_activeTf'=> $hypertrophic->is_activeTf
 			);
 		}
 
@@ -203,7 +219,7 @@ public function adminHypertrophic($id)
 
 	if($isValidToken) {
 
-		$hypertrophic = $this->api_model->get_admin_hypertrophic($id);
+		$hypertrophic = $this->api_model_hypertrophic->get_admin_hypertrophic($id);
 
 		$post = array(
 			'id' => $hypertrophic->id,
@@ -216,7 +232,10 @@ public function adminHypertrophic($id)
 			'button' => $hypertrophic->button,
 			'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 			'is_featured' => $hypertrophic->is_featured,
-			'is_active' => $hypertrophic->is_active
+			'is_active' => $hypertrophic->is_active,
+			'textFinanc' => $hypertrophic->textFinanc,
+			'textFinancEsp' => $hypertrophic->textFinancEsp,
+			'is_activeTf'=> $hypertrophic->is_activeTf
 		);
 		
 
@@ -248,6 +267,9 @@ public function createHypertrophic()
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
 
@@ -288,10 +310,13 @@ public function createHypertrophic()
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
+				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
 
-			$id = $this->api_model->insertHypertrophic($hypertrophicData);
+			$id = $this->api_model_hypertrophic->insertHypertrophic($hypertrophicData);
 
 			$response = array(
 				'status' => 'success'
@@ -317,7 +342,7 @@ public function updateHypertrophic($id)
 
 	if($isValidToken) {
 
-		$hypertrophic = $this->api_model->get_admin_hypertrophic($id);
+		$hypertrophic = $this->api_model_hypertrophic->get_admin_hypertrophic($id);
 		$filename = $hypertrophic->image;
 
 		$title = $this->input->post('title');
@@ -329,6 +354,9 @@ public function updateHypertrophic($id)
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
 
@@ -372,10 +400,13 @@ public function updateHypertrophic($id)
 				'button' => $button,
 				'image' => $filename,
 				'is_featured' => $is_featured,
-				'is_active' => $is_active
+				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
+				'is_activeTf' => $is_activeTf,
 			);
 
-			$this->api_model->updateHypertrophic($id, $hypertrophicData);
+			$this->api_model_hypertrophic->updateHypertrophic($id, $hypertrophicData);
 
 			$response = array(
 				'status' => 'success'
@@ -401,14 +432,14 @@ public function deleteHypertrophic($id)
 
 	if($isValidToken) {
 
-		$hypertrophic = $this->api_model->get_admin_hypertrophic($id);
+		$hypertrophic = $this->api_model_hypertrophic->get_admin_hypertrophic($id);
 
 		if($hypertrophic->image && file_exists(FCPATH.'media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image))
 		{
 			unlink(FCPATH.'media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image);
 		}
 
-		$this->api_model->deleteHypertrophic($id);
+		$this->api_model_hypertrophic->deleteHypertrophic($id);
 
 		$response = array(
 			'status' => 'success'

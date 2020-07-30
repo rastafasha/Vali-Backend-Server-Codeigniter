@@ -7,6 +7,7 @@ class Api_Hand extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_hand');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -19,7 +20,7 @@ public function hands()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$hands = $this->api_model->get_hands($featured=false, $recentpost=false);
+	$hands = $this->api_model_hand->get_hands($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($hands)){
@@ -41,7 +42,10 @@ public function hands()
 				'button' => $hand->button,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'created_at' => $hand->created_at,
-				'is_active' => $hand->is_active
+				'is_active' => $hand->is_active,
+				'textFinanc' => $hand->textFinanc,
+				'textFinancEsp' => $hand->textFinancEsp,
+				'is_activeTf'=> $hand->is_activeTf
 			);
 		}
 	}
@@ -55,7 +59,7 @@ public function featured_hands()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$hands = $this->api_model->get_hands($featured=true, $recentpost=false);
+	$hands = $this->api_model_hand->get_hands($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($hands)){
@@ -77,7 +81,10 @@ public function featured_hands()
 				'button' => $hand->button,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'created_at' => $hand->created_at,
-				'is_active' => $hand->is_active
+				'is_active' => $hand->is_active,
+				'textFinanc' => $hand->textFinanc,
+				'textFinancEsp' => $hand->textFinancEsp,
+				'is_activeTf'=> $hand->is_activeTf
 			);
 		}
 	}
@@ -91,7 +98,7 @@ public function hand($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$hand = $this->api_model->get_hand($id);
+	$hand = $this->api_model_hand->get_hand($id);
 
 	$author = $hand->first_name.' '.$hand->last_name;
 
@@ -107,7 +114,10 @@ public function hand($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 		'created_at' => $hand->created_at,
-		'is_active' => $hand->is_active
+		'is_active' => $hand->is_active,
+		'textFinanc' => $hand->textFinanc,
+		'textFinancEsp' => $hand->textFinancEsp,
+		'is_activeTf'=> $hand->is_activeTf
 	);
 	
 	$this->output
@@ -119,7 +129,7 @@ public function recent_hands()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$hands = $this->api_model->get_hands($featured=false, $recentpost=5);
+	$hands = $this->api_model_hand->get_hands($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($hand)){
@@ -141,7 +151,10 @@ public function recent_hands()
 				'button' => $hand->button,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'created_at' => $hand->created_at,
-				'is_active' => $hand->is_active
+				'is_active' => $hand->is_active,
+				'textFinanc' => $hand->textFinanc,
+				'textFinancEsp' => $hand->textFinancEsp,
+				'is_activeTf'=> $hand->is_activeTf
 			);
 		}
 	}
@@ -169,7 +182,7 @@ public function recent_hands()
 
 		$posts = array();
 		if($isValidToken) {
-			$hands = $this->api_model->get_admin_hands();
+			$hands = $this->api_model_hand->get_admin_hands();
 			foreach($hands as $hand) {
 				$posts[] = array(
 					'id' => $hand->id,
@@ -182,7 +195,10 @@ public function recent_hands()
 					'button' => $hand->button,
 					'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 					'created_at' => $hand->created_at,
-					'is_active' => $hand->is_active
+					'is_active' => $hand->is_active,
+					'textFinanc' => $hand->textFinanc,
+					'textFinancEsp' => $hand->textFinancEsp,
+				    'is_activeTf'=> $hand->is_activeTf
 				);
 			}
 
@@ -204,7 +220,7 @@ public function recent_hands()
 
 		if($isValidToken) {
 
-			$hand = $this->api_model->get_admin_hand($id);
+			$hand = $this->api_model_hand->get_admin_hand($id);
 
 			$post = array(
 				'id' => $hand->id,
@@ -217,7 +233,10 @@ public function recent_hands()
 				'button' => $hand->button,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'is_featured' => $hand->is_featured,
-				'is_active' => $hand->is_active
+				'is_active' => $hand->is_active,
+				'textFinanc' => $hand->textFinanc,
+				'textFinancEsp' => $hand->textFinancEsp,
+				'is_activeTf'=> $hand->is_activeTf
 			);
 			
 
@@ -249,6 +268,9 @@ public function recent_hands()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -289,10 +311,13 @@ public function recent_hands()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertHand($handData);
+				$id = $this->api_model_hand->insertHand($handData);
 
 				$response = array(
 					'status' => 'success'
@@ -318,7 +343,7 @@ public function recent_hands()
 
 		if($isValidToken) {
 
-			$hand = $this->api_model->get_admin_hand($id);
+			$hand = $this->api_model_hand->get_admin_hand($id);
 			$filename = $hand->image;
 
 			$title = $this->input->post('title');
@@ -330,6 +355,9 @@ public function recent_hands()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -373,10 +401,13 @@ public function recent_hands()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateHand($id, $handData);
+				$this->api_model_hand->updateHand($id, $handData);
 
 				$response = array(
 					'status' => 'success'
@@ -402,14 +433,14 @@ public function recent_hands()
 
 		if($isValidToken) {
 
-			$hand = $this->api_model->get_admin_hand($id);
+			$hand = $this->api_model_hand->get_admin_hand($id);
 
 			if($hand->image && file_exists(FCPATH.'media/images/servicios/body/hand/'.$hand->image))
 			{
 				unlink(FCPATH.'media/images/servicios/body/hand/'.$hand->image);
 			}
 
-			$this->api_model->deleteHand($id);
+			$this->api_model_hand->deleteHand($id);
 
 			$response = array(
 				'status' => 'success'

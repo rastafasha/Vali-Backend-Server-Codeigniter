@@ -7,6 +7,7 @@ class Api_Specialt extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_specialt');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -18,7 +19,7 @@ public function specialts()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$specialts = $this->api_model->get_specialts($featured=false, $recentpost=false);
+	$specialts = $this->api_model_specialt->get_specialts($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($specialts)){
@@ -40,7 +41,10 @@ public function specialts()
 				'button' => $specialt->button,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'created_at' => $specialt->created_at,
-				'is_active' => $specialt->is_active
+				'is_active' => $specialt->is_active,
+				'textFinanc' => $specialt->textFinanc,
+				'textFinancEsp' => $specialt->textFinancEsp,
+				'is_activeTf'=> $specialt->is_activeTf
 			);
 		}
 	}
@@ -54,7 +58,7 @@ public function featured_specialts()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$specialts = $this->api_model->get_specialts($featured=true, $recentpost=false);
+	$specialts = $this->api_model_specialt->get_specialts($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($specialts)){
@@ -76,7 +80,10 @@ public function featured_specialts()
 				'button' => $specialt->button,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'created_at' => $specialt->created_at,
-				'is_active' => $specialt->is_active
+				'is_active' => $specialt->is_active,
+				'textFinanc' => $specialt->textFinanc,
+				'textFinancEsp' => $specialt->textFinancEsp,
+				'is_activeTf'=> $specialt->is_activeTf
 			);
 		}
 	}
@@ -90,7 +97,7 @@ public function specialt($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$specialt = $this->api_model->get_specialt($id);
+	$specialt = $this->api_model_specialt->get_specialt($id);
 
 	$author = $specialt->first_name.' '.$specialt->last_name;
 
@@ -106,7 +113,10 @@ public function specialt($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 		'created_at' => $specialt->created_at,
-		'is_active' => $specialt->is_active
+		'is_active' => $specialt->is_active,
+		'textFinanc' => $specialt->textFinanc,
+		'textFinancEsp' => $specialt->textFinancEsp,
+				'is_activeTf'=> $specialt->is_activeTf
 	);
 	
 	$this->output
@@ -118,7 +128,7 @@ public function recent_specialts()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$specialts = $this->api_model->get_specialts($featured=false, $recentpost=5);
+	$specialts = $this->api_model_specialt->get_specialts($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($specialt)){
@@ -139,7 +149,10 @@ public function recent_specialts()
 				'button' => $specialt->button,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'created_at' => $specialt->created_at,
-				'is_active' => $specialt->is_active
+				'is_active' => $specialt->is_active,
+				'textFinanc' => $specialt->textFinanc,
+				'textFinancEsp' => $specialt->textFinancEsp,
+				'is_activeTf'=> $specialt->is_activeTf
 			);
 		}
 	}
@@ -166,7 +179,7 @@ public function recent_specialts()
 
 		$posts = array();
 		if($isValidToken) {
-			$specialts = $this->api_model->get_admin_specialts();
+			$specialts = $this->api_model_specialt->get_admin_specialts();
 			foreach($specialts as $specialt) {
 				$posts[] = array(
 					'id' => $specialt->id,
@@ -179,7 +192,10 @@ public function recent_specialts()
 					'button' => $specialt->button,
 					'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 					'created_at' => $specialt->created_at,
-					'is_active' => $specialt->is_active
+					'is_active' => $specialt->is_active,
+					'textFinanc' => $specialt->textFinanc,
+					'textFinancEsp' => $specialt->textFinancEsp,
+				'is_activeTf'=> $specialt->is_activeTf
 				);
 			}
 
@@ -201,7 +217,7 @@ public function recent_specialts()
 
 		if($isValidToken) {
 
-			$specialt = $this->api_model->get_admin_specialt($id);
+			$specialt = $this->api_model_specialt->get_admin_specialt($id);
 
 			$post = array(
 				'id' => $specialt->id,
@@ -214,7 +230,10 @@ public function recent_specialts()
 				'button' => $specialt->button,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'is_featured' => $specialt->is_featured,
-				'is_active' => $specialt->is_active
+				'is_active' => $specialt->is_active,
+				'textFinanc' => $specialt->textFinanc,
+				'textFinancEsp' => $specialt->textFinancEsp,
+				'is_activeTf'=> $specialt->is_activeTf
 			);
 			
 
@@ -246,6 +265,9 @@ public function recent_specialts()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -286,10 +308,13 @@ public function recent_specialts()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertSpecialt($specialtData);
+				$id = $this->api_model_specialt->insertSpecialt($specialtData);
 
 				$response = array(
 					'status' => 'success'
@@ -315,7 +340,7 @@ public function recent_specialts()
 
 		if($isValidToken) {
 
-			$specialt = $this->api_model->get_admin_specialt($id);
+			$specialt = $this->api_model_specialt->get_admin_specialt($id);
 			$filename = $specialt->image;
 
 			$title = $this->input->post('title');
@@ -327,6 +352,9 @@ public function recent_specialts()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -370,10 +398,13 @@ public function recent_specialts()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateSpecialt($id, $specialtData);
+				$this->api_model_specialt->updateSpecialt($id, $specialtData);
 
 				$response = array(
 					'status' => 'success'
@@ -399,14 +430,14 @@ public function recent_specialts()
 
 		if($isValidToken) {
 
-			$specialt = $this->api_model->get_admin_specialt($id);
+			$specialt = $this->api_model_specialt->get_admin_specialt($id);
 
 			if($specialt->image && file_exists(FCPATH.'media/images/servicios/specialt/'.$specialt->image))
 			{
 				unlink(FCPATH.'media/images/servicios/specialt/'.$specialt->image);
 			}
 
-			$this->api_model->deleteSpecialt($id);
+			$this->api_model_specialt->deleteSpecialt($id);
 
 			$response = array(
 				'status' => 'success'

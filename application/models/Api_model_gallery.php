@@ -36,6 +36,47 @@ class Api_model_gallery extends CI_Model
 	}
 
 	//
+
+	// gallery
+
+	public function get_admin_gallerys()
+	{
+		$this->db->select('gallery.*');
+		$this->db->from('gallerys gallery');
+		$this->db->order_by('gallery.created_at', 'desc');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_admin_gallery($id)
+	{
+		$this->db->select('gallery.*');
+		$this->db->from('gallerys gallery');
+		$this->db->where('gallery.id', $id);
+		$query = $this->db->get();
+		return $query->row();
+	}
+//
+
+// gallery
+public function insertGallery($galleryData)
+{
+	$this->db->insert('gallerys', $galleryData);
+	return $this->db->insert_id();
+}
+
+public function updateGallery($id, $galleryData)
+{
+	$this->db->where('id', $id);
+	$this->db->update('gallerys', $galleryData);
+}
+
+public function deleteGallery($id)
+{
+	$this->db->where('id', $id);
+	$this->db->delete('gallerys');
+}
+
 	
 	
 }

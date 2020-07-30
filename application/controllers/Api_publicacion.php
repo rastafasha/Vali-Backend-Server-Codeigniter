@@ -7,6 +7,7 @@ class Api_Publicacion extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_publicacion');
 		$this->load->helper('url');
 		$this->load->helper('text');
 	}
@@ -18,7 +19,7 @@ public function publicacions()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$publicacions = $this->api_model->get_publicacions($featured=false, $recentpost=false);
+	$publicacions = $this->api_model_publicacion->get_publicacions($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($publicacions)){
@@ -48,7 +49,7 @@ public function featured_publicacions()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$publicacions = $this->api_model->get_publicacions($featured=true, $recentpost=false);
+	$publicacions = $this->api_model_publicacion->get_publicacions($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($publicacions)){
@@ -78,7 +79,7 @@ public function publicacion($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$publicacion = $this->api_model->get_publicacion($id);
+	$publicacion = $this->api_model_publicacion->get_publicacion($id);
 
 	$author = $publicacion->first_name.' '.$publicacion->last_name;
 
@@ -101,7 +102,7 @@ public function recent_publicacions()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$publicacions = $this->api_model->get_publicacions($featured=false, $recentpost=5);
+	$publicacions = $this->api_model_publicacion->get_publicacions($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($publicacion)){
@@ -147,7 +148,7 @@ public function recent_publicacions()
 
 		$posts = array();
 		if($isValidToken) {
-			$publicacions = $this->api_model->get_admin_publicacions();
+			$publicacions = $this->api_model_publicacion->get_admin_publicacions();
 			foreach($publicacions as $publicacion) {
 				$posts[] = array(
 					'id' => $publicacion->id,
@@ -176,7 +177,7 @@ public function recent_publicacions()
 
 		if($isValidToken) {
 
-			$publicacion = $this->api_model->get_admin_publicacion($id);
+			$publicacion = $this->api_model_publicacion->get_admin_publicacion($id);
 
 			$post = array(
 				'id' => $publicacion->id,
@@ -249,7 +250,7 @@ public function recent_publicacions()
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertPublicacion($publicacionData);
+				$id = $this->api_model_publicacion->insertPublicacion($publicacionData);
 
 				$response = array(
 					'status' => 'success'
@@ -275,7 +276,7 @@ public function recent_publicacions()
 
 		if($isValidToken) {
 
-			$publicacion = $this->api_model->get_admin_publicacion($id);
+			$publicacion = $this->api_model_publicacion->get_admin_publicacion($id);
 			$filename = $publicacion->image;
 
 			$title = $this->input->post('title');
@@ -323,7 +324,7 @@ public function recent_publicacions()
 					'is_active' => $is_active
 				);
 
-				$this->api_model->updatePublicacion($id, $publicacionData);
+				$this->api_model_publicacion->updatePublicacion($id, $publicacionData);
 
 				$response = array(
 					'status' => 'success'
@@ -349,14 +350,14 @@ public function recent_publicacions()
 
 		if($isValidToken) {
 
-			$publicacion = $this->api_model->get_admin_publicacion($id);
+			$publicacion = $this->api_model_publicacion->get_admin_publicacion($id);
 
 			if($publicacion->image && file_exists(FCPATH.'media/images/publicacion/'.$publicacion->image))
 			{
 				unlink(FCPATH.'media/images/publicacion/'.$publicacion->image);
 			}
 
-			$this->api_model->deletePublicacion($id);
+			$this->api_model_publicacion->deletePublicacion($id);
 
 			$response = array(
 				'status' => 'success'

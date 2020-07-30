@@ -7,6 +7,7 @@ class Api_Fibrobody extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_fibrobody');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -18,7 +19,7 @@ public function bodys()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$bodys = $this->api_model->get_bodys($featured=false, $recentpost=false);
+	$bodys = $this->api_model_fibrobody->get_bodys($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($bodys)){
@@ -40,7 +41,9 @@ public function bodys()
 				'button' => $body->button,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
-				'is_active' => $body->is_active
+				'is_active' => $body->is_active,
+				'textFinanc' => $body->textFinanc,
+				'is_activeTf'=> $body->is_activeTf
 			);
 		}
 	}
@@ -54,7 +57,7 @@ public function featured_bodys()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$bodys = $this->api_model->get_bodys($featured=true, $recentpost=false);
+	$bodys = $this->api_model_fibrobody->get_bodys($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($bodys)){
@@ -76,7 +79,9 @@ public function featured_bodys()
 				'button' => $body->button,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
-				'is_active' => $body->is_active
+				'is_active' => $body->is_active,
+				'textFinanc' => $body->textFinanc,
+				'is_activeTf'=> $body->is_activeTf
 			);
 		}
 	}
@@ -90,7 +95,7 @@ public function body($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$body = $this->api_model->get_body($id);
+	$body = $this->api_model_fibrobody->get_body($id);
 
 	$author = $body->first_name.' '.$body->last_name;
 
@@ -106,7 +111,9 @@ public function body($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 		'created_at' => $body->created_at,
-		'is_active' => $body->is_active
+		'is_active' => $body->is_active,
+		'textFinanc' => $body->textFinanc,
+				'is_activeTf'=> $body->is_activeTf
 	);
 	
 	$this->output
@@ -118,7 +125,7 @@ public function recent_bodys()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$bodys = $this->api_model->get_bodys($featured=false, $recentpost=5);
+	$bodys = $this->api_model_fibrobody->get_bodys($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($body)){
@@ -140,7 +147,9 @@ public function recent_bodys()
 				'button' => $body->button,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
-				'is_active' => $body->is_active
+				'is_active' => $body->is_active,
+				'textFinanc' => $body->textFinanc,
+				'is_activeTf'=> $body->is_activeTf
 			);
 		}
 	}
@@ -169,7 +178,7 @@ public function adminBodys()
 
 	$posts = array();
 	if($isValidToken) {
-		$bodys = $this->api_model->get_admin_bodys();
+		$bodys = $this->api_model_fibrobody->get_admin_bodys();
 		foreach($bodys as $body) {
 			$posts[] = array(
 				'id' => $body->id,
@@ -182,7 +191,9 @@ public function adminBodys()
 				'button' => $body->button,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
-				'is_active' => $body->is_active
+				'is_active' => $body->is_active,
+				'textFinanc' => $body->textFinanc,
+				'is_activeTf'=> $body->is_activeTf
 			);
 		}
 
@@ -204,7 +215,7 @@ public function adminBody($id)
 
 	if($isValidToken) {
 
-		$body = $this->api_model->get_admin_body($id);
+		$body = $this->api_model_fibrobody->get_admin_body($id);
 
 		$post = array(
 			'id' => $body->id,
@@ -217,7 +228,9 @@ public function adminBody($id)
 			'button' => $body->button,
 			'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 			'is_featured' => $body->is_featured,
-			'is_active' => $body->is_active
+			'is_active' => $body->is_active,
+			'textFinanc' => $body->textFinanc,
+				'is_activeTf'=> $body->is_activeTf
 		);
 		
 
@@ -249,6 +262,8 @@ public function createBody()
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
 
@@ -289,10 +304,12 @@ public function createBody()
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
 
-			$id = $this->api_model->insertBody($bodyData);
+			$id = $this->api_model_fibrobody->insertBody($bodyData);
 
 			$response = array(
 				'status' => 'success'
@@ -318,7 +335,7 @@ public function updateBody($id)
 
 	if($isValidToken) {
 
-		$body = $this->api_model->get_admin_body($id);
+		$body = $this->api_model_fibrobody->get_admin_body($id);
 		$filename = $body->image;
 
 		$title = $this->input->post('title');
@@ -330,6 +347,8 @@ public function updateBody($id)
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
 
@@ -373,10 +392,12 @@ public function updateBody($id)
 				'button' => $button,
 				'image' => $filename,
 				'is_featured' => $is_featured,
-				'is_active' => $is_active
+				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf,
 			);
 
-			$this->api_model->updateBody($id, $bodyData);
+			$this->api_model_fibrobody->updateBody($id, $bodyData);
 
 			$response = array(
 				'status' => 'success'
@@ -402,14 +423,14 @@ public function deleteBody($id)
 
 	if($isValidToken) {
 
-		$body = $this->api_model->get_admin_body($id);
+		$body = $this->api_model_fibrobody->get_admin_body($id);
 
 		if($body->image && file_exists(FCPATH.'media/images/servicios/fibroblast/body/'.$body->image))
 		{
 			unlink(FCPATH.'media/images/servicios/fibroblast/body/'.$body->image);
 		}
 
-		$this->api_model->deleteBody($id);
+		$this->api_model_fibrobody->deleteBody($id);
 
 		$response = array(
 			'status' => 'success'

@@ -37,6 +37,51 @@ class Api_model_modal extends CI_Model
 	}
 
 	//
+
+
+	// Modal home
+
+	public function get_admin_modals()
+	{
+		$this->db->select('modal.*, u.first_name, u.last_name');
+		$this->db->from('modals modal');
+		$this->db->join('users u', 'u.id=modal.user_id');
+		$this->db->order_by('modal.created_at', 'desc');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_admin_modal($id)
+	{
+		$this->db->select('modal.*, u.first_name, u.last_name');
+		$this->db->from('modals modal');
+		$this->db->join('users u', 'u.id=modal.user_id');
+		$this->db->where('modal.id', $id);
+		$query = $this->db->get();
+		return $query->row();
+	}
+//
+
+// Modal home
+public function insertModal($modalData)
+{
+	$this->db->insert('modals', $modalData);
+	return $this->db->insert_id();
+}
+
+public function updateModal($id, $modalData)
+{
+	$this->db->where('id', $id);
+	$this->db->update('modals', $modalData);
+}
+
+public function deleteModal($id)
+{
+	$this->db->where('id', $id);
+	$this->db->delete('modals');
+}
+
+
 	
 	
 }

@@ -7,6 +7,7 @@ class Api_Permanent extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_permanent');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -19,7 +20,7 @@ public function permanents()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$permanents = $this->api_model->get_permanents($featured=false, $recentpost=false);
+	$permanents = $this->api_model_permanent->get_permanents($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($permanents)){
@@ -41,7 +42,10 @@ public function permanents()
 				'button' => $permanent->button,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'created_at' => $permanent->created_at,
-				'is_active' => $permanent->is_active
+				'is_active' => $permanent->is_active,
+				'textFinanc' => $permanent->textFinanc,
+				'textFinancEsp' => $permanent->textFinancEsp,
+				'is_activeTf'=> $permanent->is_activeTf
 			);
 		}
 	}
@@ -55,7 +59,7 @@ public function featured_permanents()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$permanents = $this->api_model->get_permanents($featured=true, $recentpost=false);
+	$permanents = $this->api_model_permanent->get_permanents($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($permanents)){
@@ -77,7 +81,10 @@ public function featured_permanents()
 				'button' => $permanent->button,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'created_at' => $permanent->created_at,
-				'is_active' => $permanent->is_active
+				'is_active' => $permanent->is_active,
+				'textFinanc' => $permanent->textFinanc,
+				'textFinancEsp' => $permanent->textFinancEsp,
+				'is_activeTf'=> $permanent->is_activeTf
 			);
 		}
 	}
@@ -91,7 +98,7 @@ public function permanent($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$permanent = $this->api_model->get_permanent($id);
+	$permanent = $this->api_model_permanent->get_permanent($id);
 
 	$author = $permanent->first_name.' '.$permanent->last_name;
 
@@ -107,7 +114,10 @@ public function permanent($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 		'created_at' => $permanent->created_at,
-		'is_active' => $permanent->is_active
+		'is_active' => $permanent->is_active,
+		'textFinanc' => $permanent->textFinanc,
+		'textFinancEsp' => $permanent->textFinancEsp,
+		'is_activeTf'=> $permanent->is_activeTf
 	);
 	
 	$this->output
@@ -119,7 +129,7 @@ public function recent_permanents()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$permanents = $this->api_model->get_permanents($featured=false, $recentpost=5);
+	$permanents = $this->api_model_permanent->get_permanents($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($permanent)){
@@ -140,7 +150,10 @@ public function recent_permanents()
 				'button' => $permanent->button,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'created_at' => $permanent->created_at,
-				'is_active' => $permanent->is_active
+				'is_active' => $permanent->is_active,
+				'textFinanc' => $permanent->textFinanc,
+				'textFinancEsp' => $permanent->textFinancEsp,
+				'is_activeTf'=> $permanent->is_activeTf
 			);
 		}
 	}
@@ -168,7 +181,7 @@ public function recent_permanents()
 
 		$posts = array();
 		if($isValidToken) {
-			$permanents = $this->api_model->get_admin_permanents();
+			$permanents = $this->api_model_permanent->get_admin_permanents();
 			foreach($permanents as $permanent) {
 				$posts[] = array(
 					'id' => $permanent->id,
@@ -180,7 +193,10 @@ public function recent_permanents()
 					'button' => $permanent->button,
 					'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 					'created_at' => $permanent->created_at,
-					'is_active' => $permanent->is_active
+					'is_active' => $permanent->is_active,
+					'textFinanc' => $permanent->textFinanc,
+					'textFinancEsp' => $permanent->textFinancEsp,
+				    'is_activeTf'=> $permanent->is_activeTf
 				);
 			}
 
@@ -202,7 +218,7 @@ public function recent_permanents()
 
 		if($isValidToken) {
 
-			$permanent = $this->api_model->get_admin_permanent($id);
+			$permanent = $this->api_model_permanent->get_admin_permanent($id);
 
 			$post = array(
 				'id' => $permanent->id,
@@ -215,7 +231,10 @@ public function recent_permanents()
 				'button' => $permanent->button,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'is_featured' => $permanent->is_featured,
-				'is_active' => $permanent->is_active
+				'is_active' => $permanent->is_active,
+				'textFinanc' => $permanent->textFinanc,
+				'textFinancEsp' => $permanent->textFinancEsp,
+				'is_activeTf'=> $permanent->is_activeTf
 			);
 			
 
@@ -247,6 +266,9 @@ public function recent_permanents()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -287,10 +309,13 @@ public function recent_permanents()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertPermanent($permanentData);
+				$id = $this->api_model_permanent->insertPermanent($permanentData);
 
 				$response = array(
 					'status' => 'success'
@@ -316,7 +341,7 @@ public function recent_permanents()
 
 		if($isValidToken) {
 
-			$permanent = $this->api_model->get_admin_permanent($id);
+			$permanent = $this->api_model_permanent->get_admin_permanent($id);
 			$filename = $permanent->image;
 
 			$title = $this->input->post('title');
@@ -328,6 +353,9 @@ public function recent_permanents()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -371,10 +399,13 @@ public function recent_permanents()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updatePermanent($id, $permanentData);
+				$this->api_model_permanent->updatePermanent($id, $permanentData);
 
 				$response = array(
 					'status' => 'success'
@@ -400,14 +431,14 @@ public function recent_permanents()
 
 		if($isValidToken) {
 
-			$permanent = $this->api_model->get_admin_permanent($id);
+			$permanent = $this->api_model_permanent->get_admin_permanent($id);
 
 			if($permanent->image && file_exists(FCPATH.'media/images/servicios/permanent/'.$permanent->image))
 			{
 				unlink(FCPATH.'media/images/servicios/permanent/'.$permanent->image);
 			}
 
-			$this->api_model->deletePermanent($id);
+			$this->api_model_permanent->deletePermanent($id);
 
 			$response = array(
 				'status' => 'success'

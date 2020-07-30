@@ -36,6 +36,51 @@ public function get_fibroface($id)
 //
 
 
+
+// Fibroblast Fibrofaces
+
+public function get_admin_fibrofaces()
+{
+	$this->db->select('fibroface.*, u.first_name, u.last_name');
+	$this->db->from('fibrofaces fibroface');
+	$this->db->join('users u', 'u.id=fibroface.user_id');
+	$this->db->order_by('fibroface.created_at', 'desc');
+	$query = $this->db->get();
+	return $query->result();
+}
+
+public function get_admin_fibroface($id)
+{
+	$this->db->select('fibroface.*, u.first_name, u.last_name');
+	$this->db->from('fibrofaces fibroface');
+	$this->db->join('users u', 'u.id=fibroface.user_id');
+	$this->db->where('fibroface.id', $id);
+	$query = $this->db->get();
+	return $query->row();
+}
+//
+
+
+// Fibroblast Face
+public function insertFibroface($fibrofaceData)
+{
+	$this->db->insert('fibrofaces', $fibrofaceData);
+	return $this->db->insert_id();
+}
+
+public function updateFibroface($id, $fibrofaceData)
+{
+	$this->db->where('id', $id);
+	$this->db->update('fibrofaces', $fibrofaceData);
+}
+
+public function deleteFibroface($id)
+{
+	$this->db->where('id', $id);
+	$this->db->delete('fibrofaces');
+}
+
+
 	
 	
 	

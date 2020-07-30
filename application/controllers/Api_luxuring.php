@@ -7,6 +7,7 @@ class Api_Luxuring extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_luxuring');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -18,7 +19,7 @@ public function luxurings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$luxurings = $this->api_model->get_luxurings($featured=false, $recentpost=false);
+	$luxurings = $this->api_model_luxuring->get_luxurings($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($luxurings)){
@@ -40,7 +41,10 @@ public function luxurings()
 				'button' => $luxuring->button,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'created_at' => $luxuring->created_at,
-				'is_active' => $luxuring->is_active
+				'is_active' => $luxuring->is_active,
+				'textFinanc' => $luxuring->textFinanc,
+				'textFinancEsp' => $luxuring->textFinancEsp,
+				'is_activeTf'=> $luxuring->is_activeTf
 			);
 		}
 	}
@@ -54,7 +58,7 @@ public function featured_luxurings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$luxurings = $this->api_model->get_luxurings($featured=true, $recentpost=false);
+	$luxurings = $this->api_model_luxuring->get_luxurings($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($luxurings)){
@@ -76,7 +80,10 @@ public function featured_luxurings()
 				'button' => $luxuring->button,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'created_at' => $luxuring->created_at,
-				'is_active' => $luxuring->is_active
+				'is_active' => $luxuring->is_active,
+				'textFinanc' => $luxuring->textFinanc,
+				'textFinancEsp' => $luxuring->textFinancEsp,
+				'is_activeTf'=> $luxuring->is_activeTf
 			);
 		}
 	}
@@ -90,7 +97,7 @@ public function luxuring($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$luxuring = $this->api_model->get_luxuring($id);
+	$luxuring = $this->api_model_luxuring->get_luxuring($id);
 
 	$author = $luxuring->first_name.' '.$luxuring->last_name;
 
@@ -106,7 +113,10 @@ public function luxuring($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 		'created_at' => $luxuring->created_at,
-		'is_active' => $luxuring->is_active
+		'is_active' => $luxuring->is_active,
+		'textFinanc' => $luxuring->textFinanc,
+		'textFinancEsp' => $luxuring->textFinancEsp,
+		'is_activeTf'=> $luxuring->is_activeTf
 	);
 	
 	$this->output
@@ -118,7 +128,7 @@ public function recent_luxurings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$luxurings = $this->api_model->get_luxurings($featured=false, $recentpost=5);
+	$luxurings = $this->api_model_luxuring->get_luxurings($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($luxuring)){
@@ -140,7 +150,10 @@ public function recent_luxurings()
 				'button' => $luxuring->button,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'created_at' => $luxuring->created_at,
-				'is_active' => $luxuring->is_active
+				'is_active' => $luxuring->is_active,
+				'textFinanc' => $luxuring->textFinanc,
+				'textFinancEsp' => $luxuring->textFinancEsp,
+				'is_activeTf'=> $luxuring->is_activeTf
 			);
 		}
 	}
@@ -168,7 +181,7 @@ public function adminLuxurings()
 
 		$posts = array();
 		if($isValidToken) {
-			$luxurings = $this->api_model->get_admin_luxurings();
+			$luxurings = $this->api_model_luxuring->get_admin_luxurings();
 			foreach($luxurings as $luxuring) {
 				$posts[] = array(
 					'id' => $luxuring->id,
@@ -181,7 +194,10 @@ public function adminLuxurings()
 					'button' => $luxuring->button,
 					'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 					'created_at' => $luxuring->created_at,
-					'is_active' => $luxuring->is_active
+					'is_active' => $luxuring->is_active,
+					'textFinanc' => $luxuring->textFinanc,
+					'textFinancEsp' => $luxuring->textFinancEsp,
+				    'is_activeTf'=> $luxuring->is_activeTf
 				);
 			}
 
@@ -203,7 +219,7 @@ public function adminLuxurings()
 
 		if($isValidToken) {
 
-			$luxuring = $this->api_model->get_admin_luxuring($id);
+			$luxuring = $this->api_model_luxuring->get_admin_luxuring($id);
 
 			$post = array(
 				'id' => $luxuring->id,
@@ -216,7 +232,10 @@ public function adminLuxurings()
 				'button' => $luxuring->button,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'is_featured' => $luxuring->is_featured,
-				'is_active' => $luxuring->is_active
+				'is_active' => $luxuring->is_active,
+				'textFinanc' => $luxuring->textFinanc,
+				'textFinancEsp' => $luxuring->textFinancEsp,
+				'is_activeTf'=> $luxuring->is_activeTf
 			);
 			
 
@@ -248,6 +267,11 @@ public function adminLuxurings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$is_activeTf = $this->input->post('is_activeTf');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -288,10 +312,13 @@ public function adminLuxurings()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertLuxuring($luxuringData);
+				$id = $this->api_model_luxuring->insertLuxuring($luxuringData);
 
 				$response = array(
 					'status' => 'success'
@@ -317,7 +344,7 @@ public function adminLuxurings()
 
 		if($isValidToken) {
 
-			$luxuring = $this->api_model->get_admin_luxuring($id);
+			$luxuring = $this->api_model_luxuring->get_admin_luxuring($id);
 			$filename = $luxuring->image;
 
 			$title = $this->input->post('title');
@@ -329,6 +356,9 @@ public function adminLuxurings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -372,10 +402,13 @@ public function adminLuxurings()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateLuxuring($id, $luxuringData);
+				$this->api_model_luxuring->updateLuxuring($id, $luxuringData);
 
 				$response = array(
 					'status' => 'success'
@@ -401,14 +434,14 @@ public function adminLuxurings()
 
 		if($isValidToken) {
 
-			$luxuring = $this->api_model->get_admin_luxuring($id);
+			$luxuring = $this->api_model_luxuring->get_admin_luxuring($id);
 
 			if($luxuring->image && file_exists(FCPATH.'media/images/servicios/facial/luxury/'.$luxuring->image))
 			{
 				unlink(FCPATH.'media/images/servicios/facial/luxury/'.$luxuring->image);
 			}
 
-			$this->api_model->deleteLuxuring($id);
+			$this->api_model_luxuring->deleteLuxuring($id);
 
 			$response = array(
 				'status' => 'success'

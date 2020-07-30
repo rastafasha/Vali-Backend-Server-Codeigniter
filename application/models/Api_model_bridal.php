@@ -37,6 +37,49 @@ public function get_bridal($id)
 
 //
 
+
+// Makeup Bridal looks
+
+public function get_admin_bridals()
+{
+	$this->db->select('bridal.*, u.first_name, u.last_name');
+	$this->db->from('bridals bridal');
+	$this->db->join('users u', 'u.id=bridal.user_id');
+	$this->db->order_by('bridal.created_at', 'desc');
+	$query = $this->db->get();
+	return $query->result();
+}
+
+public function get_admin_bridal($id)
+{
+	$this->db->select('bridal.*, u.first_name, u.last_name');
+	$this->db->from('bridals bridal');
+	$this->db->join('users u', 'u.id=bridal.user_id');
+	$this->db->where('bridal.id', $id);
+	$query = $this->db->get();
+	return $query->row();
+}
+//
+
+// Makeup  Bridal looks
+public function insertBridal($bridalData)
+{
+	$this->db->insert('bridals', $bridalData);
+	return $this->db->insert_id();
+}
+
+public function updateBridal($id, $bridalData)
+{
+	$this->db->where('id', $id);
+	$this->db->update('bridals', $bridalData);
+}
+
+public function deleteBridal($id)
+{
+	$this->db->where('id', $id);
+	$this->db->delete('bridals');
+}
+
 	
 	
 	

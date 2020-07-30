@@ -7,6 +7,7 @@ class Api_Bridal extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_bridal');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -18,7 +19,7 @@ public function bridals()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$bridals = $this->api_model->get_bridals($featured=false, $recentpost=false);
+	$bridals = $this->api_model_bridal->get_bridals($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($bridals)){
@@ -40,7 +41,9 @@ public function bridals()
 				'button' => $bridal->button,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
-				'is_active' => $bridal->is_active
+				'is_active' => $bridal->is_active,
+				'textFinanc' => $bridal->textFinanc,
+				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
 	}
@@ -54,7 +57,7 @@ public function featured_bridals()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$bridals = $this->api_model->get_bridals($featured=true, $recentpost=false);
+	$bridals = $this->api_model_bridal->get_bridals($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($bridals)){
@@ -76,7 +79,9 @@ public function featured_bridals()
 				'button' => $bridal->button,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
-				'is_active' => $bridal->is_active
+				'is_active' => $bridal->is_active,
+				'textFinanc' => $bridal->textFinanc,
+				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
 	}
@@ -90,7 +95,7 @@ public function bridal($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$bridal = $this->api_model->get_bridal($id);
+	$bridal = $this->api_model_bridal->get_bridal($id);
 
 	$author = $bridal->first_name.' '.$bridal->last_name;
 
@@ -106,7 +111,9 @@ public function bridal($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 		'created_at' => $bridal->created_at,
-		'is_active' => $bridal->is_active
+		'is_active' => $bridal->is_active,
+		'textFinanc' => $bridal->textFinanc,
+				'is_activeTf'=> $bridal->is_activeTf
 	);
 	
 	$this->output
@@ -118,7 +125,7 @@ public function recent_bridals()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$bridals = $this->api_model->get_bridal($featured=false, $recentpost=5);
+	$bridals = $this->api_model_bridal->get_bridal($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($bridal)){
@@ -140,7 +147,9 @@ public function recent_bridals()
 				'button' => $bridal->button,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
-				'is_active' => $bridal->is_active
+				'is_active' => $bridal->is_active,
+				'textFinanc' => $bridal->textFinanc,
+				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
 	}
@@ -168,7 +177,7 @@ public function adminBridals()
 
 	$posts = array();
 	if($isValidToken) {
-		$bridals = $this->api_model->get_admin_bridals();
+		$bridals = $this->api_model_bridal->get_admin_bridals();
 		foreach($bridals as $bridal) {
 			$posts[] = array(
 				'id' => $bridal->id,
@@ -181,7 +190,9 @@ public function adminBridals()
 				'button' => $bridal->button,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
-				'is_active' => $bridal->is_active
+				'is_active' => $bridal->is_active,
+				'textFinanc' => $bridal->textFinanc,
+				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
 
@@ -203,7 +214,7 @@ public function adminBridal($id)
 
 	if($isValidToken) {
 
-		$bridal = $this->api_model->get_admin_bridal($id);
+		$bridal = $this->api_model_bridal->get_admin_bridal($id);
 
 		$post = array(
 			'id' => $bridal->id,
@@ -216,7 +227,9 @@ public function adminBridal($id)
 			'button' => $bridal->button,
 			'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 			'is_featured' => $bridal->is_featured,
-			'is_active' => $bridal->is_active
+			'is_active' => $bridal->is_active,
+			'textFinanc' => $bridal->textFinanc,
+				'is_activeTf'=> $bridal->is_activeTf
 		);
 		
 
@@ -248,6 +261,8 @@ public function createBridal()
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
 
@@ -288,10 +303,12 @@ public function createBridal()
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
 
-			$id = $this->api_model->insertBridal($bridalData);
+			$id = $this->api_model_bridal->insertBridal($bridalData);
 
 			$response = array(
 				'status' => 'success'
@@ -317,7 +334,7 @@ public function updateBridal($id)
 
 	if($isValidToken) {
 
-		$bridal = $this->api_model->get_admin_bridal($id);
+		$bridal = $this->api_model_bridal->get_admin_bridal($id);
 		$filename = $bridal->image;
 
 		$title = $this->input->post('title');
@@ -329,6 +346,8 @@ public function updateBridal($id)
 		$button = $this->input->post('button');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
+		$textFinanc = $this->input->post('textFinanc');
+		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
 
@@ -372,10 +391,12 @@ public function updateBridal($id)
 				'button' => $button,
 				'image' => $filename,
 				'is_featured' => $is_featured,
-				'is_active' => $is_active
+				'is_active' => $is_active,
+				'textFinanc' => $textFinanc,
+				'is_activeTf' => $is_activeTf
 			);
 
-			$this->api_model->updateBridal($id, $bridalData);
+			$this->api_model_bridal->updateBridal($id, $bridalData);
 
 			$response = array(
 				'status' => 'success'
@@ -401,14 +422,14 @@ public function deleteBridal($id)
 
 	if($isValidToken) {
 
-		$bridal = $this->api_model->get_admin_bridal($id);
+		$bridal = $this->api_model_bridal->get_admin_bridal($id);
 
 		if($bridal->image && file_exists(FCPATH.'media/images/servicios/makeup/bridal/'.$bridal->image))
 		{
 			unlink(FCPATH.'media/images/servicios/makeup/bridal/'.$bridal->image);
 		}
 
-		$this->api_model->deleteBridal($id);
+		$this->api_model_bridal->deleteBridal($id);
 
 		$response = array(
 			'status' => 'success'

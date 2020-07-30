@@ -7,6 +7,7 @@ class Api_Restorative extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_restorative');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
@@ -19,7 +20,7 @@ public function restoratives()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$restoratives = $this->api_model->get_restoratives($featured=false, $recentpost=false);
+	$restoratives = $this->api_model_restorative->get_restoratives($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($restoratives)){
@@ -41,7 +42,10 @@ public function restoratives()
 				'button' => $restorative->button,
 				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 				'created_at' => $restorative->created_at,
-				'is_active' => $restorative->is_active
+				'is_active' => $restorative->is_active,
+				'textFinanc' => $restorative->textFinanc,
+				'textFinancEsp' => $restorative->textFinancEsp,
+				'is_activeTf'=> $restorative->is_activeTf
 			);
 		}
 	}
@@ -55,7 +59,7 @@ public function featured_restoratives()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$restoratives = $this->api_model->get_restoratives($featured=true, $recentpost=false);
+	$restoratives = $this->api_model_restorative->get_restoratives($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($restoratives)){
@@ -77,7 +81,10 @@ public function featured_restoratives()
 				'button' => $restorative->button,
 				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 				'created_at' => $restorative->created_at,
-				'is_active' => $restorative->is_active
+				'is_active' => $restorative->is_active,
+				'textFinanc' => $restorative->textFinanc,
+				'textFinancEsp' => $restorative->textFinancEsp,
+				'is_activeTf'=> $restorative->is_activeTf
 			);
 		}
 	}
@@ -91,7 +98,7 @@ public function restorative($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$restorative = $this->api_model->get_restorative($id);
+	$restorative = $this->api_model_restorative->get_restorative($id);
 
 	$author = $restorative->first_name.' '.$restorative->last_name;
 
@@ -107,7 +114,10 @@ public function restorative($id)
 		'author' => $author,
 		'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 		'created_at' => $restorative->created_at,
-		'is_active' => $restorative->is_active
+		'is_active' => $restorative->is_active,
+		'textFinanc' => $restorative->textFinanc,
+		'textFinancEsp' => $restorative->textFinancEsp,
+		'is_activeTf'=> $restorative->is_activeTf
 	);
 	
 	$this->output
@@ -119,7 +129,7 @@ public function recent_restoratives()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$restoratives = $this->api_model->get_restoratives($featured=false, $recentpost=5);
+	$restoratives = $this->api_model_restorative->get_restoratives($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($restorative)){
@@ -141,7 +151,10 @@ public function recent_restoratives()
 				'button' => $restorative->button,
 				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 				'created_at' => $restorative->created_at,
-				'is_active' => $restorative->is_active
+				'is_active' => $restorative->is_active,
+				'textFinanc' => $restorative->textFinanc,
+				'textFinancEsp' => $restorative->textFinancEsp,
+				'is_activeTf'=> $restorative->is_activeTf
 			);
 		}
 	}
@@ -171,7 +184,7 @@ public function recent_restoratives()
 
 		$posts = array();
 		if($isValidToken) {
-			$restoratives = $this->api_model->get_admin_restoratives();
+			$restoratives = $this->api_model_restorative->get_admin_restoratives();
 			foreach($restoratives as $restorative) {
 				$posts[] = array(
 					'id' => $restorative->id,
@@ -184,7 +197,10 @@ public function recent_restoratives()
 					'button' => $restorative->button,
 					'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 					'created_at' => $restorative->created_at,
-					'is_active' => $restorative->is_active
+					'is_active' => $restorative->is_active,
+					'textFinanc' => $restorative->textFinanc,
+					'textFinancEsp' => $restorative->textFinancEsp,
+				    'is_activeTf'=> $restorative->is_activeTf
 				);
 			}
 
@@ -206,7 +222,7 @@ public function recent_restoratives()
 
 		if($isValidToken) {
 
-			$restorative = $this->api_model->get_admin_restorative($id);
+			$restorative = $this->api_model_restorative->get_admin_restorative($id);
 
 			$post = array(
 				'id' => $restorative->id,
@@ -219,7 +235,10 @@ public function recent_restoratives()
 				'button' => $restorative->button,
 				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 				'is_featured' => $restorative->is_featured,
-				'is_active' => $restorative->is_active
+				'is_active' => $restorative->is_active,
+				'textFinanc' => $restorative->textFinanc,
+				'textFinancEsp' => $restorative->textFinancEsp,
+				'is_activeTf'=> $restorative->is_activeTf
 			);
 			
 
@@ -251,6 +270,9 @@ public function recent_restoratives()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -291,10 +313,13 @@ public function recent_restoratives()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertRestorative($restorativeData);
+				$id = $this->api_model_restorative->insertRestorative($restorativeData);
 
 				$response = array(
 					'status' => 'success'
@@ -320,7 +345,7 @@ public function recent_restoratives()
 
 		if($isValidToken) {
 
-			$restorative = $this->api_model->get_admin_restorative($id);
+			$restorative = $this->api_model_restorative->get_admin_restorative($id);
 			$filename = $restorative->image;
 
 			$title = $this->input->post('title');
@@ -332,6 +357,9 @@ public function recent_restoratives()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -375,10 +403,13 @@ public function recent_restoratives()
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateRestorative($id, $restorativeData);
+				$this->api_model_restorative->updateRestorative($id, $restorativeData);
 
 				$response = array(
 					'status' => 'success'
@@ -404,14 +435,14 @@ public function recent_restoratives()
 
 		if($isValidToken) {
 
-			$restorative = $this->api_model->get_admin_restorative($id);
+			$restorative = $this->api_model_restorative->get_admin_restorative($id);
 
 			if($restorative->image && file_exists(FCPATH.'media/images/servicios/facial/restorative/'.$restorative->image))
 			{
 				unlink(FCPATH.'media/images/servicios/facial/restorative/'.$restorative->image);
 			}
 
-			$this->api_model->deleteRestorative($id);
+			$this->api_model_restorative->deleteRestorative($id);
 
 			$response = array(
 				'status' => 'success'

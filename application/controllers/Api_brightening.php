@@ -1,24 +1,26 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Api_Fbrightening extends CI_Controller {
+class Api_Brightening extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('api_model');
+		$this->load->model('api_model_brightening');
 		$this->load->helper('url');
 		$this->load->helper('text');
     }
 
 
-// Facial brightening 
+
+// Facial brightenings 
 
 public function brightenings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$brightenings = $this->api_model->get_brightenings($featured=false, $recentpost=false);
+	$brightenings = $this->api_model_brightening->get_brightenings($featured=false, $recentpost=false);
 
 	$posts = array();
 	if(!empty($brightenings)){
@@ -31,16 +33,18 @@ public function brightenings()
 				'id' => $brightening->id,
 				'title' => $brightening->title,
 				'titleesp' => $brightening->titleesp,
-				'descriptionesp' => $brightening->descriptionesp,
 				'short_asc' => html_entity_decode($short_asc),
 				'author' => $author,
 				'price' => $brightening->price,
 				'popup' => $brightening->popup,
 				'description' => $brightening->description,
+				'descriptionesp' => $brightening->descriptionesp,
 				'button' => $brightening->button,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'created_at' => $brightening->created_at,
-				'is_active' => $brightening->is_active
+				'is_active' => $brightening->is_active,
+				'textFinanc' => $brightening->textFinanc,
+				'is_activeTf'=> $brightening->is_activeTf
 			);
 		}
 	}
@@ -54,7 +58,7 @@ public function featured_brightenings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$brightenings = $this->api_model->get_brightenings($featured=true, $recentpost=false);
+	$brightenings = $this->api_model_brightening->get_brightenings($featured=true, $recentpost=false);
 
 	$posts = array();
 	if(!empty($brightenings)){
@@ -67,16 +71,18 @@ public function featured_brightenings()
 				'id' => $brightening->id,
 				'title' => $brightening->title,
 				'titleesp' => $brightening->titleesp,
-				'descriptionesp' => $brightening->descriptionesp,
 				'short_asc' => html_entity_decode($short_asc),
 				'author' => $author,
 				'price' => $brightening->price,
 				'popup' => $brightening->popup,
 				'description' => $brightening->description,
+				'descriptionesp' => $brightening->descriptionesp,
 				'button' => $brightening->button,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'created_at' => $brightening->created_at,
-				'is_active' => $brightening->is_active
+				'is_active' => $brightening->is_active,
+				'textFinanc' => $brightening->textFinanc,
+				'is_activeTf'=> $brightening->is_activeTf
 			);
 		}
 	}
@@ -90,23 +96,25 @@ public function brightening($id)
 {
 	header("Access-Control-Allow-Origin: *");
 	
-	$brightening = $this->api_model->get_brightening($id);
+	$brightening = $this->api_model_brightening->get_brightening($id);
 
 	$author = $brightening->first_name.' '.$brightening->last_name;
 
 	$post = array(
 		'id' => $brightening->id,
 		'title' => $brightening->title,
-		'description' => $brightening->description,
 		'titleesp' => $brightening->titleesp,
-				'descriptionesp' => $brightening->descriptionesp,
+		'description' => $brightening->description,
+		'descriptionesp' => $brightening->descriptionesp,
 		'price' => $brightening->price,
 		'popup' => $brightening->popup,
 		'button' => $brightening->button,
 		'author' => $author,
 		'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 		'created_at' => $brightening->created_at,
-		'is_active' => $brightening->is_active
+		'is_active' => $brightening->is_active,
+		'textFinanc' => $brightening->textFinanc,
+		'is_activeTf'=> $brightening->is_activeTf
 	);
 	
 	$this->output
@@ -118,7 +126,7 @@ public function recent_brightenings()
 {
 	header("Access-Control-Allow-Origin: *");
 
-	$brightening = $this->api_model->get_brightenings($featured=false, $recentpost=5);
+	$brightenings = $this->api_model_brightening->get_brightenings($featured=false, $recentpost=5);
 
 	$posts = array();
 	if(!empty($brightening)){
@@ -131,16 +139,18 @@ public function recent_brightenings()
 				'id' => $brightening->id,
 				'title' => $brightening->title,
 				'titleesp' => $brightening->titleesp,
-				'descriptionesp' => $brightening->descriptionesp,
 				'short_asc' => html_entity_decode($short_asc),
 				'author' => $author,
 				'price' => $brightening->price,
 				'popup' => $brightening->popup,
 				'description' => $brightening->description,
+				'descriptionesp' => $brightening->descriptionesp,
 				'button' => $brightening->button,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'created_at' => $brightening->created_at,
-				'is_active' => $brightening->is_active
+				'is_active' => $brightening->is_active,
+				'textFinanc' => $brightening->textFinanc,
+				'is_activeTf'=> $brightening->is_activeTf
 			);
 		}
 	}
@@ -151,7 +161,6 @@ public function recent_brightenings()
 }
 
 ///
-
 
 //Crud
 
@@ -168,20 +177,22 @@ public function recent_brightenings()
 
 		$posts = array();
 		if($isValidToken) {
-			$brightenings = $this->api_model->get_admin_brightenings();
+			$brightenings = $this->api_model_brightening->get_admin_brightenings();
 			foreach($brightenings as $brightening) {
 				$posts[] = array(
 					'id' => $brightening->id,
 					'title' => $brightening->title,
-					'description' => $brightening->description,
 					'titleesp' => $brightening->titleesp,
-					'descriptionesp' => $brightening->descriptionesp,
 					'price' => $brightening->price,
 					'popup' => $brightening->popup,
+					'description' => $brightening->description,
+					'descriptionesp' => $brightening->descriptionesp,
 					'button' => $brightening->button,
 					'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 					'created_at' => $brightening->created_at,
-					'is_active' => $brightening->is_active
+					'is_active' => $brightening->is_active,
+					'textFinanc' => $brightening->textFinanc,
+				'is_activeTf'=> $brightening->is_activeTf
 				);
 			}
 
@@ -203,7 +214,7 @@ public function recent_brightenings()
 
 		if($isValidToken) {
 
-			$brightening = $this->api_model->get_admin_brightening($id);
+			$brightening = $this->api_model_brightening->get_admin_brightening($id);
 
 			$post = array(
 				'id' => $brightening->id,
@@ -216,7 +227,9 @@ public function recent_brightenings()
 				'button' => $brightening->button,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'is_featured' => $brightening->is_featured,
-				'is_active' => $brightening->is_active
+				'is_active' => $brightening->is_active,
+				'textFinanc' => $brightening->textFinanc,
+				'is_activeTf'=> $brightening->is_activeTf
 			);
 			
 
@@ -248,6 +261,8 @@ public function recent_brightenings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
 
@@ -277,10 +292,10 @@ public function recent_brightenings()
 
 			if( ! $isUploadError) {
 	        	$brighteningData = array(
-					'user_id' => 1,
 					'title' => $title,
-					'description' => $description,
 					'titleesp' => $titleesp,
+					'user_id' => 1,
+					'description' => $description,
 					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
@@ -288,10 +303,12 @@ public function recent_brightenings()
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
 
-				$id = $this->api_model->insertBrightening($brighteningData);
+				$id = $this->api_model_brightening->insertBrightening($brighteningData);
 
 				$response = array(
 					'status' => 'success'
@@ -317,7 +334,7 @@ public function recent_brightenings()
 
 		if($isValidToken) {
 
-			$brightening = $this->api_model->get_admin_brightening($id);
+			$brightening = $this->api_model_brightening->get_admin_brightening($id);
 			$filename = $brightening->image;
 
 			$title = $this->input->post('title');
@@ -329,6 +346,8 @@ public function recent_brightenings()
 			$button = $this->input->post('button');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
+			$textFinanc = $this->input->post('textFinanc');
+			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
 
@@ -362,20 +381,22 @@ public function recent_brightenings()
 
 			if( ! $isUploadError) {
 	        	$brighteningData = array(
-					'user_id' => 1,
 					'title' => $title,
-					'description' => $description,
 					'titleesp' => $titleesp,
+					'user_id' => 1,
+					'description' => $description,
 					'descriptionesp' => $descriptionesp,
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
 					'image' => $filename,
 					'is_featured' => $is_featured,
-					'is_active' => $is_active
+					'is_active' => $is_active,
+					'textFinanc' => $textFinanc,
+					'is_activeTf' => $is_activeTf,
 				);
 
-				$this->api_model->updateBrightening($id, $brighteningData);
+				$this->api_model_brightening->updateBrightening($id, $brighteningData);
 
 				$response = array(
 					'status' => 'success'
@@ -401,14 +422,14 @@ public function recent_brightenings()
 
 		if($isValidToken) {
 
-			$brightening = $this->api_model->get_admin_brightening($id);
+			$brightening = $this->api_model_brightening->get_admin_brightening($id);
 
 			if($brightening->image && file_exists(FCPATH.'media/images/servicios/facial/brightening/'.$brightening->image))
 			{
 				unlink(FCPATH.'media/images/servicios/facial/brightening/'.$brightening->image);
 			}
 
-			$this->api_model->deleteBrightening($id);
+			$this->api_model_brightening->deleteBrightening($id);
 
 			$response = array(
 				'status' => 'success'
@@ -421,5 +442,8 @@ public function recent_brightenings()
 		}
 	}
 
-}
+	//
 
+
+
+}
