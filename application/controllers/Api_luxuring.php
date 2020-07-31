@@ -39,6 +39,8 @@ public function luxurings()
 				'popup' => $luxuring->popup,
 				'description' => $luxuring->description,
 				'button' => $luxuring->button,
+				'buttonEs' => $luxuring->buttonEs,
+				'target' => $luxuring->target,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'created_at' => $luxuring->created_at,
 				'is_active' => $luxuring->is_active,
@@ -78,6 +80,8 @@ public function featured_luxurings()
 				'popup' => $luxuring->popup,
 				'description' => $luxuring->description,
 				'button' => $luxuring->button,
+				'buttonEs' => $luxuring->buttonEs,
+				'target' => $luxuring->target,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'created_at' => $luxuring->created_at,
 				'is_active' => $luxuring->is_active,
@@ -102,21 +106,23 @@ public function luxuring($id)
 	$author = $luxuring->first_name.' '.$luxuring->last_name;
 
 	$post = array(
-		'id' => $luxuring->id,
-		'title' => $luxuring->title,
-		'description' => $luxuring->description,
-		'titleesp' => $luxuring->titleesp,
-		'descriptionesp' => $luxuring->descriptionesp,
-		'price' => $luxuring->price,
-		'popup' => $luxuring->popup,
-		'button' => $luxuring->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
-		'created_at' => $luxuring->created_at,
-		'is_active' => $luxuring->is_active,
-		'textFinanc' => $luxuring->textFinanc,
-		'textFinancEsp' => $luxuring->textFinancEsp,
-		'is_activeTf'=> $luxuring->is_activeTf
+				'id' => $luxuring->id,
+				'title' => $luxuring->title,
+				'description' => $luxuring->description,
+				'titleesp' => $luxuring->titleesp,
+				'descriptionesp' => $luxuring->descriptionesp,
+				'price' => $luxuring->price,
+				'popup' => $luxuring->popup,
+				'button' => $luxuring->button,
+				'buttonEs' => $luxuring->buttonEs,
+				'target' => $luxuring->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
+				'created_at' => $luxuring->created_at,
+				'is_active' => $luxuring->is_active,
+				'textFinanc' => $luxuring->textFinanc,
+				'textFinancEsp' => $luxuring->textFinancEsp,
+				'is_activeTf'=> $luxuring->is_activeTf
 	);
 	
 	$this->output
@@ -148,6 +154,8 @@ public function recent_luxurings()
 				'popup' => $luxuring->popup,
 				'description' => $luxuring->description,
 				'button' => $luxuring->button,
+				'buttonEs' => $luxuring->buttonEs,
+				'target' => $luxuring->target,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'created_at' => $luxuring->created_at,
 				'is_active' => $luxuring->is_active,
@@ -192,6 +200,8 @@ public function adminLuxurings()
 					'price' => $luxuring->price,
 					'popup' => $luxuring->popup,
 					'button' => $luxuring->button,
+					'buttonEs' => $luxuring->buttonEs,
+					'target' => $luxuring->target,
 					'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 					'created_at' => $luxuring->created_at,
 					'is_active' => $luxuring->is_active,
@@ -230,6 +240,8 @@ public function adminLuxurings()
 				'price' => $luxuring->price,
 				'popup' => $luxuring->popup,
 				'button' => $luxuring->button,
+				'buttonEs' => $luxuring->buttonEs,
+				'target' => $luxuring->target,
 				'image' => base_url('media/images/servicios/facial/luxury/'.$luxuring->image),
 				'is_featured' => $luxuring->is_featured,
 				'is_active' => $luxuring->is_active,
@@ -265,6 +277,8 @@ public function adminLuxurings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -309,6 +323,8 @@ public function adminLuxurings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -354,6 +370,8 @@ public function adminLuxurings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -400,6 +418,8 @@ public function adminLuxurings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

@@ -40,10 +40,13 @@ public function clasess()
 				'popup' => $clases->popup,
 				'description' => $clases->description,
 				'button' => $clases->button,
+				'buttonEs' => $clases->buttonEs,
+				'target' => $clases->target,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
 				'is_active' => $clases->is_active,
 				'textFinanc' => $clases->textFinanc,
+				'textFinancEsp' => $clases->textFinancEsp,
 				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
@@ -78,10 +81,13 @@ public function featured_clasess()
 				'popup' => $clases->popup,
 				'description' => $clases->description,
 				'button' => $clases->button,
+				'buttonEs' => $clases->buttonEs,
+				'target' => $clases->target,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
 				'is_active' => $clases->is_active,
 				'textFinanc' => $clases->textFinanc,
+				'textFinancEsp' => $clases->textFinancEsp,
 				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
@@ -101,19 +107,22 @@ public function clases($id)
 	$author = $clases->first_name.' '.$clases->last_name;
 
 	$post = array(
-		'id' => $clases->id,
-		'title' => $clases->title,
-		'description' => $clases->description,
-		'titleesp' => $clases->titleesp,
+				'id' => $clases->id,
+				'title' => $clases->title,
+				'description' => $clases->description,
+				'titleesp' => $clases->titleesp,
 				'descriptionesp' => $clases->descriptionesp,
-		'price' => $clases->price,
-		'popup' => $clases->popup,
-		'button' => $clases->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
-		'created_at' => $clases->created_at,
-		'is_active' => $clases->is_active,
-		'textFinanc' => $clases->textFinanc,
+				'price' => $clases->price,
+				'popup' => $clases->popup,
+				'button' => $clases->button,
+				'buttonEs' => $clases->buttonEs,
+				'target' => $clases->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
+				'created_at' => $clases->created_at,
+				'is_active' => $clases->is_active,
+				'textFinanc' => $clases->textFinanc,
+				'textFinancEsp' => $clases->textFinancEsp,
 				'is_activeTf'=> $clases->is_activeTf
 	);
 	
@@ -146,10 +155,13 @@ public function recent_clasess()
 				'popup' => $clases->popup,
 				'description' => $clases->description,
 				'button' => $clases->button,
+				'buttonEs' => $clases->buttonEs,
+				'target' => $clases->target,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
 				'is_active' => $clases->is_active,
 				'textFinanc' => $clases->textFinanc,
+				'textFinancEsp' => $clases->textFinancEsp,
 				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
@@ -189,10 +201,13 @@ public function adminClasess()
 				'price' => $clases->price,
 				'popup' => $clases->popup,
 				'button' => $clases->button,
+				'buttonEs' => $clases->buttonEs,
+				'target' => $clases->target,
 				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
 				'created_at' => $clases->created_at,
 				'is_active' => $clases->is_active,
 				'textFinanc' => $clases->textFinanc,
+				'textFinancEsp' => $clases->textFinancEsp,
 				'is_activeTf'=> $clases->is_activeTf
 			);
 		}
@@ -218,18 +233,21 @@ public function adminClases($id)
 		$clases = $this->api_model_classe->get_admin_clases($id);
 
 		$post = array(
-			'id' => $clases->id,
-			'title' => $clases->title,
-			'description' => $clases->description,
-			'titleesp' => $clases->titleesp,
-			'descriptionesp' => $clases->descriptionesp,
-			'price' => $clases->price,
-			'popup' => $clases->popup,
-			'button' => $clases->button,
-			'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
-			'is_featured' => $clases->is_featured,
-			'is_active' => $clases->is_active,
-			'textFinanc' => $clases->textFinanc,
+				'id' => $clases->id,
+				'title' => $clases->title,
+				'description' => $clases->description,
+				'titleesp' => $clases->titleesp,
+				'descriptionesp' => $clases->descriptionesp,
+				'price' => $clases->price,
+				'popup' => $clases->popup,
+				'button' => $clases->button,
+				'buttonEs' => $clases->buttonEs,
+				'target' => $clases->target,
+				'image' => base_url('media/images/servicios/makeup/clases/'.$clases->image),
+				'is_featured' => $clases->is_featured,
+				'is_active' => $clases->is_active,
+				'textFinanc' => $clases->textFinanc,
+				'textFinancEsp' => $clases->textFinancEsp,
 				'is_activeTf'=> $clases->is_activeTf
 		);
 		
@@ -260,9 +278,12 @@ public function createClases()
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
@@ -301,10 +322,13 @@ public function createClases()
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
@@ -345,9 +369,12 @@ public function updateClases($id)
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
@@ -390,10 +417,13 @@ public function updateClases($id)
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf
 			);
 

@@ -39,6 +39,8 @@ public function wrappings()
 				'popup' => $wrapping->popup,
 				'description' => $wrapping->description,
 				'button' => $wrapping->button,
+				'buttonEs' => $wrapping->buttonEs,
+				'target' => $wrapping->target,
 				'image' => base_url('media/images/servicios/body/wrapping/'.$wrapping->image),
 				'created_at' => $wrapping->created_at,
 				'textFinanc' => $wrapping->textFinanc,
@@ -77,6 +79,8 @@ public function featured_wrappings()
 				'popup' => $wrapping->popup,
 				'description' => $wrapping->description,
 				'button' => $wrapping->button,
+				'buttonEs' => $wrapping->buttonEs,
+				'target' => $wrapping->target,
 				'image' => base_url('media/images/servicios/body/wrapping/'.$wrapping->image),
 				'created_at' => $wrapping->created_at,
 				'textFinanc' => $wrapping->textFinanc,
@@ -100,20 +104,22 @@ public function wrapping($id)
 	$author = $wrapping->first_name.' '.$wrapping->last_name;
 
 	$post = array(
-		'id' => $wrapping->id,
-		'title' => $wrapping->title,
-		'description' => $wrapping->description,
-		'titleesp' => $wrapping->titleesp,
-		'descriptionesp' => $wrapping->descriptionesp,
-		'price' => $wrapping->price,
-		'popup' => $wrapping->popup,
-		'button' => $wrapping->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/body/wrapping/'.$wrapping->image),
-		'created_at' => $wrapping->created_at,
-		'textFinanc' => $wrapping->textFinanc,
-		'textFinancEsp' => $wrapping->textFinancEsp,
-		'is_activeTf'=> $wrapping->is_activeTf
+				'id' => $wrapping->id,
+				'title' => $wrapping->title,
+				'description' => $wrapping->description,
+				'titleesp' => $wrapping->titleesp,
+				'descriptionesp' => $wrapping->descriptionesp,
+				'price' => $wrapping->price,
+				'popup' => $wrapping->popup,
+				'button' => $wrapping->button,
+				'buttonEs' => $wrapping->buttonEs,
+				'target' => $wrapping->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/body/wrapping/'.$wrapping->image),
+				'created_at' => $wrapping->created_at,
+				'textFinanc' => $wrapping->textFinanc,
+				'textFinancEsp' => $wrapping->textFinancEsp,
+				'is_activeTf'=> $wrapping->is_activeTf
 	);
 	
 	$this->output
@@ -145,6 +151,8 @@ public function recent_wrappings()
 				'popup' => $wrapping->popup,
 				'description' => $wrapping->description,
 				'button' => $wrapping->button,
+				'buttonEs' => $wrapping->buttonEs,
+				'target' => $wrapping->target,
 				'image' => base_url('media/images/servicios/body/wrapping/'.$wrapping->image),
 				'created_at' => $wrapping->created_at,
 				'textFinanc' => $wrapping->textFinanc,
@@ -188,6 +196,8 @@ public function adminWrappings()
 				'price' => $wrapping->price,
 				'popup' => $wrapping->popup,
 				'button' => $wrapping->button,
+				'buttonEs' => $wrapping->buttonEs,
+				'target' => $wrapping->target,
 				'image' => base_url('media/images/servicios/body/wrapping/'.$wrapping->image),
 				'created_at' => $wrapping->created_at,
 				'textFinanc' => $wrapping->textFinanc,
@@ -225,6 +235,8 @@ public function adminWrapping($id)
 			'price' => $wrapping->price,
 			'popup' => $wrapping->popup,
 			'button' => $wrapping->button,
+			'buttonEs' => $wrapping->buttonEs,
+			'target' => $wrapping->target,
 			'image' => base_url('media/images/servicios/body/wrapping/'.$wrapping->image),
 			'is_featured' => $wrapping->is_featured,
 			'is_active' => $wrapping->is_active,
@@ -260,6 +272,8 @@ public function createWrapping()
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
@@ -302,6 +316,8 @@ public function createWrapping()
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
@@ -347,6 +363,8 @@ public function updateWrapping($id)
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
@@ -393,6 +411,8 @@ public function updateWrapping($id)
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,

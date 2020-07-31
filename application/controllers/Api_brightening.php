@@ -40,10 +40,13 @@ public function brightenings()
 				'description' => $brightening->description,
 				'descriptionesp' => $brightening->descriptionesp,
 				'button' => $brightening->button,
+				'buttonEs' => $brightening->buttonEs,
+				'target' => $brightening->target,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'created_at' => $brightening->created_at,
 				'is_active' => $brightening->is_active,
 				'textFinanc' => $brightening->textFinanc,
+				'textFinancEsp' => $brightening->textFinancEsp,
 				'is_activeTf'=> $brightening->is_activeTf
 			);
 		}
@@ -78,10 +81,13 @@ public function featured_brightenings()
 				'description' => $brightening->description,
 				'descriptionesp' => $brightening->descriptionesp,
 				'button' => $brightening->button,
+				'buttonEs' => $brightening->buttonEs,
+				'target' => $brightening->target,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'created_at' => $brightening->created_at,
 				'is_active' => $brightening->is_active,
 				'textFinanc' => $brightening->textFinanc,
+				'textFinancEsp' => $brightening->textFinancEsp,
 				'is_activeTf'=> $brightening->is_activeTf
 			);
 		}
@@ -109,11 +115,14 @@ public function brightening($id)
 		'price' => $brightening->price,
 		'popup' => $brightening->popup,
 		'button' => $brightening->button,
+		'buttonEs' => $brightening->buttonEs,
+		'target' => $brightening->target,
 		'author' => $author,
 		'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 		'created_at' => $brightening->created_at,
 		'is_active' => $brightening->is_active,
 		'textFinanc' => $brightening->textFinanc,
+		'textFinancEsp' => $brightening->textFinancEsp,
 		'is_activeTf'=> $brightening->is_activeTf
 	);
 	
@@ -146,10 +155,13 @@ public function recent_brightenings()
 				'description' => $brightening->description,
 				'descriptionesp' => $brightening->descriptionesp,
 				'button' => $brightening->button,
+				'buttonEs' => $brightening->buttonEs,
+				'target' => $brightening->target,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'created_at' => $brightening->created_at,
 				'is_active' => $brightening->is_active,
 				'textFinanc' => $brightening->textFinanc,
+				'textFinancEsp' => $brightening->textFinancEsp,
 				'is_activeTf'=> $brightening->is_activeTf
 			);
 		}
@@ -188,10 +200,13 @@ public function recent_brightenings()
 					'description' => $brightening->description,
 					'descriptionesp' => $brightening->descriptionesp,
 					'button' => $brightening->button,
+					'buttonEs' => $brightening->buttonEs,
+					'target' => $brightening->target,
 					'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 					'created_at' => $brightening->created_at,
 					'is_active' => $brightening->is_active,
 					'textFinanc' => $brightening->textFinanc,
+					'textFinancEsp' => $brightening->textFinancEsp,
 				'is_activeTf'=> $brightening->is_activeTf
 				);
 			}
@@ -225,10 +240,13 @@ public function recent_brightenings()
 				'price' => $brightening->price,
 				'popup' => $brightening->popup,
 				'button' => $brightening->button,
+				'buttonEs' => $brightening->buttonEs,
+				'target' => $brightening->target,
 				'image' => base_url('media/images/servicios/facial/brightening/'.$brightening->image),
 				'is_featured' => $brightening->is_featured,
 				'is_active' => $brightening->is_active,
 				'textFinanc' => $brightening->textFinanc,
+				'textFinancEsp' => $brightening->textFinancEsp,
 				'is_activeTf'=> $brightening->is_activeTf
 			);
 			
@@ -259,9 +277,12 @@ public function recent_brightenings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
 			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
@@ -300,10 +321,13 @@ public function recent_brightenings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
 					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
 					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
@@ -344,9 +368,12 @@ public function recent_brightenings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
 			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
@@ -389,10 +416,13 @@ public function recent_brightenings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
 					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
 					'is_activeTf' => $is_activeTf,
 				);
 

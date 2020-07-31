@@ -39,10 +39,13 @@ public function fibrofaces()
 				'popup' => $fibroface->popup,
 				'description' => $fibroface->description,
 				'button' => $fibroface->button,
+				'buttonEs' => $fibroface->buttonEs,
+				'target' => $fibroface->target,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
 				'is_active' => $fibroface->is_active,
 				'textFinanc' => $fibroface->textFinanc,
+				'textFinancEsp' => $fibroface->textFinancEsp,
 				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
@@ -77,10 +80,13 @@ public function featured_fibrofaces()
 				'popup' => $fibroface->popup,
 				'description' => $fibroface->description,
 				'button' => $fibroface->button,
+				'buttonEs' => $fibroface->buttonEs,
+				'target' => $fibroface->target,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
 				'is_active' => $fibroface->is_active,
 				'textFinanc' => $fibroface->textFinanc,
+				'textFinancEsp' => $fibroface->textFinancEsp,
 				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
@@ -100,19 +106,22 @@ public function fibroface($id)
 	$author = $fibroface->first_name.' '.$fibroface->last_name;
 
 	$post = array(
-		'id' => $fibroface->id,
-		'title' => $fibroface->title,
-		'description' => $fibroface->description,
-		'titleesp' => $fibroface->titleesp,
+				'id' => $fibroface->id,
+				'title' => $fibroface->title,
+				'description' => $fibroface->description,
+				'titleesp' => $fibroface->titleesp,
 				'descriptionesp' => $fibroface->descriptionesp,
-		'price' => $fibroface->price,
-		'popup' => $fibroface->popup,
-		'button' => $fibroface->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
-		'created_at' => $fibroface->created_at,
-		'is_active' => $fibroface->is_active,
-		'textFinanc' => $fibroface->textFinanc,
+				'price' => $fibroface->price,
+				'popup' => $fibroface->popup,
+				'button' => $fibroface->button,
+				'buttonEs' => $fibroface->buttonEs,
+				'target' => $fibroface->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
+				'created_at' => $fibroface->created_at,
+				'is_active' => $fibroface->is_active,
+				'textFinanc' => $fibroface->textFinanc,
+				'textFinancEsp' => $fibroface->textFinancEsp,
 				'is_activeTf'=> $fibroface->is_activeTf
 	);
 	
@@ -145,10 +154,13 @@ public function recent_fibrofaces()
 				'popup' => $fibroface->popup,
 				'description' => $fibroface->description,
 				'button' => $fibroface->button,
+				'buttonEs' => $fibroface->buttonEs,
+				'target' => $fibroface->target,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
 				'is_active' => $fibroface->is_active,
 				'textFinanc' => $fibroface->textFinanc,
+				'textFinancEsp' => $fibroface->textFinancEsp,
 				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
@@ -188,10 +200,13 @@ public function adminFibrofaces()
 				'price' => $fibroface->price,
 				'popup' => $fibroface->popup,
 				'button' => $fibroface->button,
+				'buttonEs' => $fibroface->buttonEs,
+				'target' => $fibroface->target,
 				'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 				'created_at' => $fibroface->created_at,
 				'is_active' => $fibroface->is_active,
 				'textFinanc' => $fibroface->textFinanc,
+				'textFinancEsp' => $fibroface->textFinancEsp,
 				'is_activeTf'=> $fibroface->is_activeTf
 			);
 		}
@@ -225,10 +240,13 @@ public function adminFibroface($id)
 			'price' => $fibroface->price,
 			'popup' => $fibroface->popup,
 			'button' => $fibroface->button,
+			'buttonEs' => $fibroface->buttonEs,
+			'target' => $fibroface->target,
 			'image' => base_url('media/images/servicios/fibroblast/fibroface/'.$fibroface->image),
 			'is_featured' => $fibroface->is_featured,
 			'is_active' => $fibroface->is_active,
 			'textFinanc' => $fibroface->textFinanc,
+			'textFinancEsp' => $fibroface->textFinancEsp,
 				'is_activeTf'=> $fibroface->is_activeTf
 		);
 		
@@ -259,9 +277,12 @@ public function createFibroface()
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
@@ -300,10 +321,13 @@ public function createFibroface()
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
@@ -344,9 +368,12 @@ public function updateFibroface($id)
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
@@ -389,10 +416,13 @@ public function updateFibroface($id)
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf,
 			);
 

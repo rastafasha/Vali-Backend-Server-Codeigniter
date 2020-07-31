@@ -40,6 +40,8 @@ public function restoratives()
 				'popup' => $restorative->popup,
 				'description' => $restorative->description,
 				'button' => $restorative->button,
+				'buttonEs' => $restorative->buttonEs,
+				'target' => $restorative->target,
 				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 				'created_at' => $restorative->created_at,
 				'is_active' => $restorative->is_active,
@@ -69,22 +71,24 @@ public function featured_restoratives()
 			$author = $restorative->first_name.' '.$restorative->last_name;
 
 			$posts[] = array(
-				'id' => $restorative->id,
-				'title' => $restorative->title,
-				'titleesp' => $restorative->titleesp,
-				'descriptionesp' => $restorative->descriptionesp,
-				'short_desc' => html_entity_decode($short_desc),
-				'author' => $author,
-				'price' => $restorative->price,
-				'popup' => $restorative->popup,
-				'description' => $restorative->description,
-				'button' => $restorative->button,
-				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
-				'created_at' => $restorative->created_at,
-				'is_active' => $restorative->is_active,
-				'textFinanc' => $restorative->textFinanc,
-				'textFinancEsp' => $restorative->textFinancEsp,
-				'is_activeTf'=> $restorative->is_activeTf
+					'id' => $restorative->id,
+					'title' => $restorative->title,
+					'titleesp' => $restorative->titleesp,
+					'descriptionesp' => $restorative->descriptionesp,
+					'short_desc' => html_entity_decode($short_desc),
+					'author' => $author,
+					'price' => $restorative->price,
+					'popup' => $restorative->popup,
+					'description' => $restorative->description,
+					'button' => $restorative->button,
+					'buttonEs' => $restorative->buttonEs,
+					'target' => $restorative->target,
+					'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
+					'created_at' => $restorative->created_at,
+					'is_active' => $restorative->is_active,
+					'textFinanc' => $restorative->textFinanc,
+					'textFinancEsp' => $restorative->textFinancEsp,
+					'is_activeTf'=> $restorative->is_activeTf
 			);
 		}
 	}
@@ -103,21 +107,23 @@ public function restorative($id)
 	$author = $restorative->first_name.' '.$restorative->last_name;
 
 	$post = array(
-		'id' => $restorative->id,
-		'title' => $restorative->title,
-		'description' => $restorative->description,
-		'titleesp' => $restorative->titleesp,
-		'descriptionesp' => $restorative->descriptionesp,
-		'price' => $restorative->price,
-		'popup' => $restorative->popup,
-		'button' => $restorative->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
-		'created_at' => $restorative->created_at,
-		'is_active' => $restorative->is_active,
-		'textFinanc' => $restorative->textFinanc,
-		'textFinancEsp' => $restorative->textFinancEsp,
-		'is_activeTf'=> $restorative->is_activeTf
+				'id' => $restorative->id,
+				'title' => $restorative->title,
+				'description' => $restorative->description,
+				'titleesp' => $restorative->titleesp,
+				'descriptionesp' => $restorative->descriptionesp,
+				'price' => $restorative->price,
+				'popup' => $restorative->popup,
+				'button' => $restorative->button,
+				'buttonEs' => $restorative->buttonEs,
+				'target' => $restorative->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
+				'created_at' => $restorative->created_at,
+				'is_active' => $restorative->is_active,
+				'textFinanc' => $restorative->textFinanc,
+				'textFinancEsp' => $restorative->textFinancEsp,
+				'is_activeTf'=> $restorative->is_activeTf
 	);
 	
 	$this->output
@@ -149,6 +155,8 @@ public function recent_restoratives()
 				'popup' => $restorative->popup,
 				'description' => $restorative->description,
 				'button' => $restorative->button,
+				'buttonEs' => $restorative->buttonEs,
+				'target' => $restorative->target,
 				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 				'created_at' => $restorative->created_at,
 				'is_active' => $restorative->is_active,
@@ -195,6 +203,8 @@ public function recent_restoratives()
 					'price' => $restorative->price,
 					'popup' => $restorative->popup,
 					'button' => $restorative->button,
+					'buttonEs' => $restorative->buttonEs,
+					'target' => $restorative->target,
 					'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 					'created_at' => $restorative->created_at,
 					'is_active' => $restorative->is_active,
@@ -233,6 +243,8 @@ public function recent_restoratives()
 				'price' => $restorative->price,
 				'popup' => $restorative->popup,
 				'button' => $restorative->button,
+				'buttonEs' => $restorative->buttonEs,
+				'target' => $restorative->target,
 				'image' => base_url('media/images/servicios/facial/restorative/'.$restorative->image),
 				'is_featured' => $restorative->is_featured,
 				'is_active' => $restorative->is_active,
@@ -268,6 +280,8 @@ public function recent_restoratives()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -310,6 +324,8 @@ public function recent_restoratives()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -355,6 +371,8 @@ public function recent_restoratives()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -401,6 +419,8 @@ public function recent_restoratives()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

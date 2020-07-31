@@ -39,6 +39,8 @@ public function waxs()
 				'popup' => $wax->popup,
 				'description' => $wax->description,
 				'button' => $wax->button,
+				'buttonEs' => $wax->buttonEs,
+				'target' => $wax->target,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at,
 				'is_active' => $wax->is_active,
@@ -79,6 +81,8 @@ public function featured_waxs()
 				'popup' => $wax->popup,
 				'description' => $wax->description,
 				'button' => $wax->button,
+				'buttonEs' => $wax->buttonEs,
+				'target' => $wax->target,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at,
 				'is_active' => $wax->is_active,
@@ -103,21 +107,23 @@ public function wax($id)
 	$author = $wax->first_name.' '.$wax->last_name;
 
 	$post = array(
-		'id' => $wax->id,
-		'title' => $wax->title,
-		'description' => $wax->description,
-		'titleesp' => $wax->titleesp,
-		'descriptionesp' => $wax->descriptionesp,
-		'price' => $wax->price,
-		'popup' => $wax->popup,
-		'button' => $wax->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/wax/'.$wax->image),
-		'created_at' => $wax->created_at,
-		'is_active' => $wax->is_active,
-		'textFinanc' => $wax->textFinanc,
-		'textFinancEsp' => $wax->textFinancEsp,
-		'is_activeTf'=> $wax->is_activeTf
+			'id' => $wax->id,
+			'title' => $wax->title,
+			'description' => $wax->description,
+			'titleesp' => $wax->titleesp,
+			'descriptionesp' => $wax->descriptionesp,
+			'price' => $wax->price,
+			'popup' => $wax->popup,
+			'button' => $wax->button,
+			'buttonEs' => $wax->buttonEs,
+			'target' => $wax->target,
+			'author' => $author,
+			'image' => base_url('media/images/servicios/wax/'.$wax->image),
+			'created_at' => $wax->created_at,
+			'is_active' => $wax->is_active,
+			'textFinanc' => $wax->textFinanc,
+			'textFinancEsp' => $wax->textFinancEsp,
+			'is_activeTf'=> $wax->is_activeTf
 	);
 	
 	$this->output
@@ -148,6 +154,8 @@ public function recent_waxs()
 				'price' => $wax->price,
 				'popup' => $wax->popup,
 				'button' => $wax->button,
+				'buttonEs' => $wax->buttonEs,
+				'target' => $wax->target,
 				'image' => base_url('media/images/servicios/wax/'.$wax->image),
 				'created_at' => $wax->created_at,
 				'is_active' => $wax->is_active,
@@ -190,6 +198,8 @@ public function recent_waxs()
 					'descriptionesp' => $wax->descriptionesp,
 					'popup' => $wax->popup,
 					'button' => $wax->button,
+					'buttonEs' => $wax->buttonEs,
+					'target' => $wax->target,
 					'image' => base_url('media/images/servicios/wax/'.$wax->image),
 					'created_at' => $wax->created_at,
 					'is_active' => $wax->is_active,
@@ -220,20 +230,22 @@ public function recent_waxs()
 			$wax = $this->api_model_wax->get_admin_wax($id);
 
 			$post = array(
-				'id' => $wax->id,
-				'title' => $wax->title,
-				'description' => $wax->description,
-				'titleesp' => $wax->titleesp,
+					'id' => $wax->id,
+					'title' => $wax->title,
+					'description' => $wax->description,
+					'titleesp' => $wax->titleesp,
 					'descriptionesp' => $wax->descriptionesp,
-				'price' => $wax->price,
-				'popup' => $wax->popup,
-				'button' => $wax->button,
-				'image' => base_url('media/images/servicios/wax/'.$wax->image),
-				'is_featured' => $wax->is_featured,
-				'is_active' => $wax->is_active,
-				'textFinanc' => $wax->textFinanc,
-				'textFinancEsp' => $wax->textFinancEsp,
-				'is_activeTf'=> $wax->is_activeTf
+					'price' => $wax->price,
+					'popup' => $wax->popup,
+					'button' => $wax->button,
+					'buttonEs' => $wax->buttonEs,
+					'target' => $wax->target,
+					'image' => base_url('media/images/servicios/wax/'.$wax->image),
+					'is_featured' => $wax->is_featured,
+					'is_active' => $wax->is_active,
+					'textFinanc' => $wax->textFinanc,
+					'textFinancEsp' => $wax->textFinancEsp,
+					'is_activeTf'=> $wax->is_activeTf
 			);
 			
 
@@ -263,6 +275,8 @@ public function recent_waxs()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -305,6 +319,8 @@ public function recent_waxs()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -350,6 +366,8 @@ public function recent_waxs()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -396,6 +414,8 @@ public function recent_waxs()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

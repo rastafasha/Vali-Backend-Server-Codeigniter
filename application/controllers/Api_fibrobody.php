@@ -39,10 +39,13 @@ public function bodys()
 				'price' => $body->price,
 				'popup' => $body->popup,
 				'button' => $body->button,
+				'buttonEs' => $body->buttonEs,
+				'target' => $body->target,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
 				'is_active' => $body->is_active,
 				'textFinanc' => $body->textFinanc,
+				'textFinancEsp' => $body->textFinancEsp,
 				'is_activeTf'=> $body->is_activeTf
 			);
 		}
@@ -77,10 +80,13 @@ public function featured_bodys()
 				'price' => $body->price,
 				'popup' => $body->popup,
 				'button' => $body->button,
+				'buttonEs' => $body->buttonEs,
+				'target' => $body->target,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
 				'is_active' => $body->is_active,
 				'textFinanc' => $body->textFinanc,
+				'textFinancEsp' => $body->textFinancEsp,
 				'is_activeTf'=> $body->is_activeTf
 			);
 		}
@@ -100,19 +106,22 @@ public function body($id)
 	$author = $body->first_name.' '.$body->last_name;
 
 	$post = array(
-		'id' => $body->id,
-		'title' => $body->title,
-		'description' => $body->description,
-		'titleesp' => $body->titleesp,
+				'id' => $body->id,
+				'title' => $body->title,
+				'description' => $body->description,
+				'titleesp' => $body->titleesp,
 				'descriptionesp' => $body->descriptionesp,
-		'price' => $body->price,
-		'popup' => $body->popup,
-		'button' => $body->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
-		'created_at' => $body->created_at,
-		'is_active' => $body->is_active,
-		'textFinanc' => $body->textFinanc,
+				'price' => $body->price,
+				'popup' => $body->popup,
+				'button' => $body->button,
+				'buttonEs' => $body->buttonEs,
+				'target' => $body->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
+				'created_at' => $body->created_at,
+				'is_active' => $body->is_active,
+				'textFinanc' => $body->textFinanc,
+				'textFinancEsp' => $body->textFinancEsp,
 				'is_activeTf'=> $body->is_activeTf
 	);
 	
@@ -145,10 +154,13 @@ public function recent_bodys()
 				'price' => $body->price,
 				'popup' => $body->popup,
 				'button' => $body->button,
+				'buttonEs' => $body->buttonEs,
+				'target' => $body->target,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
 				'is_active' => $body->is_active,
 				'textFinanc' => $body->textFinanc,
+				'textFinancEsp' => $body->textFinancEsp,
 				'is_activeTf'=> $body->is_activeTf
 			);
 		}
@@ -189,10 +201,13 @@ public function adminBodys()
 				'price' => $body->price,
 				'popup' => $body->popup,
 				'button' => $body->button,
+				'buttonEs' => $body->buttonEs,
+				'target' => $body->target,
 				'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 				'created_at' => $body->created_at,
 				'is_active' => $body->is_active,
 				'textFinanc' => $body->textFinanc,
+				'textFinancEsp' => $body->textFinancEsp,
 				'is_activeTf'=> $body->is_activeTf
 			);
 		}
@@ -226,10 +241,13 @@ public function adminBody($id)
 			'price' => $body->price,
 			'popup' => $body->popup,
 			'button' => $body->button,
+			'buttonEs' => $body->buttonEs,
+			'target' => $body->target,
 			'image' => base_url('media/images/servicios/fibroblast/body/'.$body->image),
 			'is_featured' => $body->is_featured,
 			'is_active' => $body->is_active,
 			'textFinanc' => $body->textFinanc,
+			'textFinancEsp' => $body->textFinancEsp,
 				'is_activeTf'=> $body->is_activeTf
 		);
 		
@@ -260,9 +278,12 @@ public function createBody()
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
@@ -301,10 +322,13 @@ public function createBody()
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
@@ -345,9 +369,12 @@ public function updateBody($id)
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
@@ -390,10 +417,13 @@ public function updateBody($id)
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf,
 			);
 

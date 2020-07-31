@@ -40,6 +40,8 @@ public function hands()
 				'popup' => $hand->popup,
 				'description' => $hand->description,
 				'button' => $hand->button,
+				'buttonEs' => $hand->buttonEs,
+				'target' => $hand->target,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'created_at' => $hand->created_at,
 				'is_active' => $hand->is_active,
@@ -79,6 +81,8 @@ public function featured_hands()
 				'popup' => $hand->popup,
 				'description' => $hand->description,
 				'button' => $hand->button,
+				'buttonEs' => $hand->buttonEs,
+				'target' => $hand->target,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'created_at' => $hand->created_at,
 				'is_active' => $hand->is_active,
@@ -103,21 +107,23 @@ public function hand($id)
 	$author = $hand->first_name.' '.$hand->last_name;
 
 	$post = array(
-		'id' => $hand->id,
-		'title' => $hand->title,
-		'description' => $hand->description,
-		'titleesp' => $hand->titleesp,
+				'id' => $hand->id,
+				'title' => $hand->title,
+				'description' => $hand->description,
+				'titleesp' => $hand->titleesp,
 				'descriptionesp' => $hand->descriptionesp,
-		'price' => $hand->price,
-		'popup' => $hand->popup,
-		'button' => $hand->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
-		'created_at' => $hand->created_at,
-		'is_active' => $hand->is_active,
-		'textFinanc' => $hand->textFinanc,
-		'textFinancEsp' => $hand->textFinancEsp,
-		'is_activeTf'=> $hand->is_activeTf
+				'price' => $hand->price,
+				'popup' => $hand->popup,
+				'button' => $hand->button,
+				'buttonEs' => $hand->buttonEs,
+				'target' => $hand->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
+				'created_at' => $hand->created_at,
+				'is_active' => $hand->is_active,
+				'textFinanc' => $hand->textFinanc,
+				'textFinancEsp' => $hand->textFinancEsp,
+				'is_activeTf'=> $hand->is_activeTf
 	);
 	
 	$this->output
@@ -149,6 +155,8 @@ public function recent_hands()
 				'popup' => $hand->popup,
 				'description' => $hand->description,
 				'button' => $hand->button,
+				'buttonEs' => $hand->buttonEs,
+				'target' => $hand->target,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'created_at' => $hand->created_at,
 				'is_active' => $hand->is_active,
@@ -193,6 +201,8 @@ public function recent_hands()
 					'price' => $hand->price,
 					'popup' => $hand->popup,
 					'button' => $hand->button,
+					'buttonEs' => $hand->buttonEs,
+					'target' => $hand->target,
 					'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 					'created_at' => $hand->created_at,
 					'is_active' => $hand->is_active,
@@ -231,6 +241,8 @@ public function recent_hands()
 				'price' => $hand->price,
 				'popup' => $hand->popup,
 				'button' => $hand->button,
+				'buttonEs' => $hand->buttonEs,
+				'target' => $hand->target,
 				'image' => base_url('media/images/servicios/body/hand/'.$hand->image),
 				'is_featured' => $hand->is_featured,
 				'is_active' => $hand->is_active,
@@ -266,6 +278,8 @@ public function recent_hands()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -308,6 +322,8 @@ public function recent_hands()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -353,6 +369,8 @@ public function recent_hands()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -399,6 +417,8 @@ public function recent_hands()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

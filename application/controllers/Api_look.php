@@ -41,6 +41,8 @@ public function looks()
 				'popup' => $look->popup,
 				'description' => $look->description,
 				'button' => $look->button,
+				'buttonEs' => $look->buttonEs,
+				'target' => $look->target,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
 				'is_active' => $look->is_active,
@@ -80,6 +82,8 @@ public function featured_looks()
 				'popup' => $look->popup,
 				'description' => $look->description,
 				'button' => $look->button,
+				'buttonEs' => $look->buttonEs,
+				'target' => $look->target,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
 				'is_active' => $look->is_active,
@@ -104,21 +108,23 @@ public function look($id)
 	$author = $look->first_name.' '.$look->last_name;
 
 	$post = array(
-		'id' => $look->id,
-		'title' => $look->title,
-		'description' => $look->description,
-		'titleesp' => $look->titleesp,
+				'id' => $look->id,
+				'title' => $look->title,
+				'description' => $look->description,
+				'titleesp' => $look->titleesp,
 				'descriptionesp' => $look->descriptionesp,
-		'price' => $look->price,
-		'popup' => $look->popup,
-		'button' => $look->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
-		'created_at' => $look->created_at,
-		'is_active' => $look->is_active,
-		'textFinanc' => $look->textFinanc,
-		'textFinancEsp' => $look->textFinancEsp,
-		'is_activeTf'=> $look->is_activeTf
+				'price' => $look->price,
+				'popup' => $look->popup,
+				'button' => $look->button,
+				'buttonEs' => $look->buttonEs,
+				'target' => $look->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
+				'created_at' => $look->created_at,
+				'is_active' => $look->is_active,
+				'textFinanc' => $look->textFinanc,
+				'textFinancEsp' => $look->textFinancEsp,
+				'is_activeTf'=> $look->is_activeTf
 	);
 	
 	$this->output
@@ -150,6 +156,8 @@ public function recent_looks()
 				'popup' => $look->popup,
 				'description' => $look->description,
 				'button' => $look->button,
+				'buttonEs' => $look->buttonEs,
+				'target' => $look->target,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
 				'is_active' => $look->is_active,
@@ -193,6 +201,8 @@ public function adminLooks()
 				'price' => $look->price,
 				'popup' => $look->popup,
 				'button' => $look->button,
+				'buttonEs' => $look->buttonEs,
+				'target' => $look->target,
 				'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 				'created_at' => $look->created_at,
 				'is_active' => $look->is_active,
@@ -231,6 +241,8 @@ public function adminLook($id)
 			'price' => $look->price,
 			'popup' => $look->popup,
 			'button' => $look->button,
+			'buttonEs' => $look->buttonEs,
+			'target' => $look->target,
 			'image' => base_url('media/images/servicios/makeup/looks/'.$look->image),
 			'is_featured' => $look->is_featured,
 			'is_active' => $look->is_active,
@@ -266,6 +278,8 @@ public function createLook()
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
@@ -308,6 +322,8 @@ public function createLook()
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
@@ -353,6 +369,8 @@ public function updateLook($id)
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
@@ -399,6 +417,8 @@ public function updateLook($id)
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,

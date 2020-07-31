@@ -39,6 +39,8 @@ public function specialts()
 				'popup' => $specialt->popup,
 				'description' => $specialt->description,
 				'button' => $specialt->button,
+				'buttonEs' => $specialt->buttonEs,
+				'target' => $specialt->target,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'created_at' => $specialt->created_at,
 				'is_active' => $specialt->is_active,
@@ -78,6 +80,8 @@ public function featured_specialts()
 				'popup' => $specialt->popup,
 				'description' => $specialt->description,
 				'button' => $specialt->button,
+				'buttonEs' => $specialt->buttonEs,
+				'target' => $specialt->target,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'created_at' => $specialt->created_at,
 				'is_active' => $specialt->is_active,
@@ -102,20 +106,22 @@ public function specialt($id)
 	$author = $specialt->first_name.' '.$specialt->last_name;
 
 	$post = array(
-		'id' => $specialt->id,
-		'title' => $specialt->title,
-		'description' => $specialt->description,
-		'titleesp' => $specialt->titleesp,
-		'descriptionesp' => $specialt->descriptionesp,
-		'price' => $specialt->price,
-		'popup' => $specialt->popup,
-		'button' => $specialt->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
-		'created_at' => $specialt->created_at,
-		'is_active' => $specialt->is_active,
-		'textFinanc' => $specialt->textFinanc,
-		'textFinancEsp' => $specialt->textFinancEsp,
+				'id' => $specialt->id,
+				'title' => $specialt->title,
+				'description' => $specialt->description,
+				'titleesp' => $specialt->titleesp,
+				'descriptionesp' => $specialt->descriptionesp,
+				'price' => $specialt->price,
+				'popup' => $specialt->popup,
+				'button' => $specialt->button,
+				'buttonEs' => $specialt->buttonEs,
+				'target' => $specialt->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
+				'created_at' => $specialt->created_at,
+				'is_active' => $specialt->is_active,
+				'textFinanc' => $specialt->textFinanc,
+				'textFinancEsp' => $specialt->textFinancEsp,
 				'is_activeTf'=> $specialt->is_activeTf
 	);
 	
@@ -147,6 +153,8 @@ public function recent_specialts()
 				'price' => $specialt->price,
 				'popup' => $specialt->popup,
 				'button' => $specialt->button,
+				'buttonEs' => $specialt->buttonEs,
+				'target' => $specialt->target,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'created_at' => $specialt->created_at,
 				'is_active' => $specialt->is_active,
@@ -190,6 +198,8 @@ public function recent_specialts()
 					'price' => $specialt->price,
 					'popup' => $specialt->popup,
 					'button' => $specialt->button,
+					'buttonEs' => $specialt->buttonEs,
+					'target' => $specialt->target,
 					'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 					'created_at' => $specialt->created_at,
 					'is_active' => $specialt->is_active,
@@ -228,6 +238,8 @@ public function recent_specialts()
 				'price' => $specialt->price,
 				'popup' => $specialt->popup,
 				'button' => $specialt->button,
+				'buttonEs' => $specialt->buttonEs,
+				'target' => $specialt->target,
 				'image' => base_url('media/images/servicios/specialt/'.$specialt->image),
 				'is_featured' => $specialt->is_featured,
 				'is_active' => $specialt->is_active,
@@ -263,6 +275,8 @@ public function recent_specialts()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -305,6 +319,8 @@ public function recent_specialts()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -350,6 +366,8 @@ public function recent_specialts()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -396,6 +414,8 @@ public function recent_specialts()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

@@ -40,6 +40,8 @@ public function permanents()
 				'popup' => $permanent->popup,
 				'description' => $permanent->description,
 				'button' => $permanent->button,
+				'buttonEs' => $permanent->buttonEs,
+				'target' => $permanent->target,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'created_at' => $permanent->created_at,
 				'is_active' => $permanent->is_active,
@@ -79,6 +81,8 @@ public function featured_permanents()
 				'popup' => $permanent->popup,
 				'description' => $permanent->description,
 				'button' => $permanent->button,
+				'buttonEs' => $permanent->buttonEs,
+				'target' => $permanent->target,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'created_at' => $permanent->created_at,
 				'is_active' => $permanent->is_active,
@@ -103,21 +107,23 @@ public function permanent($id)
 	$author = $permanent->first_name.' '.$permanent->last_name;
 
 	$post = array(
-		'id' => $permanent->id,
-		'title' => $permanent->title,
-		'description' => $permanent->description,
-		'titleesp' => $permanent->titleesp,
-		'descriptionesp' => $permanent->descriptionesp,
-		'price' => $permanent->price,
-		'popup' => $permanent->popup,
-		'button' => $permanent->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
-		'created_at' => $permanent->created_at,
-		'is_active' => $permanent->is_active,
-		'textFinanc' => $permanent->textFinanc,
-		'textFinancEsp' => $permanent->textFinancEsp,
-		'is_activeTf'=> $permanent->is_activeTf
+				'id' => $permanent->id,
+				'title' => $permanent->title,
+				'description' => $permanent->description,
+				'titleesp' => $permanent->titleesp,
+				'descriptionesp' => $permanent->descriptionesp,
+				'price' => $permanent->price,
+				'popup' => $permanent->popup,
+				'button' => $permanent->button,
+				'buttonEs' => $permanent->buttonEs,
+				'target' => $permanent->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
+				'created_at' => $permanent->created_at,
+				'is_active' => $permanent->is_active,
+				'textFinanc' => $permanent->textFinanc,
+				'textFinancEsp' => $permanent->textFinancEsp,
+				'is_activeTf'=> $permanent->is_activeTf
 	);
 	
 	$this->output
@@ -148,6 +154,8 @@ public function recent_permanents()
 				'price' => $permanent->price,
 				'popup' => $permanent->popup,
 				'button' => $permanent->button,
+				'buttonEs' => $permanent->buttonEs,
+				'target' => $permanent->target,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'created_at' => $permanent->created_at,
 				'is_active' => $permanent->is_active,
@@ -191,6 +199,8 @@ public function recent_permanents()
 					'descriptionesp' => $permanent->descriptionesp,
 					'popup' => $permanent->popup,
 					'button' => $permanent->button,
+					'buttonEs' => $permanent->buttonEs,
+					'target' => $permanent->target,
 					'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 					'created_at' => $permanent->created_at,
 					'is_active' => $permanent->is_active,
@@ -229,6 +239,8 @@ public function recent_permanents()
 				'price' => $permanent->price,
 				'popup' => $permanent->popup,
 				'button' => $permanent->button,
+				'buttonEs' => $permanent->buttonEs,
+				'target' => $permanent->target,
 				'image' => base_url('media/images/servicios/permanent/'.$permanent->image),
 				'is_featured' => $permanent->is_featured,
 				'is_active' => $permanent->is_active,
@@ -264,6 +276,8 @@ public function recent_permanents()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -306,6 +320,8 @@ public function recent_permanents()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -351,6 +367,8 @@ public function recent_permanents()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -397,6 +415,8 @@ public function recent_permanents()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

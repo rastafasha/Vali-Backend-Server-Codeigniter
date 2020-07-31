@@ -40,6 +40,8 @@ public function sculptings()
 				'popup' => $sculpting->popup,
 				'description' => $sculpting->description,
 				'button' => $sculpting->button,
+				'buttonEs' => $sculpting->buttonEs,
+				'target' => $sculpting->target,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'created_at' => $sculpting->created_at,
 				'is_active' => $sculpting->is_active,
@@ -79,6 +81,8 @@ public function featured_sculptings()
 				'popup' => $sculpting->popup,
 				'description' => $sculpting->description,
 				'button' => $sculpting->button,
+				'buttonEs' => $sculpting->buttonEs,
+				'target' => $sculpting->target,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'created_at' => $sculpting->created_at,
 				'is_active' => $sculpting->is_active,
@@ -103,21 +107,23 @@ public function sculpting($id)
 	$author = $sculpting->first_name.' '.$sculpting->last_name;
 
 	$post = array(
-		'id' => $sculpting->id,
-		'title' => $sculpting->title,
-		'description' => $sculpting->description,
-		'titleesp' => $sculpting->titleesp,
+				'id' => $sculpting->id,
+				'title' => $sculpting->title,
+				'description' => $sculpting->description,
+				'titleesp' => $sculpting->titleesp,
 				'descriptionesp' => $sculpting->descriptionesp,
-		'price' => $sculpting->price,
-		'popup' => $sculpting->popup,
-		'button' => $sculpting->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
-		'created_at' => $sculpting->created_at,
-		'is_active' => $sculpting->is_active,
-		'textFinanc' => $sculpting->textFinanc,
-		'textFinancEsp' => $sculpting->textFinancEsp,
-		'is_activeTf'=> $sculpting->is_activeTf
+				'price' => $sculpting->price,
+				'popup' => $sculpting->popup,
+				'button' => $sculpting->button,
+				'buttonEs' => $sculpting->buttonEs,
+				'target' => $sculpting->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
+				'created_at' => $sculpting->created_at,
+				'is_active' => $sculpting->is_active,
+				'textFinanc' => $sculpting->textFinanc,
+				'textFinancEsp' => $sculpting->textFinancEsp,
+				'is_activeTf'=> $sculpting->is_activeTf
 	);
 	
 	$this->output
@@ -149,6 +155,8 @@ public function recent_sculptings()
 				'popup' => $sculpting->popup,
 				'description' => $sculpting->description,
 				'button' => $sculpting->button,
+				'buttonEs' => $sculpting->buttonEs,
+				'target' => $sculpting->target,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'created_at' => $sculpting->created_at,
 				'is_active' => $sculpting->is_active,
@@ -194,12 +202,14 @@ public function recent_sculptings()
 					'price' => $sculpting->price,
 					'popup' => $sculpting->popup,
 					'button' => $sculpting->button,
+					'buttonEs' => $sculpting->buttonEs,
+					'target' => $sculpting->target,
 					'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 					'created_at' => $sculpting->created_at,
 					'is_active' => $sculpting->is_active,
 					'textFinanc' => $sculpting->textFinanc,
 					'textFinancEsp' => $sculpting->textFinancEsp,
-				'is_activeTf'=> $sculpting->is_activeTf
+					'is_activeTf'=> $sculpting->is_activeTf
 				);
 			}
 
@@ -232,6 +242,8 @@ public function recent_sculptings()
 				'price' => $sculpting->price,
 				'popup' => $sculpting->popup,
 				'button' => $sculpting->button,
+				'buttonEs' => $sculpting->buttonEs,
+				'target' => $sculpting->target,
 				'image' => base_url('media/images/servicios/body/sculpting/'.$sculpting->image),
 				'is_featured' => $sculpting->is_featured,
 				'is_active' => $sculpting->is_active,
@@ -267,6 +279,8 @@ public function recent_sculptings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -309,6 +323,8 @@ public function recent_sculptings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -354,6 +370,8 @@ public function recent_sculptings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -400,6 +418,8 @@ public function recent_sculptings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

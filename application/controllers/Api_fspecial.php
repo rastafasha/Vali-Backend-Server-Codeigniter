@@ -40,6 +40,8 @@ public function specialfs()
 				'popup' => $specialf->popup,
 				'description' => $specialf->description,
 				'button' => $specialf->button,
+				'buttonEs' => $specialf->buttonEs,
+				'target' => $specialf->target,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'created_at' => $specialf->created_at,
 				'is_active' => $specialf->is_active,
@@ -79,6 +81,8 @@ public function featured_specialfs()
 				'popup' => $specialf->popup,
 				'description' => $specialf->description,
 				'button' => $specialf->button,
+				'buttonEs' => $specialf->buttonEs,
+				'target' => $specialf->target,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'created_at' => $specialf->created_at,
 				'is_active' => $specialf->is_active,
@@ -103,20 +107,22 @@ public function specialf($id)
 	$author = $specialf->first_name.' '.$specialf->last_name;
 
 	$post = array(
-		'id' => $specialf->id,
-		'title' => $specialf->title,
-		'description' => $specialf->description,
-		'titleesp' => $specialf->titleesp,
+				'id' => $specialf->id,
+				'title' => $specialf->title,
+				'description' => $specialf->description,
+				'titleesp' => $specialf->titleesp,
 				'descriptionesp' => $specialf->descriptionesp,
-		'price' => $specialf->price,
-		'popup' => $specialf->popup,
-		'button' => $specialf->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
-		'created_at' => $specialf->created_at,
-		'textFinanc' => $specialf->textFinanc,
-		'textFinancEsp' => $specialf->textFinancEsp,
-		'is_activeTf'=> $specialf->is_activeTf
+				'price' => $specialf->price,
+				'popup' => $specialf->popup,
+				'button' => $specialf->button,
+				'buttonEs' => $specialf->buttonEs,
+				'target' => $specialf->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
+				'created_at' => $specialf->created_at,
+				'textFinanc' => $specialf->textFinanc,
+				'textFinancEsp' => $specialf->textFinancEsp,
+				'is_activeTf'=> $specialf->is_activeTf
 	);
 	
 	$this->output
@@ -148,6 +154,8 @@ public function recent_specialfs()
 				'popup' => $specialf->popup,
 				'description' => $specialf->description,
 				'button' => $specialf->button,
+				'buttonEs' => $specialf->buttonEs,
+				'target' => $specialf->target,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'created_at' => $specialf->created_at,
 				'is_active' => $specialf->is_active,
@@ -191,6 +199,8 @@ public function recent_specialfs()
 					'price' => $specialf->price,
 					'popup' => $specialf->popup,
 					'button' => $specialf->button,
+					'buttonEs' => $specialf->buttonEs,
+					'target' => $specialf->target,
 					'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 					'created_at' => $specialf->created_at,
 					'is_active' => $specialf->is_active,
@@ -228,6 +238,8 @@ public function recent_specialfs()
 				'price' => $specialf->price,
 				'popup' => $specialf->popup,
 				'button' => $specialf->button,
+				'buttonEs' => $specialf->buttonEs,
+				'target' => $specialf->target,
 				'image' => base_url('media/images/servicios/facial/specialf/'.$specialf->image),
 				'is_featured' => $specialf->is_featured,
 				'is_active' => $specialf->is_active,
@@ -263,6 +275,8 @@ public function recent_specialfs()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -305,6 +319,8 @@ public function recent_specialfs()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
@@ -350,6 +366,8 @@ public function recent_specialfs()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
@@ -396,6 +414,8 @@ public function recent_specialfs()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,

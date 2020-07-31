@@ -38,6 +38,8 @@ public function hypertrophics()
 				'price' => $hypertrophic->price,
 				'popup' => $hypertrophic->popup,
 				'button' => $hypertrophic->button,
+				'buttonEs' => $hypertrophic->buttonEs,
+				'target' => $hypertrophic->target,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
 				'is_active' => $hypertrophic->is_active,
@@ -77,6 +79,8 @@ public function featured_hypertrophics()
 				'price' => $hypertrophic->price,
 				'popup' => $hypertrophic->popup,
 				'button' => $hypertrophic->button,
+				'buttonEs' => $hypertrophic->buttonEs,
+				'target' => $hypertrophic->target,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
 				'is_active' => $hypertrophic->is_active,
@@ -101,21 +105,23 @@ public function hypertrophic($id)
 	$author = $hypertrophic->first_name.' '.$hypertrophic->last_name;
 
 	$post = array(
-		'id' => $hypertrophic->id,
-		'title' => $hypertrophic->title,
-		'description' => $hypertrophic->description,
-		'titleesp' => $hypertrophic->titleesp,
-		'descriptionesp' => $hypertrophic->descriptionesp,
-		'price' => $hypertrophic->price,
-		'popup' => $hypertrophic->popup,
-		'button' => $hypertrophic->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
-		'created_at' => $hypertrophic->created_at,
-		'is_active' => $hypertrophic->is_active,
-		'textFinanc' => $hypertrophic->textFinanc,
-		'textFinancEsp' => $hypertrophic->textFinancEsp,
-		'is_activeTf'=> $hypertrophic->is_activeTf
+				'id' => $hypertrophic->id,
+				'title' => $hypertrophic->title,
+				'description' => $hypertrophic->description,
+				'titleesp' => $hypertrophic->titleesp,
+				'descriptionesp' => $hypertrophic->descriptionesp,
+				'price' => $hypertrophic->price,
+				'popup' => $hypertrophic->popup,
+				'button' => $hypertrophic->button,
+				'buttonEs' => $hypertrophic->buttonEs,
+				'target' => $hypertrophic->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
+				'created_at' => $hypertrophic->created_at,
+				'is_active' => $hypertrophic->is_active,
+				'textFinanc' => $hypertrophic->textFinanc,
+				'textFinancEsp' => $hypertrophic->textFinancEsp,
+				'is_activeTf'=> $hypertrophic->is_activeTf
 	);
 	
 	$this->output
@@ -147,6 +153,8 @@ public function recent_hypertrophics()
 				'price' => $hypertrophic->price,
 				'popup' => $hypertrophic->popup,
 				'button' => $hypertrophic->button,
+				'buttonEs' => $hypertrophic->buttonEs,
+				'target' => $hypertrophic->target,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophic/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
 				'is_active' => $hypertrophic->is_active,
@@ -192,6 +200,8 @@ public function adminHypertrophics()
 				'price' => $hypertrophic->price,
 				'popup' => $hypertrophic->popup,
 				'button' => $hypertrophic->button,
+				'buttonEs' => $hypertrophic->buttonEs,
+				'target' => $hypertrophic->target,
 				'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 				'created_at' => $hypertrophic->created_at,
 				'is_active' => $hypertrophic->is_active,
@@ -230,6 +240,8 @@ public function adminHypertrophic($id)
 			'price' => $hypertrophic->price,
 			'popup' => $hypertrophic->popup,
 			'button' => $hypertrophic->button,
+			'buttonEs' => $hypertrophic->buttonEs,
+			'target' => $hypertrophic->target,
 			'image' => base_url('media/images/servicios/fibroblast/hypertrophics/'.$hypertrophic->image),
 			'is_featured' => $hypertrophic->is_featured,
 			'is_active' => $hypertrophic->is_active,
@@ -265,6 +277,8 @@ public function createHypertrophic()
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
@@ -307,6 +321,8 @@ public function createHypertrophic()
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
@@ -352,6 +368,8 @@ public function updateHypertrophic($id)
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
@@ -398,6 +416,8 @@ public function updateHypertrophic($id)
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,

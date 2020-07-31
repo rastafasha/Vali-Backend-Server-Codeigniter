@@ -39,10 +39,13 @@ public function bridals()
 				'popup' => $bridal->popup,
 				'description' => $bridal->description,
 				'button' => $bridal->button,
+				'buttonEs' => $bridal->buttonEs,
+				'target' => $bridal->target,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
 				'is_active' => $bridal->is_active,
 				'textFinanc' => $bridal->textFinanc,
+				'textFinancEsp' => $bridal->textFinancEsp,
 				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
@@ -77,10 +80,13 @@ public function featured_bridals()
 				'popup' => $bridal->popup,
 				'description' => $bridal->description,
 				'button' => $bridal->button,
+				'buttonEs' => $bridal->buttonEs,
+				'target' => $bridal->target,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
 				'is_active' => $bridal->is_active,
 				'textFinanc' => $bridal->textFinanc,
+				'textFinancEsp' => $bridal->textFinancEsp,
 				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
@@ -100,19 +106,22 @@ public function bridal($id)
 	$author = $bridal->first_name.' '.$bridal->last_name;
 
 	$post = array(
-		'id' => $bridal->id,
-		'title' => $bridal->title,
-		'description' => $bridal->description,
-		'titleesp' => $bridal->titleesp,
+				'id' => $bridal->id,
+				'title' => $bridal->title,
+				'description' => $bridal->description,
+				'titleesp' => $bridal->titleesp,
 				'descriptionesp' => $bridal->descriptionesp,
-		'price' => $bridal->price,
-		'popup' => $bridal->popup,
-		'button' => $bridal->button,
-		'author' => $author,
-		'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
-		'created_at' => $bridal->created_at,
-		'is_active' => $bridal->is_active,
-		'textFinanc' => $bridal->textFinanc,
+				'price' => $bridal->price,
+				'popup' => $bridal->popup,
+				'button' => $bridal->button,
+				'buttonEs' => $bridal->buttonEs,
+				'target' => $bridal->target,
+				'author' => $author,
+				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
+				'created_at' => $bridal->created_at,
+				'is_active' => $bridal->is_active,
+				'textFinanc' => $bridal->textFinanc,
+				'textFinancEsp' => $bridal->textFinancEsp,
 				'is_activeTf'=> $bridal->is_activeTf
 	);
 	
@@ -145,10 +154,13 @@ public function recent_bridals()
 				'popup' => $bridal->popup,
 				'description' => $bridal->description,
 				'button' => $bridal->button,
+				'buttonEs' => $bridal->buttonEs,
+				'target' => $bridal->target,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
 				'is_active' => $bridal->is_active,
 				'textFinanc' => $bridal->textFinanc,
+				'textFinancEsp' => $bridal->textFinancEsp,
 				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
@@ -188,10 +200,13 @@ public function adminBridals()
 				'price' => $bridal->price,
 				'popup' => $bridal->popup,
 				'button' => $bridal->button,
+				'buttonEs' => $bridal->buttonEs,
+				'target' => $bridal->target,
 				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
 				'created_at' => $bridal->created_at,
 				'is_active' => $bridal->is_active,
 				'textFinanc' => $bridal->textFinanc,
+				'textFinancEsp' => $bridal->textFinancEsp,
 				'is_activeTf'=> $bridal->is_activeTf
 			);
 		}
@@ -217,18 +232,21 @@ public function adminBridal($id)
 		$bridal = $this->api_model_bridal->get_admin_bridal($id);
 
 		$post = array(
-			'id' => $bridal->id,
-			'title' => $bridal->title,
-			'description' => $bridal->description,
-			'titleesp' => $bridal->titleesp,
-			'descriptionesp' => $bridal->descriptionesp,
-			'price' => $bridal->price,
-			'popup' => $bridal->popup,
-			'button' => $bridal->button,
-			'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
-			'is_featured' => $bridal->is_featured,
-			'is_active' => $bridal->is_active,
-			'textFinanc' => $bridal->textFinanc,
+				'id' => $bridal->id,
+				'title' => $bridal->title,
+				'description' => $bridal->description,
+				'titleesp' => $bridal->titleesp,
+				'descriptionesp' => $bridal->descriptionesp,
+				'price' => $bridal->price,
+				'popup' => $bridal->popup,
+				'button' => $bridal->button,
+				'buttonEs' => $bridal->buttonEs,
+				'target' => $bridal->target,
+				'image' => base_url('media/images/servicios/makeup/bridal/'.$bridal->image),
+				'is_featured' => $bridal->is_featured,
+				'is_active' => $bridal->is_active,
+				'textFinanc' => $bridal->textFinanc,
+				'textFinancEsp' => $bridal->textFinancEsp,
 				'is_activeTf'=> $bridal->is_activeTf
 		);
 		
@@ -259,9 +277,12 @@ public function createBridal()
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$filename = NULL;
@@ -300,10 +321,13 @@ public function createBridal()
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf,
 				'created_at' => date('Y-m-d H:i:s', time())
 			);
@@ -344,9 +368,12 @@ public function updateBridal($id)
 		$price = $this->input->post('price');
 		$popup = $this->input->post('popup');
 		$button = $this->input->post('button');
+		$buttonEs = $this->input->post('buttonEs');
+		$target = $this->input->post('target');
 		$is_featured = $this->input->post('is_featured');
 		$is_active = $this->input->post('is_active');
 		$textFinanc = $this->input->post('textFinanc');
+		$textFinancEsp = $this->input->post('textFinancEsp');
 		$is_activeTf = $this->input->post('is_activeTf');
 
 		$isUploadError = FALSE;
@@ -389,10 +416,13 @@ public function updateBridal($id)
 				'price' => $price,
 				'popup' => $popup,
 				'button' => $button,
+				'buttonEs' => $buttonEs,
+				'target' => $target,
 				'image' => $filename,
 				'is_featured' => $is_featured,
 				'is_active' => $is_active,
 				'textFinanc' => $textFinanc,
+				'textFinancEsp' => $textFinancEsp,
 				'is_activeTf' => $is_activeTf
 			);
 

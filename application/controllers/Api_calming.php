@@ -41,10 +41,13 @@ public function calmings()
 				'popup' => $calming->popup,
 				'description' => $calming->description,
 				'button' => $calming->button,
+				'buttonEs' => $calming->buttonEs,
+				'target' => $calming->target,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'created_at' => $calming->created_at,
 				'is_active' => $calming->is_active,
 				'textFinanc' => $calming->textFinanc,
+				'textFinancEsp' => $calming->textFinancEsp,
 				'is_activeTf'=> $calming->is_activeTf
 			);
 		}
@@ -79,10 +82,13 @@ public function featured_calmings()
 				'popup' => $calming->popup,
 				'description' => $calming->description,
 				'button' => $calming->button,
+				'buttonEs' => $calming->buttonEs,
+				'target' => $calming->target,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'created_at' => $calming->created_at,
 				'is_active' => $calming->is_active,
 				'textFinanc' => $calming->textFinanc,
+				'textFinancEsp' => $calming->textFinancEsp,
 				'is_activeTf'=> $calming->is_activeTf
 			);
 		}
@@ -110,11 +116,14 @@ public function calming($id)
 				'price' => $calming->price,
 				'popup' => $calming->popup,
 				'button' => $calming->button,
+				'buttonEs' => $calming->buttonEs,
+				'target' => $calming->target,
 				'author' => $author,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'created_at' => $calming->created_at,
 				'is_active' => $calming->is_active,
 				'textFinanc' => $calming->textFinanc,
+				'textFinancEsp' => $calming->textFinancEsp,
 				'is_activeTf'=> $calming->is_activeTf
 	);
 	
@@ -147,10 +156,13 @@ public function recent_calmings()
 				'popup' => $calming->popup,
 				'description' => $calming->description,
 				'button' => $calming->button,
+				'buttonEs' => $calming->buttonEs,
+				'target' => $calming->target,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'created_at' => $calming->created_at,
 				'is_active' => $calming->is_active,
 				'textFinanc' => $calming->textFinanc,
+				'textFinancEsp' => $calming->textFinancEsp,
 				'is_activeTf'=> $calming->is_activeTf
 			);
 		}
@@ -189,10 +201,13 @@ public function recent_calmings()
 					'price' => $calming->price,
 					'popup' => $calming->popup,
 					'button' => $calming->button,
+					'buttonEs' => $calming->buttonEs,
+					'target' => $calming->target,
 					'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 					'created_at' => $calming->created_at,
 					'is_active' => $calming->is_active,
 					'textFinanc' => $calming->textFinanc,
+					'textFinancEsp' => $calming->textFinancEsp,
 					'is_activeTf'=> $calming->is_activeTf
 				);
 			}
@@ -226,10 +241,13 @@ public function recent_calmings()
 				'price' => $calming->price,
 				'popup' => $calming->popup,
 				'button' => $calming->button,
+				'buttonEs' => $calming->buttonEs,
+				'target' => $calming->target,
 				'image' => base_url('media/images/servicios/facial/calming/'.$calming->image),
 				'is_featured' => $calming->is_featured,
 				'is_active' => $calming->is_active,
 				'textFinanc' => $calming->textFinanc,
+				'textFinancEsp' => $calming->textFinancEsp,
 				'is_activeTf'=> $calming->is_activeTf
 			);
 			
@@ -260,9 +278,12 @@ public function recent_calmings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
 			$is_activeTf = $this->input->post('is_activeTf');
 
 			$filename = NULL;
@@ -301,10 +322,13 @@ public function recent_calmings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
 					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
 					'is_activeTf' => $is_activeTf,
 					'created_at' => date('Y-m-d H:i:s', time())
 				);
@@ -345,9 +369,12 @@ public function recent_calmings()
 			$price = $this->input->post('price');
 			$popup = $this->input->post('popup');
 			$button = $this->input->post('button');
+			$buttonEs = $this->input->post('buttonEs');
+			$target = $this->input->post('target');
 			$is_featured = $this->input->post('is_featured');
 			$is_active = $this->input->post('is_active');
 			$textFinanc = $this->input->post('textFinanc');
+			$textFinancEsp = $this->input->post('textFinancEsp');
 			$is_activeTf = $this->input->post('is_activeTf');
 
 			$isUploadError = FALSE;
@@ -390,10 +417,13 @@ public function recent_calmings()
 					'price' => $price,
 					'popup' => $popup,
 					'button' => $button,
+					'buttonEs' => $buttonEs,
+					'target' => $target,
 					'image' => $filename,
 					'is_featured' => $is_featured,
 					'is_active' => $is_active,
 					'textFinanc' => $textFinanc,
+					'textFinancEsp' => $textFinancEsp,
 					'is_activeTf' => $is_activeTf
 				);
 
